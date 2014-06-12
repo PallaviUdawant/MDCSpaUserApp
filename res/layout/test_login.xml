@@ -1,0 +1,137 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|center_vertical"
+    android:id="@+id/Login_relative_layout"
+    android:background="@drawable/login_background_small"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+     >
+
+<LinearLayout
+    android:id="@+id/title_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:layout_marginBottom="20sp">
+
+ <ImageView
+     android:id="@+id/imageView1"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="50dp"
+     android:src="@drawable/mdc_spa_logo" />
+  
+  <!--    <TextView
+        android:id="@+id/txt_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:gravity="center"
+        android:text="MDC SPA"
+        android:textColor="#fbff00"
+        android:textSize="40dp" 
+        />-->
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_marginBottom="50sp"
+       >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/login_panel_layout"
+            android:paddingTop="10dp"
+             android:paddingBottom="10dp"
+              android:paddingLeft="20dp"
+              android:paddingRight="20dp"
+             >
+
+            <EditText
+                android:id="@+id/Username_Login"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/edittext_background"
+                android:hint="User Name"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp"
+                android:imeOptions="actionNext"
+                android:padding="15dp"
+                android:singleLine="true"
+                android:textColor="#4e3315"
+                android:textColorHint="#9b8c7b" >
+
+               
+            </EditText>
+
+            <EditText
+                android:id="@+id/Password_Login"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                 android:singleLine="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Password"
+                android:imeOptions="actionDone"
+                android:padding="15dp"
+                 android:textColor="#4e3315"
+                  android:textCursorDrawable="@null"
+                android:password="true"
+                android:textColorHint="#9b8c7b"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/Login"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_default_bg"
+                android:padding="20sp"
+               android:textSize="20sp"
+                android:text="Login"
+                android:textColor="#ffffff" />
+
+            <!--
+                  <Button
+                android:id="@+id/GoToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_default_bg"
+                android:text="Create Account" />
+            -->
+
+            <TextView
+                android:id="@+id/txt_Create_account"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="20sp"
+                android:layout_weight="0.42"
+                android:padding="5sp"
+                android:text="@string/Create_account"
+                 android:textColor="@drawable/textview_selector"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+   
+
+</LinearLayout>
