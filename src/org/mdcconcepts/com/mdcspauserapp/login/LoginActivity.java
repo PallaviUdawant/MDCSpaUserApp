@@ -17,6 +17,7 @@ import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,6 +30,7 @@ import android.os.Bundle;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -51,6 +53,8 @@ public class LoginActivity extends Activity {
 
 	EditText Username;
 	EditText Password;
+	
+	Typeface font;
 	
 	TextView txt_Create_account;
 	TextView txt_demo;
@@ -116,7 +120,7 @@ public class LoginActivity extends Activity {
 		   
 		    
 		    
-		Typeface font = Typeface.createFromAsset(getAssets(),"Raleway-Light.otf");	
+		font = Typeface.createFromAsset(getAssets(),"Raleway-Light.otf");	
 		pref=getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
 		editor = pref.edit();
 		
@@ -214,7 +218,8 @@ public class LoginActivity extends Activity {
 	class LoginUser extends AsyncTask<String, String, String> {
 
 		// Progress Dialog
-		private ProgressDialog pDialog;
+//		private ProgressDialog pDialog;
+		private Dialog dialog;
 		int success;
 		/**
 		 * Before starting background thread Show Progress Dialog
@@ -224,18 +229,29 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(LoginActivity.this);
-			pDialog.setMessage("Attempting Login ... ");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
+			
+			dialog= new Dialog(LoginActivity.this,R.style.ThemeWithCorners);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.custom_progress_dialog);
+			dialog.setCancelable(false);
+			dialog.show();
+			
+			TextView Txt_Title=(TextView)dialog.findViewById(R.id.txt_alert_text);
+			Txt_Title.setTypeface(font);
+			
+//			pDialog = new ProgressDialog(LoginActivity.this);
+//			pDialog.setContentView(R.layout.custom_progress_dialog);
+//			pDialog.setMessage("Attempting Login ... ");
+//			pDialog.setIndeterminate(false);
+//			pDialog.setCancelable(false); pDialog.show();
+			
 		}
 
 		@Override
 		protected String doInBackground(String... args) {
 			// TODO Auto-generated method stub
 			// Check for success tag
-
+			
 			String Username_Container = Username.getText().toString();
 			String Password_Container = Password.getText().toString();
 
@@ -283,7 +299,7 @@ public class LoginActivity extends Activity {
 		 **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-			pDialog.dismiss();
+		dialog.cancel();
 			if (file_url != null) {
 				Toast.makeText(LoginActivity.this, file_url, Toast.LENGTH_LONG)
 						.show();

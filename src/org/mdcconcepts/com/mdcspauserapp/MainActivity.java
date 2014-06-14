@@ -10,7 +10,9 @@ import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
 import org.mdcconcepts.com.mdcspauserapp.findspa.FindSpaFragment;
+import org.mdcconcepts.com.mdcspauserapp.giftcard.GiftCardFragment;
 import org.mdcconcepts.com.mdcspauserapp.login.LoginActivity;
+import org.mdcconcepts.com.mdcspauserapp.makeappointment.MakeAppointmentFragment;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerItem;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerListAdapter;
 import org.mdcconcepts.com.mdcspauserapp.profile.ProfileFragment;
@@ -19,17 +21,15 @@ import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -38,16 +38,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	JSONParser jsonParser = new JSONParser();
-
+	Typeface font;
 	// ids
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MESSAGE = "message";
@@ -65,10 +67,11 @@ public class MainActivity extends Activity {
 	private NavDrawerListAdapter adapter;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		font = Typeface.createFromAsset(getAssets(), "Raleway-Light.otf");
 
 		mTitle = mDrawerTitle = getTitle();
 
@@ -88,21 +91,25 @@ public class MainActivity extends Activity {
 		// Home
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons
 				.getResourceId(0, -1)));
-		//Home
+		// Profile
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons
 				.getResourceId(1, -1)));
-		// Photos
+		// File Spa
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons
 				.getResourceId(2, -1)));
-		// Communities, Will add a counter here
+
+		// Make an appointment
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons
 				.getResourceId(3, -1), true, "22"));
-		// Pages
+
+		// View an appointment
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons
 				.getResourceId(4, -1)));
+
 		// What's hot, We will add a counter here
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons
 				.getResourceId(5, -1), true, "50+"));
+
 		// What's hot, We will add a counter here
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons
 				.getResourceId(6, -1)));
@@ -137,12 +144,9 @@ public class MainActivity extends Activity {
 				invalidateOptionsMenu();
 			}
 
-			public void onDrawerOpened(View drawerView)
-			{
+			public void onDrawerOpened(View drawerView) {
 				getActionBar().setTitle(mDrawerTitle);
-				// getActionBar().setIcon(mDrawer);
 
-				
 				// calling onPrepareOptionsMenu() to hide action bar icons
 				invalidateOptionsMenu();
 			}
@@ -153,8 +157,9 @@ public class MainActivity extends Activity {
 			// on first time display view for first nav item
 			displayView(0);
 		}
-		
+
 		new GetUserData().execute();
+
 	}
 
 	/**
@@ -211,51 +216,58 @@ public class MainActivity extends Activity {
 
 		switch (position) {
 		case 0:
+
 			fragment = new HomeFragment();
 			break;
+
 		case 1:
+
 			fragment = new ProfileFragment();
 			break;
-		case 2:
-						GPSTracker gps=new GPSTracker(this);
 			
+		case 2:
+			
+			/**
+			 * Check if Gps is On
+			 */
+			
+			GPSTracker gps = new GPSTracker(this);
+
 			if (gps.canGetLocation()) {
-				 fragment = new FindSpaFragment();
-				
+				fragment = new FindSpaFragment();
+
 			} else {
 				// can't get location
 				// GPS or Network is not enabled
 				// Ask user to enable GPS/network in settings
 				gps.showSettingsAlert();
 			}
+			break;
 			
-//			fragment = new HomeFragment();
+		case 3:
+
+			fragment = new MakeAppointmentFragment();
 			break;
-		case 3:fragment = new HomeFragment();
-//			fragment = new MakeAppointmentFragment();
+			
+		case 4:
+			
+			fragment = new HomeFragment();
+			// fragment = new ViewAppointmentFragment();
 			break;
-		case 4:fragment = new HomeFragment();
-//			fragment = new ViewAppointmentFragment();
-			break;
+			
 		case 5:
 			// fragment = new WhatsHotFragment();
 			break;
+			
 		case 6:
-			fragment = new HomeFragment();
-//			fragment = new GiftCardFragment();
+			// fragment = new HomeFragment();
+			fragment = new GiftCardFragment();
 			break;
+			
 		case 7:
-			SharedPreferences pref=getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-			Editor editor = pref.edit();
-			if(pref.getBoolean("Login_Status", false))
-			{
-//				editor.putBoolean("Login_Status", false);
-//				editor.commit();
+				Intent i = new Intent(MainActivity.this, LoginActivity.class);
+				startActivity(i);
 				finish();
-				
-				
-			}
-			// fragment = new WhatsHotFragment();
 			break;
 
 		default:
@@ -303,11 +315,17 @@ public class MainActivity extends Activity {
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
+	/**
+	 * Fetch User Details and save it in util class
+	 *  details shown in Profile class
+	 * @author Pallavi
+	 *
+	 */
 	class GetUserData extends AsyncTask<String, String, String> {
 
 		// Progress Dialog
-		private ProgressDialog pDialog;
-
+		// private ProgressDialog pDialog;
+		private Dialog dialog;
 		/**
 		 * Before starting background thread Show Progress Dialog
 		 * */
@@ -323,11 +341,18 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(MainActivity.this);
-			pDialog.setMessage("Getting User Details...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
+
+			dialog = new Dialog(MainActivity.this, R.style.ThemeWithCorners);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.custom_progress_dialog);
+			dialog.setCancelable(false);
+			dialog.show();
+
+			TextView Txt_Title = (TextView) dialog
+					.findViewById(R.id.txt_alert_text);
+			Txt_Title.setTypeface(font);
+			Txt_Title.setText("Getting User Details....");
+			
 		}
 
 		@SuppressLint("SimpleDateFormat")
@@ -381,75 +406,64 @@ public class MainActivity extends Activity {
 		 * **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-			pDialog.dismiss();
+			dialog.cancel();
 			if (file_url != null) {
-				Util.User_Name=Name1;
-				Util.User_Contact_Number=Mobile1;
-				Util.User_EmailId=Email1;
-				Util.User_Address=Address1;
-				Util.User_DOB=DOB1;
-				Util.User_Anniversary=Anniversary1;
+				Util.User_Name = Name1;
+				Util.User_Contact_Number = Mobile1;
+				Util.User_EmailId = Email1;
+				Util.User_Address = Address1;
+				Util.User_DOB = DOB1;
+				Util.User_Anniversary = Anniversary1;
 			}
-//			if (file_url != null) {
-//				Toast.makeText(rootView.getContext(), file_url,
-//						Toast.LENGTH_LONG).show();
-//				Name.setText(Name1);
-//				Mobile.setText(Mobile1);
-//				Email.setText(Email1);
-//				Address.setText(Address1);
-//				DOB.setText(DOB1);
-//				Anniversary.setText(Anniversary1);
-//			}
 
 		}
 	}
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-//		super.onBackPressed();
-		
-		
-		SharedPreferences pref=getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-		final Editor editor = pref.edit();
-		
-			
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-					MainActivity.this);
-	 
-				// set title
-				alertDialogBuilder.setTitle("Exit App");
-	 
-				// set dialog message
-				alertDialogBuilder
-					.setMessage("Are you sure you want to exit?")
-					.setCancelable(false)
-					.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,int id) {
-							// if this button is clicked, close
-							// current activity
-							
-							MainActivity.this.finish();
-							
-						}
-					  })
-					.setNegativeButton("No",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,int id) {
-							// if this button is clicked, just close
-							// the dialog box and do nothing
-							dialog.cancel();
-						}
-					});
-	 
-					// create alert dialog
-					AlertDialog alertDialog = alertDialogBuilder.create();
-	 
-					// show it
-					alertDialog.show();
-				}
-		
-			
-			
-		
-		
-	
+
+/**
+ * Ask before leaving app
+ */
+		final Dialog dialog = new Dialog(MainActivity.this,
+				R.style.ThemeWithCorners);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.custom_alert_box);
+		dialog.setCancelable(false);
+		dialog.show();
+
+		TextView title;
+		Button btn_yes;
+		Button btn_no;
+
+		btn_yes = (Button) dialog.findViewById(R.id.btn_yes);
+		btn_no = (Button) dialog.findViewById(R.id.btn_no);
+		title = (TextView) dialog.findViewById(R.id.txt_title);
+
+		title.setTypeface(font);
+		btn_yes.setTypeface(font);
+		btn_no.setTypeface(font);
+
+		btn_yes.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MainActivity.this.finish();
+
+			}
+		});
+		btn_no.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				dialog.cancel();
+			}
+		});
+
+	}
+
 }

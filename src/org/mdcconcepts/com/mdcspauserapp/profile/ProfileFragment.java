@@ -77,6 +77,7 @@ public class ProfileFragment extends Fragment {
 		Address.setText(Util.User_Address);
 		DOB.setText(Util.User_DOB);
 		Anniversary.setText(Util.User_Anniversary);
+		
 //		new GetUserData().execute();
 		return rootView;
 	}

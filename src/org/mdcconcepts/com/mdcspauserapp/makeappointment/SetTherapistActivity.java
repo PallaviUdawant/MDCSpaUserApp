@@ -74,7 +74,7 @@ public class SetTherapistActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.set_therapist, menu);
+		getMenuInflater().inflate(R.menu.set_therapist, menu);
 		return true;
 	}
 
@@ -163,13 +163,13 @@ public class SetTherapistActivity extends FragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-//			View rootView = inflater.inflate(
-//					R.layout.fragment_set_therapist_dummy, container, false);
-//			TextView dummyTextView = (TextView) rootView
-//					.findViewById(R.id.section_label);
-//			dummyTextView.setText(Integer.toString(getArguments().getInt(
-//					ARG_SECTION_NUMBER)));
-			return null;
+			View rootView = inflater.inflate(
+					R.layout.fragment_set_therapist_dummy, container, false);
+			TextView dummyTextView = (TextView) rootView
+					.findViewById(R.id.section_label);
+			dummyTextView.setText(Integer.toString(getArguments().getInt(
+					ARG_SECTION_NUMBER)));
+			return rootView;
 		}
 	}
 
@@ -266,8 +266,8 @@ public class SetTherapistActivity extends FragmentActivity {
 				mSectionsPagerAdapter = new SectionsPagerAdapter(
 						getSupportFragmentManager());
 				// Set up the ViewPager with the sections adapter.
-//				mViewPager = (ViewPager) findViewById(R.id.pager);
-//				mViewPager.setAdapter(mSectionsPagerAdapter);
+				mViewPager = (ViewPager) findViewById(R.id.pager);
+				mViewPager.setAdapter(mSectionsPagerAdapter);
 			}
 		}
 

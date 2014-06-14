@@ -19,6 +19,8 @@ public class MemoryCache {
     public void put(String id, Bitmap bitmap){
         cache.put(id, new SoftReference<Bitmap>(bitmap));
     }
+    
+    
  
     public void clear() {
         cache.clear();

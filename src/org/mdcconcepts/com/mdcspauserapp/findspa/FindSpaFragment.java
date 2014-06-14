@@ -9,6 +9,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.MainActivity;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
@@ -16,11 +17,13 @@ import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -29,6 +32,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +52,7 @@ public class FindSpaFragment extends Fragment implements
 {
 	
 	private static View rootView;
-	
+	Typeface font;
 	public GoogleMap google_map;
 	LocationManager location_manager;
 	Location location;
@@ -104,7 +108,7 @@ public class FindSpaFragment extends Fragment implements
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		font = Typeface.createFromAsset(getActivity().getAssets(),"Raleway-Light.otf");	
 		/**
 		 * Fetch 10 Nearest Spa's from server 
 		 */
@@ -121,7 +125,8 @@ public class FindSpaFragment extends Fragment implements
 
 	public class FetchNearestSpa extends AsyncTask<String, String, String> {
 
-		private ProgressDialog pDialog;
+//		private ProgressDialog pDialog;
+		private Dialog dialog;
 		int success;
 		JSONParser jsonParser = new JSONParser();
 		private static final String TAG_SUCCESS = "success";
@@ -131,11 +136,20 @@ public class FindSpaFragment extends Fragment implements
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			pDialog = new ProgressDialog(getActivity());
-			pDialog.setMessage("Fetching Data ... ");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
+//			pDialog = new ProgressDialog(getActivity());
+//			pDialog.setMessage("Fetching Data ... ");
+//			pDialog.setIndeterminate(false);
+//			pDialog.setCancelable(false);
+//			pDialog.show();
+			dialog= new Dialog(getActivity(),R.style.ThemeWithCorners);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.custom_progress_dialog);
+			dialog.setCancelable(false);
+			dialog.show();
+			
+			TextView Txt_Title=(TextView)dialog.findViewById(R.id.txt_alert_text);
+			Txt_Title.setTypeface(font);
+			Txt_Title.setText("Fetching data....");
 		}
 
 		@Override
@@ -227,7 +241,8 @@ public class FindSpaFragment extends Fragment implements
 		 **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-			pDialog.dismiss();
+//			pDialog.dismiss();
+			dialog.cancel();
 			/**
 			 * Initialize Map
 			 */
@@ -345,6 +360,8 @@ public class FindSpaFragment extends Fragment implements
 						
 						txt_addr = (TextView) v.findViewById(R.id.txt_address);
 
+						txt_spa_name.setTypeface(font);
+						txt_addr.setTypeface(font);
 												
 						double search_lat, search_long;
 						search_lat = marker.getPosition().latitude;

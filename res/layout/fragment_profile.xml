@@ -44,15 +44,23 @@
                 android:padding="5dp"
                 android:text="Name"
                 android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/Name"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/ic_edit" />
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-     
         android:orientation="vertical" >
 
         <ScrollView
@@ -80,15 +88,28 @@
 
                     <TextView
                         android:id="@+id/Mobile"
-                        android:layout_width="match_parent"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20sp"
                         android:layout_marginTop="5dp"
                         android:hint="Contact Number"
-                        android:textSize="16sp"
                         android:textColor="#4e3315"
-                        android:textColorHint="#bbbbbb" >
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="16sp" >
                     </TextView>
+
+                     <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            /> 
+                    <ImageButton
+                        android:id="@+id/imageButton2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_edit"
+                        android:gravity="right" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -101,11 +122,11 @@
                         android:id="@+id/imageView2"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/profile_email" />
+                        android:background="@drawable/profile_email" />
 
                     <TextView
                         android:id="@+id/Email"
-                        android:layout_width="match_parent"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20sp"
                         android:layout_marginTop="5dp"
@@ -115,6 +136,17 @@
                         android:textSize="16sp" >
 
                     </TextView>
+
+                     <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            /> 
+                    <ImageButton
+                        android:id="@+id/imageButton3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_edit" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -127,19 +159,31 @@
                         android:id="@+id/imageView3"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/profile_addr" />
+                        android:background="@drawable/profile_addr" />
 
                     <TextView
                         android:id="@+id/Address"
-                        android:layout_width="match_parent"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="5dp"
-                        android:hint="Address"  android:textColor="#4e3315"
+                        android:hint="Address"
+                        android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
                         android:textSize="16sp" >
 
                     </TextView>
+
+                     <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            /> 
+                    <ImageButton
+                        android:id="@+id/imageButton4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_edit" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -156,16 +200,28 @@
 
                     <TextView
                         android:id="@+id/DOB"
-                        android:layout_width="match_parent"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="5dp"
-                        android:hint="Date Of Birth"  android:textColor="#4e3315"
+                        android:hint="Date Of Birth"
                         android:inputType="textMultiLine"
+                        android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
                         android:textSize="16sp" >
 
                     </TextView>
+
+                     <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            /> 
+                    <ImageButton
+                        android:id="@+id/imageButton5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_edit" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -178,17 +234,31 @@
                         android:id="@+id/imageView5"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/profile_anniversary" />
+                        android:background="@drawable/profile_anniversary" />
 
                     <TextView
                         android:id="@+id/Anniversary"
-                        android:layout_width="match_parent"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                         android:layout_marginLeft="20sp"
-                        android:layout_marginTop="5dp" android:textSize="16sp"
-                        android:hint="Date Of Anniversary"  android:textColor="#4e3315"
-                        android:textColorHint="#bbbbbb" >
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="5dp"
+                        android:hint="Date Of Anniversary"
+                        android:textColor="#4e3315"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="16sp" >
+
                     </TextView>
+
+                     <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            /> 
+                    <ImageButton
+                        android:id="@+id/imageButton5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_edit" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

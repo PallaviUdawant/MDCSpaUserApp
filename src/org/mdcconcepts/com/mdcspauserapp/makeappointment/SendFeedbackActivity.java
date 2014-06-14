@@ -84,7 +84,7 @@ public class SendFeedbackActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.send_feedback, menu);
+		getMenuInflater().inflate(R.menu.send_feedback, menu);
 		return true;
 	}
 

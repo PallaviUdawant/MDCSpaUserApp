@@ -74,6 +74,24 @@
              android:screenOrientation="portrait"
              >
         </activity>
+         <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.makeappointment.SetTherapistActivity"
+            android:label="@string/app_name" 
+             android:screenOrientation="portrait"
+             >
+        </activity>
+        <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.makeappointment.SendFeedbackActivity"
+            android:label="@string/app_name" 
+             android:screenOrientation="portrait"
+             >
+        </activity>
+        <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.makeappointment.Select_Therapy_Activity"
+            android:label="@string/app_name" 
+             android:screenOrientation="portrait"
+             >
+        </activity>
         
           <service
             android:name="org.mdcconcepts.com.mdcspauserapp.notification.MyAlarmService"
