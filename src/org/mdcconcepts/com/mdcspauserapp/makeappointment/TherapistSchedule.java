@@ -15,19 +15,23 @@ import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,15 +51,20 @@ public class TherapistSchedule extends Fragment {
 	private static final String TAG_MESSAGE = "message";
 
 	private ArrayList<String> ArrayList_AllServiceList = new ArrayList<String>();
+	private ArrayList<String> ArrayList_Dates = new ArrayList<String>();
 	private ArrayList<String> ArrayList_AllTimeList = new ArrayList<String>();
 	ListView listViewController_Schedule;
 	Button buttonController_ChooseTherapist;
 	Button buttonController_SendFeedback;
+	Button Btn_Select_Therapist;
 	TextView textViewController_SpaName;
 	TextView textViewController_TherapistName;
 	ImageView ImageviewController_ProfileImage;
 	RatingBar ratingBarController_Therapist;
 	TextView textViewController_No_Of_Rating;
+	TextView txt_service, txt_service_time, txt_date, txt_time;
+	Button btn_show_timeline,btn_feedback;
+	Spinner Date_Spinner;
 
 	public TherapistSchedule() {
 		// TODO Auto-generated constructor stub
@@ -88,13 +97,16 @@ public class TherapistSchedule extends Fragment {
 		View v = inflater
 				.inflate(R.layout.therapist_schedule, container, false);
 
-		listViewController_Schedule = (ListView) v
-				.findViewById(R.id.listViewController_Schedule);
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(),
+				"Raleway-Light.otf");
 
-		buttonController_ChooseTherapist = (Button) v
-				.findViewById(R.id.buttonController_ChooseTherapist);
-		buttonController_SendFeedback = (Button) v
-				.findViewById(R.id.buttonController_SendFeedback);
+		// listViewController_Schedule = (ListView) v
+		// .findViewById(R.id.listViewController_Schedule);
+		//
+		// buttonController_ChooseTherapist = (Button) v
+		// .findViewById(R.id.buttonController_ChooseTherapist);
+		// buttonController_SendFeedback = (Button) v
+		// .findViewById(R.id.buttonController_SendFeedback);
 		textViewController_SpaName = (TextView) v
 				.findViewById(R.id.textViewController_SpaName);
 
@@ -111,35 +123,106 @@ public class TherapistSchedule extends Fragment {
 		textViewController_No_Of_Rating = (TextView) v
 				.findViewById(R.id.textViewController_No_Of_Rating);
 
+		txt_service = (TextView) v.findViewById(R.id.txt_service);
+		txt_service_time = (TextView) v.findViewById(R.id.txt_service_time);
+		txt_date = (TextView) v.findViewById(R.id.txt_date);
+		txt_time = (TextView) v.findViewById(R.id.txt_time);
+
 		textViewController_TherapistName.setText(Therapist_name);
 
 		textViewController_SpaName.setText(Util.Spa_Name);
 
-		buttonController_ChooseTherapist.setEnabled(false);
+		Button btn_show_timeline = (Button) v
+				.findViewById(R.id.btn_show_timeline);
 
-		buttonController_ChooseTherapist
-				.setOnClickListener(new OnClickListener() {
+		Btn_Select_Therapist = (Button) v
+				.findViewById(R.id.Btn_Select_Therapist_final);
 
-					@Override
-					public void onClick(View v) {
-						Intent data = new Intent();
-						data.putExtra("Therapist_Id", Therapist_Id);
-						data.putExtra("Therapist_Name", Therapist_name);
-						getActivity().setResult(2, data);
-						getActivity().finish();
-					}
-				});
-		buttonController_SendFeedback.setOnClickListener(new OnClickListener() {
+		btn_feedback=(Button)v.findViewById(R.id.btn_feedback);
+		
+		Btn_Select_Therapist.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent intentGetMessage = new Intent(getActivity(),
-						SendFeedbackActivity.class);
-				intentGetMessage.putExtra("Therapist_Id", Therapist_Id);
-				intentGetMessage.putExtra("Therapist_name", Therapist_name);
-				startActivity(intentGetMessage);
+				// TODO Auto-generated method stub
+
+				Intent i=new Intent(getActivity(),FinalMakeAppointmentActivity.class);
+				startActivity(i);
 			}
 		});
+		
+		btn_feedback.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+		textViewController_SpaName.setTypeface(font);
+		textViewController_TherapistName.setTypeface(font);
+		textViewController_No_Of_Rating.setTypeface(font);
+		Btn_Select_Therapist.setTypeface(font);
+		btn_show_timeline.setTypeface(font);
+		btn_feedback.setTypeface(font);
+		txt_service.setTypeface(font);
+		txt_service_time.setTypeface(font);
+		txt_date.setTypeface(font);
+		txt_time.setTypeface(font);
+
+		final Dialog dialog = new Dialog(getActivity());
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.timeline);
+		dialog.setTitle("Timeline");
+
+		Date_Spinner = (Spinner) dialog.findViewById(R.id.date_spinner);
+
+		ArrayList_Dates.add("Today: 17/06/2014");
+		ArrayList_Dates.add("Tommorrow:18/06/2014");
+		ArrayList_Dates.add("19/06/2014");
+
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
+				getActivity(), R.layout.spinner_item, ArrayList_Dates);
+
+		dataAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		Date_Spinner.setAdapter(dataAdapter);
+		btn_show_timeline.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				dialog.show();
+			}
+		});
+		// buttonController_ChooseTherapist.setEnabled(false);
+		//
+		// buttonController_ChooseTherapist
+		// .setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// Intent data = new Intent();
+		// data.putExtra("Therapist_Id", Therapist_Id);
+		// data.putExtra("Therapist_Name", Therapist_name);
+		// getActivity().setResult(2, data);
+		// getActivity().finish();
+		// }
+		// });
+		// buttonController_SendFeedback.setOnClickListener(new
+		// OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// Intent intentGetMessage = new Intent(getActivity(),
+		// SendFeedbackActivity.class);
+		// intentGetMessage.putExtra("Therapist_Id", Therapist_Id);
+		// intentGetMessage.putExtra("Therapist_name", Therapist_name);
+		// startActivity(intentGetMessage);
+		// }
+		// });
 		// Clear collection..
 		ArrayList_AllServiceList.clear();
 
@@ -150,9 +233,9 @@ public class TherapistSchedule extends Fragment {
 
 		adapter.clear();
 
-		new GetTherapistSchedule().execute();
-
-		new IsTherapistAvailable().execute();
+		// new GetTherapistSchedule().execute();
+		//
+		// new IsTherapistAvailable().execute();
 
 		return v;
 	}
