@@ -19,6 +19,8 @@ import org.mdcconcepts.com.mdcspauserapp.profile.ProfileFragment;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
+import com.todddavies.components.progressbar.ProgressWheel;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -353,6 +355,9 @@ public class MainActivity extends Activity {
 			Txt_Title.setTypeface(font);
 			Txt_Title.setText("Getting User Details....");
 			
+			ProgressWheel   pw_four = (ProgressWheel)dialog.findViewById(R.id.progressBarFour);
+			 pw_four.spin();
+			
 		}
 
 		@SuppressLint("SimpleDateFormat")
@@ -450,6 +455,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				Intent i=new Intent(MainActivity.this,LoginActivity.class);
+				startActivity(i);
 				MainActivity.this.finish();
 
 			}

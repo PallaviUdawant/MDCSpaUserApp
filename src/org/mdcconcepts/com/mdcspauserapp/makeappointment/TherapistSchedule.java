@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -63,9 +64,12 @@ public class TherapistSchedule extends Fragment {
 	RatingBar ratingBarController_Therapist;
 	TextView textViewController_No_Of_Rating;
 	TextView txt_service, txt_service_time, txt_date, txt_time;
-	Button btn_show_timeline,btn_feedback;
+	TextView txt_feedback_therapist,txt_feedback_therapist_name,txt_feedback_message,txt_feedkback_title;
+	EditText edt_feedback_message;
+	Button btn_show_timeline,btn_feedback,btn_send_feedback;
 	Spinner Date_Spinner;
 
+	Dialog feedback_dialog;
 	public TherapistSchedule() {
 		// TODO Auto-generated constructor stub
 
@@ -140,6 +144,67 @@ public class TherapistSchedule extends Fragment {
 
 		btn_feedback=(Button)v.findViewById(R.id.btn_feedback);
 		
+		/**
+		 * Feedback Dialog
+		 */
+		feedback_dialog= new Dialog(getActivity());
+		feedback_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		feedback_dialog.setContentView(R.layout.feedback_dialog);
+		
+		txt_feedback_message=(TextView)feedback_dialog.findViewById(R.id.txt_feedback_message);
+		txt_feedback_therapist=(TextView)feedback_dialog.findViewById(R.id.txt_feedback_therapist);
+		txt_feedback_therapist_name=(TextView)feedback_dialog.findViewById(R.id.txt_feedback_therapist_name);
+		txt_feedkback_title=(TextView)feedback_dialog.findViewById(R.id.txt_feedkback_title);
+		
+		edt_feedback_message=(EditText)feedback_dialog.findViewById(R.id.edt_feedback_message);
+		
+		btn_send_feedback=(Button)feedback_dialog.findViewById(R.id.btn_send_feedback);
+		
+		/**
+		 * Set Fonts
+		 */
+		textViewController_SpaName.setTypeface(font);
+		textViewController_TherapistName.setTypeface(font);
+		textViewController_No_Of_Rating.setTypeface(font);
+		txt_service.setTypeface(font);
+		txt_service_time.setTypeface(font);
+		txt_date.setTypeface(font);
+		txt_time.setTypeface(font);
+		txt_feedback_message.setTypeface(font);
+		txt_feedback_therapist.setTypeface(font);
+		txt_feedback_therapist_name.setTypeface(font);
+		txt_feedkback_title.setTypeface(font);
+		
+		edt_feedback_message.setTypeface(font);
+
+		Btn_Select_Therapist.setTypeface(font);
+		btn_show_timeline.setTypeface(font);
+		btn_feedback.setTypeface(font);
+		btn_send_feedback.setTypeface(font);
+		
+		/**
+		 * TimeLine Dialog
+		 */
+
+		final Dialog timeline_dialog = new Dialog(getActivity());
+		timeline_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		timeline_dialog.setContentView(R.layout.timeline);
+
+		Date_Spinner = (Spinner) timeline_dialog.findViewById(R.id.date_spinner);
+
+		ArrayList_Dates.add("Today: 17/06/2014");
+		ArrayList_Dates.add("Tommorrow:18/06/2014");
+		ArrayList_Dates.add("19/06/2014");
+
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
+				getActivity(), R.layout.spinner_item, ArrayList_Dates);
+
+		dataAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		Date_Spinner.setAdapter(dataAdapter);
+		
+		
 		Btn_Select_Therapist.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -156,47 +221,22 @@ public class TherapistSchedule extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				feedback_dialog.show();
 			}
 		});
 
-		textViewController_SpaName.setTypeface(font);
-		textViewController_TherapistName.setTypeface(font);
-		textViewController_No_Of_Rating.setTypeface(font);
-		Btn_Select_Therapist.setTypeface(font);
-		btn_show_timeline.setTypeface(font);
-		btn_feedback.setTypeface(font);
-		txt_service.setTypeface(font);
-		txt_service_time.setTypeface(font);
-		txt_date.setTypeface(font);
-		txt_time.setTypeface(font);
+		
 
-		final Dialog dialog = new Dialog(getActivity());
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.timeline);
-		dialog.setTitle("Timeline");
-
-		Date_Spinner = (Spinner) dialog.findViewById(R.id.date_spinner);
-
-		ArrayList_Dates.add("Today: 17/06/2014");
-		ArrayList_Dates.add("Tommorrow:18/06/2014");
-		ArrayList_Dates.add("19/06/2014");
-
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
-				getActivity(), R.layout.spinner_item, ArrayList_Dates);
-
-		dataAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		Date_Spinner.setAdapter(dataAdapter);
 		btn_show_timeline.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				dialog.show();
+				timeline_dialog.show();
 			}
 		});
+		
+		
 		// buttonController_ChooseTherapist.setEnabled(false);
 		//
 		// buttonController_ChooseTherapist

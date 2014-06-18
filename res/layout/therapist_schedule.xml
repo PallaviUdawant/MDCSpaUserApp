@@ -2,23 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp"
-    android:background="#70CCCCCC"
+    android:background="@drawable/drawer_bg"
     android:orientation="vertical"
-    android:paddingLeft="5dp"
     android:weightSum="5" >
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp" >
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-           >
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -54,7 +50,7 @@
                             android:paddingLeft="5dp"
                             android:text="Medium Text"
                             android:textColor="#4e3115"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -63,7 +59,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:text="MDC Spa"
-                            android:textColor="#4e3115" />
+                            android:textColor="#4e3115"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:id="@+id/RattingLayout"
@@ -91,7 +89,9 @@
                                 android:text="(19 Ratings)"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textColor="#4e3115"
-                                android:textSize="15sp" />
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -134,10 +134,8 @@
 
             <View
                 android:layout_width="fill_parent"
-                android:layout_height="2dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#4e3115" />
+                android:layout_height="1dp"
+                android:background="#948472" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -157,18 +155,25 @@
 
                     <TextView
                         android:id="@+id/txt_service"
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Service"
                         android:textColor="#4e3115"
-                        android:textSize="14sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/edt_service"
-                        android:layout_width="170dp"
-                        android:layout_height="30dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
                         android:background="@drawable/edittext_background"
-                        android:ems="10" >
+                        android:ems="10"
+                        android:imeOptions="actionNext"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textColor="#4e3115"
+                        android:textSize="16sp" >
+
                     </EditText>
                 </LinearLayout>
 
@@ -181,18 +186,25 @@
 
                     <TextView
                         android:id="@+id/txt_service_time"
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Service Time"
                         android:textColor="#4e3115"
-                        android:textSize="14sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/edt_service_time"
-                        android:layout_width="170dp"
-                        android:layout_height="30dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
                         android:background="@drawable/edittext_background"
-                        android:ems="10" >
+                        android:ems="10"
+                        android:imeOptions="actionNext"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textColor="#4e3115"
+                        android:textSize="16sp" >
+
                     </EditText>
                 </LinearLayout>
 
@@ -205,18 +217,27 @@
 
                     <TextView
                         android:id="@+id/txt_date"
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Date"
                         android:textColor="#4e3115"
-                        android:textSize="14sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/edt_date"
-                        android:layout_width="170dp"
-                        android:layout_height="30dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
                         android:background="@drawable/edittext_background"
-                        android:ems="10" >
+                        android:drawableRight="@drawable/calender_icon"
+                        android:ems="10"
+                        android:imeOptions="actionNext"
+                        android:padding="10dp"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        android:textColor="#4e3115"
+                        android:textSize="16sp" >
+
                     </EditText>
                 </LinearLayout>
 
@@ -229,18 +250,27 @@
 
                     <TextView
                         android:id="@+id/txt_time"
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Time"
                         android:textColor="#4e3115"
-                        android:textSize="14sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/edt_time"
-                        android:layout_width="170dp"
-                        android:layout_height="30dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
                         android:background="@drawable/edittext_background"
-                        android:ems="10" >
+                        android:drawableRight="@drawable/clock_icon"
+                        android:ems="10"
+                        android:imeOptions="actionGo"
+                        android:padding="10dp"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        android:textColor="#4e3115"
+                        android:textSize="16sp" >
+
                     </EditText>
                 </LinearLayout>
             </LinearLayout>

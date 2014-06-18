@@ -3,7 +3,6 @@ package org.mdcconcepts.com.mdcspauserapp.login;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -14,6 +13,8 @@ import org.mdcconcepts.com.mdcspauserapp.customitems.ConnectionDetector;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.signup.SignUpActivity;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
+
+import com.todddavies.components.progressbar.ProgressWheel;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -53,12 +54,12 @@ public class LoginActivity extends Activity {
 
 	EditText Username;
 	EditText Password;
-	
+
 	Typeface font;
-	
+
 	TextView txt_Create_account;
 	TextView txt_demo;
-	Editor editor ;
+	Editor editor;
 	Button Login_ButtonController;
 	Button GoToCreateAccount_ButtonController;
 
@@ -69,91 +70,79 @@ public class LoginActivity extends Activity {
 	// Connection detector class
 	ConnectionDetector cd;
 
-
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.test_login);
 
 		
-		
-//		RelativeLayout Login_relative_layout=(RelativeLayout)findViewById(R.id.Login_relative_layout);
-		final LinearLayout login_panel_layout=(LinearLayout)findViewById(R.id.login_panel_layout);
-		final LinearLayout title_layout=(LinearLayout)findViewById(R.id.title_layout);
-		
-//		txt_demo=(TextView)findViewById(R.id.txt_demo);
-		
+		/**
+		 * Apply Animation
+		 */
+		final LinearLayout login_panel_layout = (LinearLayout) findViewById(R.id.login_panel_layout);
+		final LinearLayout title_layout = (LinearLayout) findViewById(R.id.title_layout);
+
 		login_panel_layout.setVisibility(View.GONE);
-		 final Animation animFade  = AnimationUtils.loadAnimation( LoginActivity.this, R.drawable.fade);
-		
-		 Animation animation = AnimationUtils.loadAnimation(this, R.drawable.translate);
-		 title_layout.startAnimation(animation);
-		    //use this to make it longer:  animation.setDuration(1000);
-		    animation.setAnimationListener(new AnimationListener() {
-		        @Override
-		        public void onAnimationStart(Animation animation) {
-//		        	Toast.makeText(getApplicationContext(), "Animation Started", Toast.LENGTH_LONG).show();
-		        }
+		final Animation animFade = AnimationUtils.loadAnimation(
+				LoginActivity.this, R.drawable.fade);
 
-		        @Override
-		        public void onAnimationRepeat(Animation animation) {
-//		        	Toast.makeText(getApplicationContext(), "Animation Repeat", Toast.LENGTH_LONG).show();
-		        }
+		Animation animation = AnimationUtils.loadAnimation(this,
+				R.drawable.translate);
+		title_layout.startAnimation(animation);
+		animation.setAnimationListener(new AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+			}
 
-		        @Override
-		        public void onAnimationEnd(Animation animation) {
-//		        	Toast.makeText(getApplicationContext(), "Animation End", Toast.LENGTH_LONG).show();
-		        	title_layout.clearAnimation();
-		        	login_panel_layout.setVisibility(View.VISIBLE);
-		        	
-		        	 login_panel_layout.startAnimation(animFade);
-		        	
-//		        	txt_demo.setVisibility(View.VISIBLE);
-//		        	 Animation animFade  = AnimationUtils.loadAnimation( LoginActivity.this, R.anim.fade);
-//		        	 txt_demo.startAnimation(animFade);
-//		        	 login_panel_layout.startAnimation(animFade);
-//		             view.setVisibility(View.GONE);
-		        }
-		    });
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
 
-		   
-		    
-		    
-		font = Typeface.createFromAsset(getAssets(),"Raleway-Light.otf");	
-		pref=getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-		editor = pref.edit();
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				title_layout.clearAnimation();
+				login_panel_layout.setVisibility(View.VISIBLE);
+
+				login_panel_layout.startAnimation(animFade);
+
+			}
+		});
+		
+
 		
 		
 		
-		
-		
+
 		// creating connection detector class instance
 		cd = new ConnectionDetector(getApplicationContext());
 
 		Username = (EditText) findViewById(R.id.Username_Login);
 		Password = (EditText) findViewById(R.id.Password_Login);
 		Login_ButtonController = (Button) findViewById(R.id.Login);
-		
-		txt_Create_account=(TextView)findViewById(R.id.txt_Create_account);
-		
+
+		txt_Create_account = (TextView) findViewById(R.id.txt_Create_account);
+
+		/**
+		 * Set Font
+		 */
+		font = Typeface.createFromAsset(getAssets(), "Raleway-Light.otf");
 		Username.setTypeface(font);
 		Password.setTypeface(font);
 		Login_ButtonController.setTypeface(font);
 		txt_Create_account.setTypeface(font);
 
-		
-		if(pref.getBoolean("Login_Status", false))
-		{
-//			Intent i= new Intent(LoginActivity.this,MainActivity.class);
-//			startActivity(i);
-//			finish();
-		
+		/**
+		 * Shared preferences to autofill username and password 
+		 */
+		pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for  private  mode
+		editor = pref.edit();
+		if (pref.getBoolean("Login_Status", false)) {
+
 			Username.setText(pref.getString("UserName", ""));
 			Password.setText(pref.getString("Password", ""));
-			
+
 		}
-		
+
 		Login_ButtonController.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -189,36 +178,20 @@ public class LoginActivity extends Activity {
 			}
 		});
 		txt_Create_account.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent myIntent = new Intent(LoginActivity.this,
-					SignUpActivity.class);
-			finish();
-			startActivity(myIntent);
-			} 
+						SignUpActivity.class);
+				finish();
+				startActivity(myIntent);
+			}
 		});
-//
-//		GoToCreateAccount_ButtonController = (Button) findViewById(R.id.GoToRegister);
-//
-//		GoToCreateAccount_ButtonController
-//				.setOnClickListener(new OnClickListener() {
-//					@Override
-//					public void onClick(View v) {
-////						Intent myIntent = new Intent(LoginActivity.this,
-////								SignUpActivity.class);
-////						finish();
-////						startActivity(myIntent);
-//
-//					}
-//				});
 	}
 
 	class LoginUser extends AsyncTask<String, String, String> {
 
-		// Progress Dialog
-//		private ProgressDialog pDialog;
 		private Dialog dialog;
 		int success;
 		/**
@@ -229,29 +202,31 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			
-			dialog= new Dialog(LoginActivity.this,R.style.ThemeWithCorners);
+
+			dialog = new Dialog(LoginActivity.this, R.style.ThemeWithCorners);
 			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			dialog.setContentView(R.layout.custom_progress_dialog);
 			dialog.setCancelable(false);
 			dialog.show();
-			
-			TextView Txt_Title=(TextView)dialog.findViewById(R.id.txt_alert_text);
+
+			TextView Txt_Title = (TextView) dialog
+					.findViewById(R.id.txt_alert_text);
 			Txt_Title.setTypeface(font);
+			/**
+			 * custom circular progress bar 
+			 */
+			ProgressWheel pw_four = (ProgressWheel) dialog
+					.findViewById(R.id.progressBarFour);
+			pw_four.spin();
 			
-//			pDialog = new ProgressDialog(LoginActivity.this);
-//			pDialog.setContentView(R.layout.custom_progress_dialog);
-//			pDialog.setMessage("Attempting Login ... ");
-//			pDialog.setIndeterminate(false);
-//			pDialog.setCancelable(false); pDialog.show();
-			
+
 		}
 
 		@Override
 		protected String doInBackground(String... args) {
 			// TODO Auto-generated method stub
 			// Check for success tag
-			
+
 			String Username_Container = Username.getText().toString();
 			String Password_Container = Password.getText().toString();
 
@@ -269,20 +244,23 @@ public class LoginActivity extends Activity {
 				JSONObject json = jsonParser.makeHttpRequest(Util.Login_URL,
 						"POST", params);
 
-			
-					
 				// full json response
 				Log.d("Login attempt", json.toString());
 
 				// json success element
 				success = json.getInt(TAG_SUCCESS);
-				Util.Uid = json.getInt("Uid");
+				
 				if (success == 1) {
-					
-					
+					Util.Uid = json.getInt("Uid");
 					return json.getString(TAG_MESSAGE);
-				} else {
-					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+				} 
+				else
+				
+				{
+//					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+//					Toast.makeText(LoginActivity.this,
+//							"Wrong Username or Password", Toast.LENGTH_LONG)
+//							.show();
 					return json.getString(TAG_MESSAGE);
 
 				}
@@ -299,21 +277,24 @@ public class LoginActivity extends Activity {
 		 **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-		dialog.cancel();
+			dialog.cancel();
 			if (file_url != null) {
-				Toast.makeText(LoginActivity.this, file_url, Toast.LENGTH_LONG)
-						.show();
-				if (success == 1)
-				{
+//				Toast.makeText(LoginActivity.this, file_url, Toast.LENGTH_LONG)
+//						.show();
+				if (success == 1) {
 					editor.putBoolean("Login_Status", true);
 					editor.putString("UserName", Username.getText().toString());
 					editor.putString("Password", Password.getText().toString());
 					editor.commit();
-					
+
 					Intent myIntent = new Intent(LoginActivity.this,
 							MainActivity.class);
 					finish();
 					startActivity(myIntent);
+				} else {
+					Toast.makeText(LoginActivity.this,
+							"Wrong Username or Password.. Please try again..!!!", Toast.LENGTH_LONG)
+							.show();
 				}
 			}
 

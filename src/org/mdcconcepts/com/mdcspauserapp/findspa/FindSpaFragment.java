@@ -46,6 +46,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.todddavies.components.progressbar.ProgressWheel;
 
 public class FindSpaFragment extends Fragment implements
 		android.location.LocationListener, OnInfoWindowClickListener
@@ -150,6 +151,8 @@ public class FindSpaFragment extends Fragment implements
 			TextView Txt_Title=(TextView)dialog.findViewById(R.id.txt_alert_text);
 			Txt_Title.setTypeface(font);
 			Txt_Title.setText("Fetching data....");
+			ProgressWheel   pw_four = (ProgressWheel)dialog.findViewById(R.id.progressBarFour);
+			 pw_four.spin();
 		}
 
 		@Override

@@ -40,7 +40,7 @@
         android:layout_height="35sp"
         android:padding="2sp"
         android:gravity="center"
-        android:layout_marginRight="5sp"
+        android:layout_marginRight="3sp"
         android:background="@drawable/counter_bg"
         android:textColor="@color/counter_text_color" />
 </LinearLayout>

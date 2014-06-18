@@ -7,4 +7,5 @@
     <color name="counter_text_bg">#c60505</color>
     <color name="counter_text_color">#c5c4c4</color>
       <color name="actionbar_bg">#27190a</color>
+      <color name="pager_margin">#948472</color>
 </resources>

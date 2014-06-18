@@ -8,6 +8,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.MainActivity;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.CustomValidator;
 import org.mdcconcepts.com.mdcspauserapp.login.LoginActivity;
@@ -329,4 +330,12 @@ public class SignUpActivity extends Activity {
 
 	}
 
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+//		super.onBackPressed();
+		Intent i=new Intent(SignUpActivity.this,LoginActivity.class);
+		startActivity(i);
+		SignUpActivity.this.finish();
+	}
 }
