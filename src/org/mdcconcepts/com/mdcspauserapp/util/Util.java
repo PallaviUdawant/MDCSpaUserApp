@@ -82,6 +82,22 @@ public class Util {
 	public static final String send_feedback = "http://mdcspa.mdcconcepts.com/send_feedback.php";
 
 	/**
+	 * Get 10 spa's at a time
+	 */
+	public static final String get_ten_spa="http://mdcspa.mdcconcepts.com/get_ten_spa_webservice.php";
+	
+	/**
+	 * Get Nearest 10 spa's at a time
+	 */
+	public static final String get_nearest_ten_spa="http://mdcspa.mdcconcepts.com/get_ten_nearest_spa_webservice.php";
+	
+	/**
+	 * Get Nearest 10 spa's at a time
+	 */
+	public static final String get_ten_therapies="http://mdcspa.mdcconcepts.com/get_ten_therapies_webservice.php";
+	
+	
+	/**
 	 * This is Get An Single Appointments User Webservice URL.
 	 */
 	public static final String sendgift = "http://mdcspa.mdcconcepts.com/sendgift.php";

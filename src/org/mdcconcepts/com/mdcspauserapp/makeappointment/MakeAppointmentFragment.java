@@ -2,7 +2,6 @@ package org.mdcconcepts.com.mdcspauserapp.makeappointment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -12,12 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
-import org.mdcconcepts.com.mdcspauserapp.findspa.FindSpaFragment;
 import org.mdcconcepts.com.mdcspauserapp.findspa.Spa_Data;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
-
-import com.todddavies.components.progressbar.ProgressWheel;
 
 import android.app.Dialog;
 import android.app.Fragment;
@@ -25,20 +21,27 @@ import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MakeAppointmentFragment extends Fragment {
+import com.todddavies.components.progressbar.ProgressWheel;
+
+public class MakeAppointmentFragment extends Fragment implements
+		OnScrollListener {
 
 	ListView listview_spa;
 	SpaListAdapter adapter;
@@ -48,25 +51,42 @@ public class MakeAppointmentFragment extends Fragment {
 	// ids
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MESSAGE = "message";
-
+	
+	
+	private GetTenSpa getTenSpaTask;
+	private FetchNearestSpa getTenNearestSpaTask;
+	
+	int hit_counter = 0;
+	
 	private ArrayList<String> ArrayList_Filter = new ArrayList<String>();
-
+	private boolean isloading = false;
+	private boolean isloadingNearestSpa = false;
 	Spinner filter;
-	// private List<String> ArrayList_AllSpaList = new ArrayList<String>();
-	// private ArrayList<String> ArrayList_AllSpaIdList = new
-	// ArrayList<String>();
-	//
-	ArrayList<HashMap<String, String>> SpaDetails = new ArrayList<HashMap<String, String>>();
-	private ArrayList<Spa_Data> NearestLocations = new ArrayList<Spa_Data>();
+	private boolean isDataAvailable = true;
+	private boolean isNearestDataAvailable = true;
+	ProgressWheel progressbar_footer;
+	ProgressWheel progressbar_header;
 
+	ArrayList<HashMap<String, String>> SpaDetails = new ArrayList<HashMap<String, String>>();
+	
+//	private ArrayList<Spa_Data> NearestLocations = new ArrayList<Spa_Data>();
+//	private Dialog NearestSpaDialog;
+	
 	static final String SPA_ID = "spa_id";
 	static final String SPA_NAME = "spa_name";
 	static final String SPA_Address = "spa_addr";
 
+	int Selected_Filter;
 	private double mLastLatitude;
 	private double mLastLongitude;
-
+	int VisiblePosition,distFromTop;
+	TextView Txt_Title;
+	ProgressWheel pw_four;
+	Handler handler = new Handler();
+	Runnable refresh;
+	Dialog dialog;
 	GPSTracker gps;
+	private View footer;
 
 	public MakeAppointmentFragment() {
 	}
@@ -77,13 +97,44 @@ public class MakeAppointmentFragment extends Fragment {
 		rootView = inflater.inflate(R.layout.fragment_makeappointment_spa_list,
 				container, false);
 
-		listview_spa = (ListView) rootView.findViewById(R.id.listview_spa);
-
 		font = Typeface.createFromAsset(getActivity().getAssets(),
 				"Raleway-Light.otf");
 
-		
+		footer = inflater.inflate(R.layout.footer, null);
 
+		progressbar_footer = (ProgressWheel) footer
+				.findViewById(R.id.progressbar_footer);
+		progressbar_footer.spin();
+
+		listview_spa = (ListView) rootView.findViewById(R.id.listview_spa);
+
+		adapter = new SpaListAdapter(getActivity(), SpaDetails);
+		listview_spa.setAdapter(adapter);
+
+		listview_spa.setOnScrollListener(this);
+
+		/**
+		 * Add footer to listview
+		 */
+		listview_spa.addFooterView(footer);
+		
+		/**
+		 * Dialog Box
+		 */
+
+		dialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.custom_progress_dialog);
+		dialog.setCancelable(false);
+
+		Txt_Title = (TextView) dialog.findViewById(R.id.txt_alert_text);
+		pw_four = (ProgressWheel) dialog.findViewById(R.id.progressBarFour);
+
+		Txt_Title.setTypeface(font);
+
+		/**
+		 * Filter drop down
+		 */
 		filter = (Spinner) rootView.findViewById(R.id.spinner_sort_by);
 
 		ArrayList_Filter.add("Show All");
@@ -110,22 +161,62 @@ public class MakeAppointmentFragment extends Fragment {
 
 				switch (position) {
 				case 0:
+					hit_counter = 0;
 
-					new GetAllSpa().execute();
+//					Txt_Title.setText("Fetching data....");
+//					pw_four.spin();
+//					dialog.show();
 
+					Selected_Filter = 0;
+					listview_spa.setAdapter(null);
+					if (!SpaDetails.isEmpty())
+						SpaDetails.clear();
+					getTenSpaTask = new GetTenSpa();
+					getTenSpaTask.execute();
+					 
+					
 					break;
 
 				case 1:
-					
+					hit_counter = 0;
+					Selected_Filter = 1;
 					gps = new GPSTracker(getActivity());
 					if (gps.canGetLocation()) {
+
 						listview_spa.setAdapter(null);
-						new FetchNearestSpa().execute();
+						if (!SpaDetails.isEmpty())
+							SpaDetails.clear();
+
+//						Txt_Title.setText("Fetching Nearest Spa....");
+//						pw_four.spin();
+//						dialog.show();
+						getTenNearestSpaTask = new FetchNearestSpa();
+						getTenNearestSpaTask.execute();
+						
+//						 scrollMyListViewToBottom();
 					} else {
 						// can't get location
 						// GPS or Network is not enabled
 						// Ask user to enable GPS/network in settings
+
 						gps.showSettingsAlert();
+						refresh = new Runnable() {
+							public void run() {
+								// Do something
+								handler.postDelayed(refresh, 5);
+								// dialog.show();
+							}
+						};
+						handler.post(refresh);
+						listview_spa.setAdapter(null);
+						if (!SpaDetails.isEmpty())
+							SpaDetails.clear();
+								listview_spa.setOnScrollListener(null);
+								listview_spa.removeFooterView(footer);
+								progressbar_footer.stopSpinning();
+								// adapter.notifyDataSetChanged();
+
+							
 					}
 
 					break;
@@ -140,15 +231,94 @@ public class MakeAppointmentFragment extends Fragment {
 
 			}
 		});
+		
+	
 
 		return rootView;
 
 	}
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		// TODO Auto-generated method stub
+		int loadedItems = (firstVisibleItem) + visibleItemCount;
+		
+		switch (Selected_Filter) {
+
+		case 0:
+			/**
+			 * Select All Spa's On Scroll event- Load 10 items on scroll end
+			 */
+
+			if (isDataAvailable) 
+			{
+				if ((loadedItems == totalItemCount) && !isloading) {
+
+					if (getTenSpaTask != null	&& (getTenSpaTask.getStatus() == AsyncTask.Status.FINISHED)) {
+						getTenSpaTask = new GetTenSpa();
+						getTenSpaTask.execute();
+						
+					}
+				}
+			} else {
+				listview_spa.setOnScrollListener(null);
+				listview_spa.removeFooterView(footer);
+				progressbar_footer.stopSpinning();
+				// adapter.notifyDataSetChanged();
+
+			}
+			break;
+		case 1:
+			/**
+			 * Select Nearest Spa's On Scroll event- Load 10 items on scroll end
+			 */
+			
+			if (isNearestDataAvailable) {
+					if ((loadedItems == totalItemCount) && !isloadingNearestSpa) {
+
+						if (getTenNearestSpaTask != null
+								&& (getTenNearestSpaTask.getStatus() == AsyncTask.Status.FINISHED)) {
+							getTenNearestSpaTask = new FetchNearestSpa();
+							getTenNearestSpaTask.execute();
+							
+						}
+					}
+				} else {
+					listview_spa.setOnScrollListener(null);
+					listview_spa.removeFooterView(footer);
+					progressbar_footer.stopSpinning();
+					// adapter.notifyDataSetChanged();
+
+				}
+			 
+			break;
+
+		}
+		/**
+		 * When you scroll down and start getting new data store  Last Visible Position in some variables using this method 
+		 */
+		VisiblePosition= listview_spa.getFirstVisiblePosition();
+		View v = listview_spa.getChildAt(0);
+		distFromTop= (v == null) ? 0 : v.getTop();
+
+	}
+
+	/**
+	 * Fetch 10 Nearest Spa's
+	 * 
+	 * @author Pallavi Udawant
+	 * 
+	 */
 	public class FetchNearestSpa extends AsyncTask<String, String, String> {
 
 		// private ProgressDialog pDialog;
-		private Dialog dialog;
+
 		int success;
 		JSONParser jsonParser = new JSONParser();
 		private static final String TAG_SUCCESS = "success";
@@ -158,25 +328,15 @@ public class MakeAppointmentFragment extends Fragment {
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			//
-			dialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
-			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			dialog.setContentView(R.layout.custom_progress_dialog);
-			dialog.setCancelable(false);
-			dialog.show();
 
-			TextView Txt_Title = (TextView) dialog
-					.findViewById(R.id.txt_alert_text);
-			Txt_Title.setTypeface(font);
-			Txt_Title.setText("Fetching data....");
-			ProgressWheel pw_four = (ProgressWheel) dialog
-					.findViewById(R.id.progressBarFour);
-			pw_four.spin();
+
 		}
 
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
+			SystemClock.sleep(1000);
+			isloadingNearestSpa = true;
 			try {
 				// Building Parameters
 				List<NameValuePair> params1 = new ArrayList<NameValuePair>();
@@ -187,15 +347,6 @@ public class MakeAppointmentFragment extends Fragment {
 					mLastLatitude = gps.getLatitude();
 					mLastLongitude = gps.getLongitude();
 
-					// \n is for new line
-					// Toast.makeText(
-					// getActivity(),
-					// "Your Location is - \nLat: " + mLastLatitude
-					// + "\nLong: " + mLastLongitude, Toast.LENGTH_LONG)
-					// .show();
-					// Log.d("latitude", "" + mLastLatitude);
-					// Log.d("longitude", "" + mLastLongitude);
-
 				}
 				Log.d("Sending Lat", String.valueOf(mLastLatitude));
 				Log.d("Sending Long", String.valueOf(mLastLongitude));
@@ -203,15 +354,16 @@ public class MakeAppointmentFragment extends Fragment {
 						.valueOf(mLastLatitude)));
 				params1.add(new BasicNameValuePair("CurrentLong", String
 						.valueOf(mLastLongitude)));
+				params1.add(new BasicNameValuePair("hit_counter", String
+						.valueOf(hit_counter)));
 
 				Log.d("request!", "starting");
 
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(
-						Util.NearestSpa_URL, "POST", params1);
+						Util.get_nearest_ten_spa, "POST", params1);
 
-				// full json response
-				Log.d("Nearest Spa", json.toString());
+				Log.d("Hit count", String.valueOf(hit_counter));
 
 				// json success element
 				success = json.getInt(TAG_SUCCESS);
@@ -219,40 +371,19 @@ public class MakeAppointmentFragment extends Fragment {
 				if (success == 1) {
 
 					JSONArray PostJson = json.getJSONArray("posts");
-					Log.d("Post Date ", PostJson.toString());
+					Log.d("Executing Nearest 10 ", PostJson.toString());
 					for (int i = 0; i < PostJson.length(); i++) {
 
 						JSONObject Temp = PostJson.getJSONObject(i);
-						// NearestLocations= new ArrayList<Spa_Data> ();
-
-						String addr = Temp.getString("Addresss");
-						Log.d("data", addr);
-						//
-						// NearestLocations.add(new Spa_Data(Temp
-						// .getString("Spa_Name"), Temp
-						// .getString("Spa_Id"),
-						// Temp.getString("Spa_Lat"), Temp
-						// .getString("Spa_long"), addr));
-						// Log.d("address",
-						// NearestLocations.get(i).Spa_Address);
 
 						HashMap<String, String> spaDetails = new HashMap<String, String>();
 						spaDetails.put(SPA_ID, Temp.getString("Spa_Id"));
 						spaDetails.put(SPA_NAME, Temp.getString("Spa_Name"));
 						spaDetails.put(SPA_Address, Temp.getString("Addresss"));
-						// ArrayList_AllSpaList.add(Temp.getString("Spa_Name"));
-						// ArrayList_AllSpaIdList.add(Temp.getString("Spa_Id"));
 
 						SpaDetails.add(spaDetails);
-						
 
-						/*
-						 * Log.d("data", Temp.getString("Spa_Name"));
-						 * Log.d("data", Temp.getString("Spa_Id"));
-						 * Log.d("data", Temp.getString("Spa_Lat"));
-						 * Log.d("data", Temp.getString("Spa_long"));
-						 * Log.d("data", Temp.getString("Addresss"));
-						 */
+						isNearestDataAvailable = true;
 					}
 
 					return json.getString(TAG_MESSAGE);
@@ -275,24 +406,36 @@ public class MakeAppointmentFragment extends Fragment {
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
 			// pDialog.dismiss();
-			dialog.cancel();
+			if (dialog.isShowing())
+				dialog.dismiss();
+			isloadingNearestSpa = false;
 
-			if (file_url != null) 
-			{
-				
-				adapter = new SpaListAdapter(getActivity(), SpaDetails);
-				adapter.notifyDataSetChanged();
+			if (file_url.contains("Spa Found !")) {
 				listview_spa.setAdapter(adapter);
-				
+				listview_spa.setSelectionFromTop(VisiblePosition, distFromTop);
+				hit_counter++;
+
+			} else if (file_url.equalsIgnoreCase("false")) {
+				/**
+				 * Stop loading items if data finished
+				 */
+				listview_spa.setOnScrollListener(null);
+				listview_spa.removeFooterView(footer);
+				progressbar_footer.stopSpinning();
+				isNearestDataAvailable = false;
 			}
 
-	}
+		}
 	}
 
-	class GetAllSpa extends AsyncTask<String, String, String> {
+	/**
+	 * Get All Spa's-10 at a time
+	 * 
+	 * @author Pallavi Udawant
+	 * 
+	 */
+	class GetTenSpa extends AsyncTask<String, String, String> {
 
-		// Progress Dialog
-		private ProgressDialog pDialog;
 		int success;
 		/**
 		 * Before starting background thread Show Progress Dialog
@@ -302,27 +445,26 @@ public class MakeAppointmentFragment extends Fragment {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(rootView.getContext());
-			pDialog.setMessage("Getting Your Data ... ");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
+
 		}
 
 		@Override
-		protected String doInBackground(String... args) {
-			// TODO Auto-generated method stub
-			// Check for success tag
+		protected String doInBackground(String... params) {
 
+			// TODO Auto-generated method stub
+			SystemClock.sleep(3000);
+			isloading = true;
 			try {
 				// Building Parameters
-				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				List<NameValuePair> Newparams = new ArrayList<NameValuePair>();
 
+				Newparams.add(new BasicNameValuePair("hit_counter", String
+						.valueOf(hit_counter)));
 				Log.d("request!", "starting");
 
 				// Posting user data to script
-				JSONObject json = jsonParser.makeHttpRequest(Util.GetAllSpa,
-						"POST", params);
+				JSONObject json = jsonParser.makeHttpRequest(Util.get_ten_spa,
+						"POST", Newparams);
 
 				// full json response
 				Log.d("Login attempt", json.toString());
@@ -332,23 +474,28 @@ public class MakeAppointmentFragment extends Fragment {
 				if (success == 1) {
 
 					JSONArray PostJson = json.getJSONArray("posts");
-					Log.d("Post Date ", PostJson.toString());
-					for (int i = 0; i < 10; i++) {
+					Log.d("Ten spa ", PostJson.toString());
+					for (int i = 0; i < PostJson.length(); i++) {
 
 						JSONObject Temp = PostJson.getJSONObject(i);
 
 						HashMap<String, String> spaDetails = new HashMap<String, String>();
+
 						spaDetails.put(SPA_ID, Temp.getString("Spa_Id"));
 						spaDetails.put(SPA_NAME, Temp.getString("Spa_Name"));
 						spaDetails.put(SPA_Address, Temp.getString("Addresss"));
-						// ArrayList_AllSpaList.add(Temp.getString("Spa_Name"));
-						// ArrayList_AllSpaIdList.add(Temp.getString("Spa_Id"));
 
 						SpaDetails.add(spaDetails);
+
+						isDataAvailable = true;
+
 					}
+
 					return json.getString(TAG_MESSAGE) + " , Please Login !";
-				} else {
+				} else if (success == 0) {
 					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+					isDataAvailable = false;
+					listview_spa.setOnScrollListener(null);
 					return json.getString(TAG_MESSAGE);
 
 				}
@@ -365,12 +512,30 @@ public class MakeAppointmentFragment extends Fragment {
 		 * **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-			pDialog.dismiss();
-			if (file_url != null) {
-				adapter = new SpaListAdapter(getActivity(), SpaDetails);
+			if (dialog.isShowing())
+				dialog.dismiss();
+			isloading = false;
+
+			if (file_url.contains("Spa Found !")) {
+				Log.v("onPostLog If", file_url);
+
 				listview_spa.setAdapter(adapter);
+				listview_spa.setSelectionFromTop(VisiblePosition, distFromTop);
+				hit_counter++;
+
+			} else if (file_url.equalsIgnoreCase("false")) {
+				Log.v("onPostLog Else", file_url);
+				listview_spa.setOnScrollListener(null);
+				listview_spa.removeFooterView(footer);
+				
+				progressbar_footer.stopSpinning();
+				listview_spa.setAdapter(adapter);
+				isDataAvailable = false;
 
 			}
+			
+
 		}
 	}
+
 }

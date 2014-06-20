@@ -4,25 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff"
+     
     >
 
     <!-- Framelayout to display Fragments -->
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"  />
 
     <!-- Listview to display slider menu -->
     <ListView
         android:id="@+id/list_slidermenu"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-     android:layout_marginTop="?android:attr/actionBarSize"
+   android:layout_marginTop="?android:attr/actionBarSize"
         android:layout_gravity="start|bottom"
          android:divider="@color/list_divider"
         android:choiceMode="singleChoice"
         android:dividerHeight="0dp"        
-        android:background="@drawable/drawer_bg_new"
+        android:background="@drawable/final_bg"
         android:listSelector="@drawable/list_selector"
         />
     

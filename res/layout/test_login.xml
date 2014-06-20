@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center|center_vertical"
     android:id="@+id/Login_relative_layout"
-    android:background="@drawable/login_background_small"
+    android:background="@drawable/final_bg"
     android:orientation="vertical"
     tools:context=".MainActivity"
      >
