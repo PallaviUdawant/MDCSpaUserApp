@@ -6,4 +6,8 @@
    <dimen name="circle_top_margin">2dp</dimen>
     <dimen name="circle_bottom_margin">2dp</dimen>
     <dimen name="textView_width">120dp</dimen>
+    <dimen name="Button_Width">100dp</dimen>
+    <dimen name="Button_Height">40dp</dimen>
+    <dimen name="Button_TextSize">16sp</dimen>
+    
 </resources>

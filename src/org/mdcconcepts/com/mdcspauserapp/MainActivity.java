@@ -1,13 +1,13 @@
 package org.mdcconcepts.com.mdcspauserapp;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
 import org.mdcconcepts.com.mdcspauserapp.findspa.FindSpaFragment;
 import org.mdcconcepts.com.mdcspauserapp.giftcard.GiftCardFragment;
@@ -15,26 +15,24 @@ import org.mdcconcepts.com.mdcspauserapp.login.LoginActivity;
 import org.mdcconcepts.com.mdcspauserapp.makeappointment.MakeAppointmentFragment;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerItem;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerListAdapter;
-import org.mdcconcepts.com.mdcspauserapp.profile.ProfileFragment;
+import org.mdcconcepts.com.mdcspauserapp.profile.MyProfileFragment;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
-import com.todddavies.components.progressbar.ProgressWheel;
-
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -46,7 +44,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+import com.todddavies.components.progressbar.ProgressWheel;
+
+public class MainActivity extends FragmentActivity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -67,6 +67,8 @@ public class MainActivity extends Activity {
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
+
+	SharedPreferences sharedPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,25 +102,31 @@ public class MainActivity extends Activity {
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons
 				.getResourceId(2, -1)));
 
-		// Make an appointment
+		// View an appointment
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons
 				.getResourceId(3, -1), true, "22"));
 
-		// View an appointment
+		// Notifications
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons
-				.getResourceId(4, -1)));
+				.getResourceId(5, -1)));
 
-		// What's hot, We will add a counter here
+		// Send Gift Card
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons
-				.getResourceId(5, -1), true, "50+"));
+				.getResourceId(6, -1), true, "50+"));
 
-		// What's hot, We will add a counter here
+		// Favourites
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons
-				.getResourceId(6, -1)));
-		// LogOut
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons
 				.getResourceId(7, -1)));
+		// Offers
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons
+				.getResourceId(8, -1)));
 
+		// Settings
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons
+				.getResourceId(9, -1)));
+		// Logout
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[9], navMenuIcons
+				.getResourceId(10, -1)));
 		// Recycle the typed array
 		navMenuIcons.recycle();
 
@@ -158,6 +166,21 @@ public class MainActivity extends Activity {
 		if (savedInstanceState == null) {
 			// on first time display view for first nav item
 			displayView(0);
+		}
+
+		sharedPreferences = getSharedPreferences(Util.APP_PREFERENCES,
+				Context.MODE_PRIVATE);
+		boolean isFirstRun = sharedPreferences.getBoolean("FIRSTRUN", true);
+
+		if (isFirstRun) {
+			// Code to run once
+			SharedPreferences.Editor editor = sharedPreferences.edit();
+			editor.putBoolean("FIRSTRUN", false);
+			editor.commit();
+
+			Intent i = new Intent(MainActivity.this, InjuriesActivityMain.class);
+			startActivity(i);
+
 		}
 
 		new GetUserData().execute();
@@ -224,15 +247,15 @@ public class MainActivity extends Activity {
 
 		case 1:
 
-			fragment = new ProfileFragment();
+			fragment = new MyProfileFragment();
 			break;
-			
+
 		case 2:
-			
+
 			/**
 			 * Check if Gps is On
 			 */
-			
+
 			GPSTracker gps = new GPSTracker(this);
 
 			if (gps.canGetLocation()) {
@@ -245,31 +268,31 @@ public class MainActivity extends Activity {
 				gps.showSettingsAlert();
 			}
 			break;
-			
+
 		case 3:
 
 			fragment = new MakeAppointmentFragment();
 			break;
-			
+
 		case 4:
-			
+
 			fragment = new HomeFragment();
 			// fragment = new ViewAppointmentFragment();
 			break;
-			
+
 		case 5:
 			// fragment = new WhatsHotFragment();
 			break;
-			
+
 		case 6:
 			// fragment = new HomeFragment();
 			fragment = new GiftCardFragment();
 			break;
-			
+
 		case 7:
-				Intent i = new Intent(MainActivity.this, LoginActivity.class);
-				startActivity(i);
-				finish();
+			Intent i = new Intent(MainActivity.this, LoginActivity.class);
+			startActivity(i);
+			finish();
 			break;
 
 		default:
@@ -318,10 +341,11 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * Fetch User Details and save it in util class
-	 *  details shown in Profile class
+	 * Fetch User Details and save it in util class details shown in Profile
+	 * class
+	 * 
 	 * @author Pallavi
-	 *
+	 * 
 	 */
 	class GetUserData extends AsyncTask<String, String, String> {
 
@@ -354,10 +378,11 @@ public class MainActivity extends Activity {
 					.findViewById(R.id.txt_alert_text);
 			Txt_Title.setTypeface(font);
 			Txt_Title.setText("Getting User Details....");
-			
-			ProgressWheel   pw_four = (ProgressWheel)dialog.findViewById(R.id.progressBarFour);
-			 pw_four.spin();
-			
+
+			ProgressWheel pw_four = (ProgressWheel) dialog
+					.findViewById(R.id.progressBarFour);
+			pw_four.spin();
+
 		}
 
 		@SuppressLint("SimpleDateFormat")
@@ -428,9 +453,9 @@ public class MainActivity extends Activity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 
-/**
- * Ask before leaving app
- */
+		/**
+		 * Ask before leaving app
+		 */
 		final Dialog dialog = new Dialog(MainActivity.this,
 				R.style.ThemeWithCorners);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -455,7 +480,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent i=new Intent(MainActivity.this,LoginActivity.class);
+				Intent i = new Intent(MainActivity.this, LoginActivity.class);
 				startActivity(i);
 				MainActivity.this.finish();
 

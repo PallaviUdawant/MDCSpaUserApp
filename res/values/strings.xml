@@ -10,10 +10,13 @@
         <item>Home</item>
         <item>Profile</item>
         <item>Find Spa</item>
-        <item>Make Appointment</item>
+        <!-- <item>Make Appointment</item> -->
         <item>View Appointment</item>
         <item>Notifications</item>
         <item>Send Gift Card</item>
+        <item>Favourites</item>
+        <item>Offers</item>
+        <item>Settings</item>
         <item>Logout</item>
     </string-array>
 
@@ -27,6 +30,9 @@
         <item>@drawable/ic_view_appointment</item>
         <item>@drawable/ic_notification</item>
         <item>@drawable/ic_send_gift_card</item>
+        <item>@drawable/ic_favourites</item>
+        <item>@drawable/ic_offers</item>
+        <item>@drawable/ic_settings</item>
         <item>@drawable/ic_logout</item>
     </array>
 
@@ -38,6 +44,6 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_see_apointment">See Apointment</string>
     <string name="title_activity_send_feedback">Send Feedback</string>
-   
+    <string name="title_activity_test">Test</string>
 
 </resources>

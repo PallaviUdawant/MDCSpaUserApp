@@ -1,5 +1,12 @@
 package org.mdcconcepts.com.mdcspauserapp.util;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+
+import android.support.v4.app.FragmentManager;
+
+
 public class Util {
 
 	/**
@@ -102,6 +109,22 @@ public class Util {
 	 */
 	public static final String sendgift = "http://mdcspa.mdcconcepts.com/sendgift.php";
 	
+
+	/**
+	 * This is to submit paining area details
+	 */
+	public static final String sendPainData = "http://mdcspa.mdcconcepts.com/sendPainData.php";
+	
+	/**
+	 * This is to get paining area details
+	 */
+	public static final String getPainData = "http://mdcspa.mdcconcepts.com/Get_Paining_Areas_webservice.php";
+	
+	public static final String getDiseaseData = "http://mdcspa.mdcconcepts.com/GetDiseaseWebservice.php";
+	
+	
+	public static final String APP_PREFERENCES="MDC_SPA"; 
+	
 	public static int Uid;
 	public static int Appointment_Id;
 	public static String Appointment_Time;
@@ -113,5 +136,39 @@ public class Util {
 	public static String User_Address;
 	public static String User_DOB;
 	public static String User_Anniversary;
+
+	public static String fontPath="Raleway-Light.otf";
+	
+	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Head = false;
+	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Neck = false;
+	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Shoulder = false;
+	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Arm = false;
+	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Waist = false;
+	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Back = false;
+	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Thigh = false;
+	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Calf = false;
+	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Sole = false;
+	
+	public static Boolean isChecked_Heart=false;
+	public static Boolean isChecked_Hepatitis=false;
+	public static Boolean isChecked_Diabeties=false;
+	public static Boolean isChecked_Lung=false;
+	public static Boolean isChecked_Hypotension=false;
+	public static Boolean isChecked_Skin=false;
+	public static Boolean isChecked_BP=false;
+	public static Boolean isChecked_Arthritis=false;
+	public static Boolean isChecked_Pregnant=false;
+	public static Boolean isChecked_Other=false;
+	
+	
+	public static JSONArray jsonPainArray= new JSONArray();
+	
+	public static JSONArray jsonDiseaseArray= new JSONArray();
+	
+	
+	public static ArrayList<String> PainAreas = new ArrayList<String>();
+	public static ArrayList<String> UserDisease = new ArrayList<String>();
+ 	
+	public static FragmentManager fm;
 	
 }

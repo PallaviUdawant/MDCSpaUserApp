@@ -2,77 +2,77 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="?android:attr/actionBarSize"
     android:orientation="vertical"
     android:weightSum="2" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/profile_cover_photo"
-        android:orientation="vertical" >
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp" >
-
-            <TextView
-                android:id="@+id/textViewController_TherapistName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ImageviewController_ProfileImage"
-                android:layout_centerHorizontal="true"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <ImageView
-                android:id="@+id/ImageviewController_ProfileImage"
-                android:layout_width="100sp"
-                android:layout_height="100sp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_margin="15sp"
-                android:background="@drawable/profile_pic_bg"
-                android:padding="5sp"
-                android:src="@drawable/avtar" />
-
-            <TextView
-                android:id="@+id/Name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/ImageviewController_ProfileImage"
-                android:layout_toRightOf="@+id/ImageviewController_ProfileImage"
-                android:padding="5dp"
-                android:text="Name"
-                android:textColor="#ffffff"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/imageButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/Name"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/ic_edit" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ScrollView
-            android:id="@+id/scrollView1"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:padding="10dp" >
+                android:layout_height="150dp"
+                android:background="@drawable/profile_cover_photo"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp" >
+
+                    <TextView
+                        android:id="@+id/textViewController_TherapistName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ImageviewController_ProfileImage"
+                        android:layout_centerHorizontal="true"
+                        android:text="Medium Text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <ImageView
+                        android:id="@+id/ImageviewController_ProfileImage"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="15sp"
+                        android:background="@drawable/profile_pic_bg"
+                        android:padding="5sp"
+                        android:src="@drawable/avtar" />
+
+                    <TextView
+                        android:id="@+id/Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/ImageviewController_ProfileImage"
+                        android:layout_toRightOf="@+id/ImageviewController_ProfileImage"
+                        android:padding="5dp"
+                        android:text="Name"
+                        android:textColor="#ffffff"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/Name"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="24dp"
+                        android:background="@drawable/ic_edit" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -98,18 +98,17 @@
                         android:textSize="16sp" >
                     </TextView>
 
-                     <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            /> 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
                     <ImageButton
                         android:id="@+id/imageButton2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_edit"
                         android:gravity="right" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -134,14 +133,13 @@
                         android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
                         android:textSize="16sp" >
-
                     </TextView>
 
-                     <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            /> 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
                     <ImageButton
                         android:id="@+id/imageButton3"
                         android:layout_width="wrap_content"
@@ -171,14 +169,13 @@
                         android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
                         android:textSize="16sp" >
-
                     </TextView>
 
-                     <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            /> 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
                     <ImageButton
                         android:id="@+id/imageButton4"
                         android:layout_width="wrap_content"
@@ -209,14 +206,13 @@
                         android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
                         android:textSize="16sp" >
-
                     </TextView>
 
-                     <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            /> 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
                     <ImageButton
                         android:id="@+id/imageButton5"
                         android:layout_width="wrap_content"
@@ -246,14 +242,13 @@
                         android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
                         android:textSize="16sp" >
-
                     </TextView>
 
-                     <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            /> 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
                     <ImageButton
                         android:id="@+id/imageButton5"
                         android:layout_width="wrap_content"
@@ -261,7 +256,6 @@
                         android:background="@drawable/ic_edit" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-
-</LinearLayout>
+               
+    </LinearLayout></ScrollView>
+        </LinearLayout>

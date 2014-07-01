@@ -1,7 +1,5 @@
 package org.mdcconcepts.com.mdcspauserapp;
 
-import org.mdcconcepts.com.mdcspauserapp.R;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +8,7 @@ import android.view.ViewGroup;
 
 public class HomeFragment extends Fragment {
 	
+
 	public HomeFragment(){}
 	
 	@Override
@@ -18,6 +17,10 @@ public class HomeFragment extends Fragment {
  
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
          
+        
+		
         return rootView;
     }
+	
+
 }
