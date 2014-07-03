@@ -1,7 +1,6 @@
 package org.mdcconcepts.com.mdcspauserapp;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -12,7 +11,6 @@ import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
 import org.mdcconcepts.com.mdcspauserapp.findspa.FindSpaFragment;
 import org.mdcconcepts.com.mdcspauserapp.giftcard.GiftCardFragment;
 import org.mdcconcepts.com.mdcspauserapp.login.LoginActivity;
-import org.mdcconcepts.com.mdcspauserapp.makeappointment.MakeAppointmentFragment;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerItem;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerListAdapter;
 import org.mdcconcepts.com.mdcspauserapp.profile.MyProfileFragment;
@@ -20,6 +18,7 @@ import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -32,7 +31,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -46,7 +44,7 @@ import android.widget.TextView;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -140,7 +138,7 @@ public class MainActivity extends FragmentActivity {
 		// enabling action bar app icon and behaving it as toggle button
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-
+ 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_drawer, // nav menu toggle icon
 				R.string.app_name, // nav drawer open - description for
@@ -150,13 +148,14 @@ public class MainActivity extends FragmentActivity {
 		) {
 			public void onDrawerClosed(View view) {
 				getActionBar().setTitle(mTitle);
+				getActionBar().show();
 				// calling onPrepareOptionsMenu() to show action bar icons
 				invalidateOptionsMenu();
 			}
-
+                                                                                                 
 			public void onDrawerOpened(View drawerView) {
 				getActionBar().setTitle(mDrawerTitle);
-
+				getActionBar().hide();
 				// calling onPrepareOptionsMenu() to hide action bar icons
 				invalidateOptionsMenu();
 			}
@@ -246,7 +245,7 @@ public class MainActivity extends FragmentActivity {
 			break;
 
 		case 1:
-
+//			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 			fragment = new MyProfileFragment();
 			break;
 
@@ -270,8 +269,8 @@ public class MainActivity extends FragmentActivity {
 			break;
 
 		case 3:
-
-			fragment = new MakeAppointmentFragment();
+			fragment = new HomeFragment();
+//			fragment = new MakeAppointmentFragment();
 			break;
 
 		case 4:
@@ -281,6 +280,7 @@ public class MainActivity extends FragmentActivity {
 			break;
 
 		case 5:
+			fragment = new HomeFragment();
 			// fragment = new WhatsHotFragment();
 			break;
 
@@ -289,7 +289,11 @@ public class MainActivity extends FragmentActivity {
 			fragment = new GiftCardFragment();
 			break;
 
-		case 7:
+		case 7: 	fragment = new HomeFragment();
+			break;
+		case 8: 	fragment = new HomeFragment();
+			break;
+		case 9:
 			Intent i = new Intent(MainActivity.this, LoginActivity.class);
 			startActivity(i);
 			finish();

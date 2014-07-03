@@ -2,9 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?android:attr/actionBarSize"
+    android:background="#50CCCCCC"
     android:orientation="vertical"
     android:weightSum="2" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:background="#4e3115"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <org.mdcconcepts.com.mdcspauserapp.customitems.FontTextView
+            android:id="@+id/FontTextView_PersonalInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:padding="10dp"
+            android:text="Personal Information"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/btn_save_profile"
+            android:layout_width="@dimen/Button_Width"
+            android:layout_height="@dimen/Button_Height"
+            android:layout_marginRight="5dp"
+            android:text="Save"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -12,62 +39,11 @@
         android:layout_height="fill_parent" >
 
         <LinearLayout
+            android:id="@+id/PersonalInfo_Layout"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@drawable/profile_cover_photo"
-                android:orientation="vertical" >
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp" >
-
-                    <TextView
-                        android:id="@+id/textViewController_TherapistName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ImageviewController_ProfileImage"
-                        android:layout_centerHorizontal="true"
-                        android:text="Medium Text"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <ImageView
-                        android:id="@+id/ImageviewController_ProfileImage"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_margin="15sp"
-                        android:background="@drawable/profile_pic_bg"
-                        android:padding="5sp"
-                        android:src="@drawable/avtar" />
-
-                    <TextView
-                        android:id="@+id/Name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/ImageviewController_ProfileImage"
-                        android:layout_toRightOf="@+id/ImageviewController_ProfileImage"
-                        android:padding="5dp"
-                        android:text="Name"
-                        android:textColor="#ffffff"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/Name"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="24dp"
-                        android:background="@drawable/ic_edit" />
-                </RelativeLayout>
-            </LinearLayout>
+            android:orientation="vertical"
+            android:padding="10dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,6 +53,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/drop_sawdow_bk"
                     android:orientation="horizontal"
                     android:padding="10dp" >
 
@@ -98,22 +76,40 @@
                         android:textSize="16sp" >
                     </TextView>
 
+                    <EditText
+                        android:id="@+id/EditText_Mobile"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Contact Number"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:padding="5sp"
+                        android:textColor="#4e3315"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton2"
+                    <ImageView
+                        android:id="@+id/ImageView_Edit_Number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_edit"
-                        android:gravity="right" />
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/imageview_selector" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/drop_sawdow_bk"
                     android:orientation="horizontal"
                     android:padding="10dp" >
 
@@ -139,17 +135,12 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_edit" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/drop_sawdow_bk"
                     android:orientation="horizontal"
                     android:padding="10dp" >
 
@@ -168,24 +159,43 @@
                         android:hint="Address"
                         android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
-                        android:textSize="16sp" >
-                    </TextView>
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/EditText_Address"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Address"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:padding="5sp"
+                        android:textColor="#4e3315"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton4"
+                    <ImageView
+                        android:id="@+id/ImageView_Edit_Addr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_edit" />
+                        android:layout_gravity="center_vertical"
+                        android:gravity="right"
+                        android:src="@drawable/imageview_selector" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/drop_sawdow_bk"
+                    android:focusableInTouchMode="false"
                     android:orientation="horizontal"
                     android:padding="10dp" >
 
@@ -205,24 +215,42 @@
                         android:inputType="textMultiLine"
                         android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
-                        android:textSize="16sp" >
-                    </TextView>
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/EditText_DOB"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Date Of Birth"
+                        android:inputType="date"
+                        android:onClick="showDatepickerDialog"
+                        android:padding="5sp"
+                        android:textColor="#4e3315"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton5"
+                    <ImageView
+                        android:id="@+id/ImageView_Edit_DOB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_edit" />
+                        android:layout_gravity="center_vertical"
+                        android:gravity="right"
+                        android:src="@drawable/imageview_selector" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/drop_sawdow_bk"
                     android:orientation="horizontal"
                     android:padding="10dp" >
 
@@ -241,21 +269,40 @@
                         android:hint="Date Of Anniversary"
                         android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
-                        android:textSize="16sp" >
-                    </TextView>
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/EditText_Anniversary"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Date Of Anniversary"
+                        android:imeOptions="actionDone"
+                        android:inputType="date"
+                        android:padding="5sp"
+                        android:textColor="#4e3315"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="16sp"
+                        android:visibility="gone" 
+                         android:onClick="showDatepickerDialog"/>
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton5"
+                    <ImageView
+                        android:id="@+id/ImageView_Edit_Anniversary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_edit" />
+                        android:layout_gravity="center_vertical"
+                        android:gravity="right"
+                        android:src="@drawable/imageview_selector" />
                 </LinearLayout>
             </LinearLayout>
-               
-    </LinearLayout></ScrollView>
         </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

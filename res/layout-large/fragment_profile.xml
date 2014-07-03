@@ -2,88 +2,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="#50CCCCCC"
     android:orientation="vertical"
     android:weightSum="2" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="270dp"
-        android:background="@drawable/profile_cover_photo"
-        android:orientation="vertical" >
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:background="#4e3115"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <org.mdcconcepts.com.mdcspauserapp.customitems.FontTextView
+            android:id="@+id/FontTextView_PersonalInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:padding="10dp"
+            android:text="Personal Information"
+            android:textColor="#ffffff" />
 
-            <TextView
-                android:id="@+id/textViewController_TherapistName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ImageviewController_ProfileImage"
-                android:layout_centerHorizontal="true"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <ImageView
-                android:id="@+id/ImageviewController_ProfileImage"
-                android:layout_width="100sp"
-                android:layout_height="100sp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_margin="15sp"
-                android:background="@drawable/profile_pic_bg"
-                android:padding="5sp"
-                android:src="@drawable/avtar" />
-
-            <TextView
-                android:id="@+id/Name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/ImageviewController_ProfileImage"
-                android:layout_toRightOf="@+id/ImageviewController_ProfileImage"
-                android:padding="5dp"
-                android:text="Name"
-                android:textColor="#ffffff"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/imageButton5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/Name"
-                android:layout_marginRight="32dp"
-                android:background="@drawable/ic_edit" />
-        </RelativeLayout>
+        <Button
+            android:id="@+id/btn_save_profile"
+            android:layout_width="@dimen/Button_Width"
+            android:layout_height="@dimen/Button_Height"
+            android:layout_marginRight="5dp"
+            android:text="Save"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0.8"
-        android:orientation="vertical"
-        android:padding="5dp" >
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
-        <ScrollView
-            android:id="@+id/scrollView1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0.8"
+                android:background="@drawable/drop_sawdow_bk"
                 android:orientation="vertical"
-                android:padding="10dp" >
+                android:padding="2dp" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
                     android:orientation="horizontal"
-                    android:padding="10dp" >
+                    android:padding="15dp" >
 
                     <ImageView
                         android:id="@+id/imageView1"
@@ -104,25 +79,48 @@
                         android:textSize="18sp" >
                     </TextView>
 
+                    <EditText
+                        android:id="@+id/EditText_Mobile"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Contact Number"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:padding="7dp"
+                        android:textColor="#4e3315"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/ic_edit" />
-
+                    <ImageView
+                        android:id="@+id/ImageView_Edit_Number"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/imageview_selector" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#edeae7"
+                    android:orientation="horizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
                     android:orientation="horizontal"
-                    android:padding="10dp" >
+                    android:padding="15dp" >
 
                     <ImageView
                         android:id="@+id/imageView2"
@@ -142,26 +140,27 @@
                         android:textColorHint="#bbbbbb"
                         android:textSize="18sp" >
                     </TextView>
-                    
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/ic_edit" />
-
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#edeae7"
+                    android:orientation="horizontal" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="fill_vertical"
                     android:orientation="horizontal"
-                    android:padding="10dp" >
+                    android:padding="15dp" >
 
                     <ImageView
                         android:id="@+id/imageView3"
@@ -171,7 +170,7 @@
 
                     <TextView
                         android:id="@+id/Address"
-                        android:layout_width="250dp"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="5dp"
@@ -182,25 +181,48 @@
                         android:textSize="18sp" >
                     </TextView>
 
+                    <EditText
+                        android:id="@+id/EditText_Address"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Address"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:padding="7dp"
+                        android:textColor="#4e3315"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/ic_edit" />
+                    <ImageView
+                        android:id="@+id/ImageView_Edit_Addr"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/imageview_selector" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#edeae7"
+                    android:orientation="horizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp" >
+                    android:padding="15dp" >
 
                     <ImageView
                         android:id="@+id/imageView4"
@@ -222,25 +244,46 @@
                         android:textSize="18sp" >
                     </TextView>
 
+                    <EditText
+                        android:id="@+id/EditText_DOB"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Date of birth"
+                        android:padding="7dp"
+                         android:onClick="showDatepickerDialog"
+                        android:textColor="#4e3315"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/ic_edit" />
-
+                    <ImageView
+                        android:id="@+id/ImageView_Edit_DOB"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/imageview_selector" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#edeae7"
+                    android:orientation="horizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp" >
+                    android:padding="15dp" >
 
                     <ImageView
                         android:id="@+id/imageView5"
@@ -250,7 +293,7 @@
 
                     <TextView
                         android:id="@+id/Anniversary"
-                        android:layout_width="250dp"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30sp"
                         android:layout_marginTop="5dp"
@@ -258,24 +301,38 @@
                         android:padding="5dp"
                         android:textColor="#4e3315"
                         android:textColorHint="#bbbbbb"
-                        android:textSize="18sp" >
-                    </TextView>
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/EditText_Anniversary"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Anniversary"
+                        android:imeOptions="actionDone"
+                        android:inputType="time"
+                        android:padding="7dp"
+                         android:onClick="showDatepickerDialog"
+                        android:textColor="#4e3315"
+                        android:textColorHint="#bbbbbb"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/ic_edit" />
-
+                    <ImageView
+                        android:id="@+id/ImageView_Edit_Anniversary"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/imageview_selector" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

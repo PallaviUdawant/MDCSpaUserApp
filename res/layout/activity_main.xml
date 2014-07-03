@@ -18,7 +18,7 @@
         android:id="@+id/list_slidermenu"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-   android:layout_marginTop="?android:attr/actionBarSize"
+   
         android:layout_gravity="start|bottom"
          android:divider="@color/list_divider"
         android:choiceMode="singleChoice"
