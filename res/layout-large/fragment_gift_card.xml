@@ -1,0 +1,154 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/drawer_bg"
+    tools:context=".MainActivity" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="50sp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <Button
+                android:id="@+id/SendGiftCard_MakeAppointment"
+                android:layout_width="200sp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_default_bg"
+                android:paddingLeft="2sp"
+                android:textSize="18sp"
+                android:text="Make an appointment"
+                android:textColor="#ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/txt_friends_name"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5sp"
+                    android:text="Friend\&apos;s Name"
+                    android:textColor="#4e3315"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/Friend_Name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/edittext_background"
+                    android:imeOptions="actionNext"
+                    android:padding="10dp"  android:textSize="18dp"
+                    android:textColorHint="#bbbbbb" >
+
+                    <requestFocus />
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.1sp"
+                android:background="#4e3315"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/txt_friend_email"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5sp"
+                    android:text="Friend\&apos;s Email"
+                    android:textColor="#4e3315"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/Friend_Email"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/edittext_background"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"  android:textSize="18dp"
+                    android:textColorHint="#bbbbbb" >
+
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.1sp"
+                android:background="#4e3315"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/txt_friends_contact_number"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5sp"
+                    android:text="Friend\&apos;s Contact Number"
+                    android:textColor="#4e3315"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/Friend_Mobile"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/edittext_background"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:padding="10dp"  android:textSize="18dp"
+                    android:textColorHint="#bbbbbb" >
+
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.1sp"
+                android:background="#4e3315"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/ButtonController_SendGiftCard"
+                android:layout_width="200sp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_default_bg"
+                android:padding="2sp"
+                android:textSize="18sp"
+                android:text="Send Gift Card"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

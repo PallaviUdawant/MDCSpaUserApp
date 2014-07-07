@@ -1,0 +1,177 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical" >
+
+    <org.mdcconcepts.com.mdcspauserapp.customitems.FontTextView
+        android:id="@+id/FontTextView03"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="Any Disease"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" >
+
+                <CheckBox
+                    android:id="@+id/CheckBox_HeartDisease"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="Heart Disease"
+                    android:textColor="#4e3115" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox_LungDisease"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="Lung Disease"
+                    android:textColor="#4e3115" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" >
+
+                <CheckBox
+                    android:id="@+id/CheckBox_Hepatitis"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="Hepatitis"
+                    android:textColor="#4e3115" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox_Diabeties"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="Diabeties"
+                    android:textColor="#4e3115" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" >
+
+                <CheckBox
+                    android:id="@+id/CheckBox_Hypotension"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="Hypotension"
+                    android:textColor="#4e3115" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox_Arthritis"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="Arthritis"
+                    android:textColor="#4e3115" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" >
+
+                <CheckBox
+                    android:id="@+id/CheckBox_SkinDisease"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="Skin Disease"
+                    android:textColor="#4e3115" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox_BP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="High Blood Pressure"
+                    android:textColor="#4e3115" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" >
+
+                <CheckBox
+                    android:id="@+id/CheckBox_Pregnant"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="Pregnant"
+                    android:textColor="#4e3115" />
+
+                <CheckBox
+                    android:id="@+id/CheckBox_Other"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:button="@drawable/apptheme_btn_check_holo_light"
+                    android:text="Any Other"
+                    android:textColor="#4e3115" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/Btn_Submit_Disease"
+                    android:layout_width="@dimen/Button_Width"
+                    android:layout_height="@dimen/Button_Height"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/button_default_bg"
+                    android:text="Submit"
+                    android:layout_marginRight="5dp"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/Button_TextSize" />
+
+                <Button
+                    android:id="@+id/Btn_Skip_Disease_Fragment"
+                    android:layout_width="@dimen/Button_Width"
+                    android:layout_height="@dimen/Button_Height"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/button_default_bg"
+                    android:text="Skip"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/Button_TextSize" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

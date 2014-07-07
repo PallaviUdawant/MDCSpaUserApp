@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="450dp"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical" >
+
+  
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="#4e3115"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txt_feedkback_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send Feedback"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/txt_feedback_therapist"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="For Therapist"
+            android:textColor="#4e3115"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_feedback_therapist_name"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/edittext_background"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="TextView"
+            android:textColor="#4e3115"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="181dp"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/txt_feedback_message"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="Message"
+            android:textColor="#4e3115"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edt_feedback_message"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/edittext_background"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:textColor="#4e3115"
+            android:textSize="18sp" >
+
+        </EditText>
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_send_feedback"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_default_bg"
+            android:padding="5sp"
+            android:text="Send"
+            android:textColor="#ffffff" />
+  
+  </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="#50CCCCCC"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="1"
+        android:background="#4e3115" >
+
+        <Spinner
+            android:id="@+id/spinner_sort_by"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:background="@drawable/spinner_selector"
+            android:drawSelectorOnTop="true" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_filter" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listview_spa"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" >
+    </ListView>
+
+</LinearLayout>

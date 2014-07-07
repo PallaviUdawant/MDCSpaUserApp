@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+  
+   <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         >
+<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="250sp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/sp_profile_cover" >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"  android:layout_marginTop="120dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="80dp"
+                android:src="@drawable/profile_pic_bg" />
+
+            <TextView
+                android:id="@+id/txt_spa_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView2"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/imageView2"
+                android:text="Aura Thai Spa"
+                android:textColor="#4e3315"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+              <RatingBar
+                  android:id="@+id/ratingBar1"
+                  style="?android:attr/ratingBarStyleSmall"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignLeft="@+id/txt_spa_name"
+                  android:layout_alignParentBottom="true"
+                  android:numStars="5"
+                  android:rating="3" />
+
+        </RelativeLayout>
+        
+        
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_spa_dec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:padding="20sp"
+        android:textSize="18sp"
+        android:textColor="#4e3315"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="horizontal"
+        android:padding="20sp" >
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/ic_location" />
+
+    <TextView
+        android:id="@+id/txt_spa_addr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:textSize="18sp"
+        android:textColor="#4e3315"
+        android:text="MDC Corporation (India) Pvt. Ltd. 3rd Floor, Deccan Avenue Building, Jangali Maharaj Road, Near PMT Bus Depot, Deccan Gymkhana, Pune – 411005." />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/Btn_Skip_Injuries_Fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical"
+        android:background="@drawable/button_default_bg"
+        android:textColor="#ffffff"
+        android:paddingLeft="10sp"
+         android:paddingRight="10sp"
+         android:paddingTop="2sp"
+         android:paddingBottom="2sp"
+        android:textSize="16sp"
+        android:layout_marginTop="20sp"
+        android:text="Make an Appointment" />
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

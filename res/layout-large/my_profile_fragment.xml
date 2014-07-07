@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+      android:background="#50CCCCCC"
+ >
+
+  <LinearLayout
+      android:id="@+id/linearlayout_cover"
+      android:layout_width="match_parent"
+      android:layout_height="300dp"
+      android:background="@drawable/profile_cover_photo"
+      android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp" >
+
+                    <TextView
+                        android:id="@+id/textViewController_TherapistName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ImageviewController_ProfileImage"
+                        android:layout_centerHorizontal="true"
+                        android:text="Medium Text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <ImageView
+                        android:id="@+id/ImageviewController_ProfileImage"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="15sp"
+                        android:background="@drawable/profile_pic_bg"
+                        android:padding="5sp"
+                        android:src="@drawable/avtar" />
+
+                    <TextView
+                        android:id="@+id/Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/ImageviewController_ProfileImage"
+                        android:layout_toRightOf="@+id/ImageviewController_ProfileImage"
+                        android:padding="5dp"
+                        android:text="Name"
+                        android:textColor="#ffffff"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </LinearLayout>
+
+   <!-- <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="102dp"
+        />-->
+
+ <ListView
+     android:id="@+id/listView_tabs"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginLeft="2dp"
+     android:layout_marginRight="2dp"
+     android:layout_marginTop="2dp"
+     android:cacheColorHint="#4e3115"
+     android:divider="@android:color/transparent"
+     android:dividerHeight="0dp" >
+
+ </ListView>
+
+</LinearLayout>

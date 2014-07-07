@@ -8,7 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
-import org.mdcconcepts.com.mdcspauserapp.findspa.FindSpaFragment;
+import org.mdcconcepts.com.mdcspauserapp.findspa.FindSpaMapFragment;
 import org.mdcconcepts.com.mdcspauserapp.giftcard.GiftCardFragment;
 import org.mdcconcepts.com.mdcspauserapp.login.LoginActivity;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerItem;
@@ -258,7 +258,7 @@ public class MainActivity extends Activity {
 			GPSTracker gps = new GPSTracker(this);
 
 			if (gps.canGetLocation()) {
-				fragment = new FindSpaFragment();
+				fragment = new FindSpaMapFragment();
 
 			} else {
 				// can't get location

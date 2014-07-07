@@ -25,10 +25,10 @@
 
         <Button
             android:id="@+id/btn_save_profile"
-            android:layout_width="@dimen/Button_Width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/Button_Height"
             android:layout_marginRight="5dp"
-            android:text="Save"
+            android:text="Done Editing"
             android:textColor="#ffffff"
             android:visibility="gone" />
     </LinearLayout>
@@ -82,9 +82,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20sp"
                         android:layout_marginTop="5dp"
+                        android:ems="10"
                         android:background="@drawable/edittext_background"
                         android:hint="Contact Number"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:inputType="phone"
                         android:padding="5sp"
                         android:textColor="#4e3315"
@@ -99,8 +100,8 @@
 
                     <ImageView
                         android:id="@+id/ImageView_Edit_Number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/imageview_selector" />
                 </LinearLayout>
@@ -169,7 +170,7 @@
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edittext_background"
                         android:hint="Address"
-                        android:imeOptions="actionNext"
+                         android:imeOptions="actionDone"
                         android:inputType="textMultiLine"
                         android:padding="5sp"
                         android:textColor="#4e3315"
@@ -184,8 +185,8 @@
 
                     <ImageView
                         android:id="@+id/ImageView_Edit_Addr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_vertical"
                         android:gravity="right"
                         android:src="@drawable/imageview_selector" />
@@ -240,8 +241,8 @@
 
                     <ImageView
                         android:id="@+id/ImageView_Edit_DOB"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_vertical"
                         android:gravity="right"
                         android:src="@drawable/imageview_selector" />
@@ -295,8 +296,8 @@
 
                     <ImageView
                         android:id="@+id/ImageView_Edit_Anniversary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_vertical"
                         android:gravity="right"
                         android:src="@drawable/imageview_selector" />

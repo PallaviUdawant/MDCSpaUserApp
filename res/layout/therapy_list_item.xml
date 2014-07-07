@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:background="@drawable/drop_sawdow_bk"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/Txt_Spa_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Aura Thai Spa"
+        android:textColor="#4e3115"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Txt_Spa_Descp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        android:textColor="#4e3115" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/txt_therapy_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="Time"
+            android:textColor="#4e3115"
+            android:textStyle="bold"
+        />
+
+        <TextView
+            android:id="@+id/txt_therapy_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="Price"
+            android:textColor="#4e3115"
+            android:textStyle="bold"
+ />
+
+        <Button
+            android:id="@+id/btn_select_therapist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_default_bg"
+            android:padding="10sp"
+            android:text="Select Therapist"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            />
+
+    </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_time_for_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Select time for service"
+             android:textColor="#4e3115"
+            android:textStyle="bold" />
+</LinearLayout>

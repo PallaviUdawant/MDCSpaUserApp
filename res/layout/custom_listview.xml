@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/drop_sawdow_bk"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/ImgeView_TabIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_personal_info" />
+
+        <org.mdcconcepts.com.mdcspauserapp.customitems.FontTextView
+            android:id="@+id/FontTextView_TabText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Personal Information"
+            android:textColor="#4e3115"
+            android:textColorLink="#4e3115"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

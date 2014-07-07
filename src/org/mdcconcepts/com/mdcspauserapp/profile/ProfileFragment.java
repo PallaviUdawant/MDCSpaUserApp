@@ -198,8 +198,16 @@ public class ProfileFragment extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
-				new UpdateUserDetails().execute();
+				if(Edt_Mobile.getText().toString().trim().isEmpty())
+					Edt_Mobile.setError("Please Enter Mobile Number");
+				else
+					if(Edt_Addr.getText().toString().trim().isEmpty())
+						Edt_Addr.setError("Please Enter Adrress");
+					else
+						if(Edt_DOB.getText().toString().trim().isEmpty())
+							Edt_DOB.setError("Please Enter DOB");
+						else
+							new UpdateUserDetails().execute();
 			}
 		});
 		 
@@ -214,9 +222,9 @@ public class ProfileFragment extends FragmentActivity {
                 // TODO Auto-generated method stub                      
                 /*      Your code   to get date and time    */
             	if(v==Edt_DOB)
-            	Edt_DOB.setText(selectedday+"/"+selectedmonth+"/"+selectedyear);
+            	Edt_DOB.setText(selectedyear+"-"+(selectedmonth+1)+"-"+selectedday);
             	else
-            		Edt_Anniversary.setText(selectedday+"/"+selectedmonth+"/"+selectedyear);
+            		Edt_Anniversary.setText(selectedyear+"-"+(selectedmonth+1)+"-"+selectedday);
             }
         },year, month, day);
         mDatePicker.setTitle("Select date");                
@@ -271,7 +279,7 @@ public class ProfileFragment extends FragmentActivity {
 			TextView Txt_Title = (TextView) dialog
 					.findViewById(R.id.txt_alert_text);
 			Txt_Title.setTypeface(font);
-			Txt_Title.setText("Getting User Details....");
+			Txt_Title.setText("Updating Details....");
 
 			ProgressWheel pw_four = (ProgressWheel) dialog
 					.findViewById(R.id.progressBarFour);
