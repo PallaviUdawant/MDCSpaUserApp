@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerItem;
-import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerListAdapter;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
@@ -174,8 +173,12 @@ public class FindSpaMapFragment extends Fragment implements
 				.findViewById(R.id.progressbar_footer);
 		progressbar_footer.spin();
 		
-		header=inflater.inflate(R.layout.header, null);
-		mDrawerList.addHeaderView(header);
+		if(header==null)
+		{
+			header=inflater.inflate(R.layout.header, null);
+			mDrawerList.addHeaderView(header,null,false);
+		}
+			
 		mDrawerList.addFooterView(footer);
 		filter = (Spinner) header.findViewById(R.id.spinner_sort_by);
 		
@@ -836,9 +839,9 @@ public class FindSpaMapFragment extends Fragment implements
 	public void onInfoWindowClick(Marker arg0) {
 		// TODO Auto-generated method stub
 		// Toast.makeText(getActivity(), "Onclick", Toast.LENGTH_LONG).show();
-		Intent i = new Intent(getActivity(), Spa_Details_Activity.class);
-		i.putExtra("Spa_Name", spa_data.Spa_Name);
-		i.putExtra("Spa_Id", spa_data.Spa_Id);
+		Intent i = new Intent(getActivity(), SpaProfileActivity.class);
+//		i.putExtra("Spa_Name", spa_data.Spa_Name);
+//		i.putExtra("Spa_Id", spa_data.Spa_Id);
 		startActivity(i);
 
 	}
@@ -851,5 +854,7 @@ public class FindSpaMapFragment extends Fragment implements
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		google_map.clear();
+		mDrawerList.removeHeaderView(header);
+		mDrawerList.removeFooterView(footer);
 	}
 }

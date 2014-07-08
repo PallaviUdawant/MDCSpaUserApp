@@ -26,7 +26,6 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 	TextView Txt_Spa_Name, Txt_Spa_Area;
 	String Spa_Id;
 	int count;
-
 	Context context;
 	public NearestSpaListviewAdapter(Activity a,
 			ArrayList<HashMap<String, String>> data) {
