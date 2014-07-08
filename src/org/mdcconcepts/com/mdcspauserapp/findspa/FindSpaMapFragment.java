@@ -717,16 +717,35 @@ public class FindSpaMapFragment extends Fragment implements
 
 	private String getMapsApiDirectionsUrl(LatLng source, LatLng destination) {
 
-		String waypoints = "waypoints=optimize:true|" + +source.latitude + ","
+		/*String waypoints = "waypoints=optimize:true|" + +source.latitude + ","
 				+ source.longitude + "|" + destination.latitude + ","
 				+ destination.longitude;
 		// + "|"+STREET1.latitude + ","+ STREET1.longitude;
-		String sensor = "sensor=false";
+		String sensor = "sensor=true";
 		String params = waypoints + "&" + sensor;
 		String output = "json";
 		String url = "https://maps.googleapis.com/maps/api/directions/"
 				+ output + "?" + params;
-		return url;
+		return url;*/
+		// Origin of route
+        String str_origin = "origin="+source.latitude+","+source.longitude;
+
+        // Destination of route
+        String str_dest = "destination="+destination.latitude+","+destination.longitude;
+
+        // Sensor enabled
+        String sensor = "sensor=false";
+
+        // Building the parameters to the web service
+        String parameters = str_origin+"&"+str_dest+"&"+sensor;
+
+        // Output format
+        String output = "json";
+
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
+
+        return url;
 	}
 
 	/**
@@ -785,19 +804,24 @@ public class FindSpaMapFragment extends Fragment implements
 		protected void onPostExecute(List<List<HashMap<String, String>>> routes) {
 			ArrayList<LatLng> points = null;
 			PolylineOptions polyLineOptions = new PolylineOptions();
-
+			 String duration = "";
 			// traversing through routes
 			for (int i = 0; i < routes.size(); i++) {
 				points = new ArrayList<LatLng>();
 				// polyLineOptions = new PolylineOptions();
 				List<HashMap<String, String>> path = routes.get(i);
+				Log.d("HaspMap", path.toString());
 				for (int j = 0; j < path.size(); j++) {
 					HashMap<String, String> point = path.get(j);
 
 					double lat = Double.parseDouble(point.get("lat"));
 					double lng = Double.parseDouble(point.get("lng"));
 					LatLng position = new LatLng(lat, lng);
-
+					 // Get duration from the list
+					if(j==0)
+	                        duration = (String)point.get("distance");
+	                      
+                     
 					points.add(position);
 				}
 
@@ -826,6 +850,7 @@ public class FindSpaMapFragment extends Fragment implements
 
 			}
 			google_map.addPolyline(polyLineOptions);
+			Toast.makeText(getActivity(), duration, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -840,8 +865,8 @@ public class FindSpaMapFragment extends Fragment implements
 		// TODO Auto-generated method stub
 		// Toast.makeText(getActivity(), "Onclick", Toast.LENGTH_LONG).show();
 		Intent i = new Intent(getActivity(), SpaProfileActivity.class);
-//		i.putExtra("Spa_Name", spa_data.Spa_Name);
-//		i.putExtra("Spa_Id", spa_data.Spa_Id);
+		i.putExtra("Spa_Name", spa_data.Spa_Name);
+		i.putExtra("Spa_Id", spa_data.Spa_Id);
 		startActivity(i);
 
 	}
