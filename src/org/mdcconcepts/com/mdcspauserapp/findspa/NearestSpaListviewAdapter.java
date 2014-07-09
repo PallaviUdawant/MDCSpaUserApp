@@ -4,19 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mdcconcepts.com.mdcspauserapp.R;
-import org.mdcconcepts.com.mdcspauserapp.makeappointment.Select_Therapy_Activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class NearestSpaListviewAdapter extends BaseAdapter {
 
@@ -70,6 +67,8 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 		Txt_Spa_Area = (TextView) rootView
 				.findViewById(R.id.txt_list_spa_name_area);
 
+		RatingBar Spa_ratingBar =(RatingBar)rootView.findViewById(R.id.Spa_ratingBar);
+		
 		Typeface font = Typeface.createFromAsset(activity.getAssets(),
 				"Raleway-Light.otf");
 
@@ -84,7 +83,8 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 		rootView.setTag(spaDetails);
 		Txt_Spa_Name.setText(spaDetails.get("spa_name"));
 		Txt_Spa_Area.setText(spaDetails.get("spa_addr"));
-		
+		Spa_ratingBar.setRating(Float.parseFloat(spaDetails.get("spa_rating")));
+//		Spa_ratingBar.setNumStars(Integer.parseInt(spaDetails.get("spa_rating")));
 	
 		return rootView;
 	}

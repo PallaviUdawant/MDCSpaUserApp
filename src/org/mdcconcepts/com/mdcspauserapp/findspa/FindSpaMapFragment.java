@@ -17,8 +17,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
-import org.mdcconcepts.com.mdcspauserapp.makeappointment.MakeAppointmentFragment.FetchNearestSpa;
-import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerItem;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
@@ -26,10 +24,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
@@ -40,7 +36,6 @@ import android.os.SystemClock;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -200,7 +195,7 @@ public class FindSpaMapFragment extends Fragment implements
 
 		ArrayList_Filter.add("Nearest Spa's");
 		ArrayList_Filter.add("Highest Rated Spa's");
-		ArrayList_Filter.add("Newest Spa");
+//		ArrayList_Filter.add("Newest Spa");
 
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
 				getActivity(), R.layout.spinner_item, ArrayList_Filter);
@@ -220,7 +215,7 @@ public class FindSpaMapFragment extends Fragment implements
 
 				case 0:
 					hit_counter = 0;
-					// Selected_Filter = 1;
+					 Selected_Filter = 0;
 
 					// dialog.show();
 					getTenNearestSpaTask = new FetchNearestSpa();
@@ -228,6 +223,7 @@ public class FindSpaMapFragment extends Fragment implements
 
 					break;
 				case 1:
+					 Selected_Filter = 1;
 					mDrawerList.setAdapter(null);
 					if (!SpaDetails.isEmpty())
 						SpaDetails.clear();
@@ -386,6 +382,7 @@ public class FindSpaMapFragment extends Fragment implements
 						spaDetails.put(SPA_Address, Temp.getString("Addresss"));
 						spaDetails.put(SPA_LAT, Temp.getString("Spa_Lat"));
 						spaDetails.put(SPA_LONG, Temp.getString("Spa_long"));
+						spaDetails.put(SPA_RATING, Temp.getString("Total_Rating"));
 						NearestLocations.add(new Spa_Data(Temp
 								.getString("Spa_Name"), Temp
 								.getString("Spa_Id"),
@@ -587,8 +584,8 @@ public class FindSpaMapFragment extends Fragment implements
 			break;
 		case 1:
 			/**
-			 * Select Nearest Spa's On Scroll event- Load 10 items on scroll end
-			 */
+			 * Select Nearest Spa's On Scroll event- Load 10 items on scroll end*/
+			 
 
 			if (isHighestRatedDataAvailable) {
 				if ((loadedItems == totalItemCount)
@@ -596,6 +593,7 @@ public class FindSpaMapFragment extends Fragment implements
 
 					if (getHighestRatedSpaTask != null
 							&& (getTenNearestSpaTask.getStatus() == AsyncTask.Status.FINISHED)) {
+						
 						getHighestRatedSpaTask = new FetchHighestRatedSpa();
 						getHighestRatedSpaTask.execute();
 
@@ -1068,9 +1066,14 @@ public class FindSpaMapFragment extends Fragment implements
 	public void onInfoWindowClick(Marker arg0) {
 		// TODO Auto-generated method stub
 		// Toast.makeText(getActivity(), "Onclick", Toast.LENGTH_LONG).show();
+
 		Intent i = new Intent(getActivity(), SpaProfileActivity.class);
+		
+		
+//		i.putExtra("Spa_Data", )
 		i.putExtra("Spa_Name", spa_data.Spa_Name);
 		i.putExtra("Spa_Id", spa_data.Spa_Id);
+		i.putExtra("Spa_Addr", spa_data.Spa_Address);
 		startActivity(i);
 
 	}

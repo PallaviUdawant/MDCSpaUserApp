@@ -103,9 +103,9 @@ public class Spa_Details_Activity extends FragmentActivity {
 		Spa_Name = i.getStringExtra("Spa_Name");
 		Spa_Id = Integer.parseInt(i.getStringExtra("Spa_Id"));
 
-		Txt_Spa_Addr = (TextView) findViewById(R.id.txt_spa_addr);
-		Txt_Spa_desc = (TextView) findViewById(R.id.txt_spa_dec);
-		Txt_Spa_name = (TextView) findViewById(R.id.txt_spa_name);
+		Txt_Spa_Addr = (TextView) findViewById(R.id.txt_spa_addr_profile);
+		Txt_Spa_desc = (TextView) findViewById(R.id.txt_spa_dec_profile);
+		Txt_Spa_name = (TextView) findViewById(R.id.txt_spa_name_profile);
 
 		Typeface font = Typeface.createFromAsset(getAssets(),
 				"Raleway-Light.otf");

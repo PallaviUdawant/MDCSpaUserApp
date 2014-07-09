@@ -177,7 +177,7 @@ public class SearchSpaActivity extends FragmentActivity implements
 								R.layout.custom_info_window, null);
 
 						txt_spa_name = (TextView) v
-								.findViewById(R.id.txt_spa_name);
+								.findViewById(R.id.txt_spa_name1);
 
 						txt_addr = (TextView) v.findViewById(R.id.txt_address);
 

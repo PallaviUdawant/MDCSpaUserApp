@@ -40,7 +40,7 @@
                         android:src="@drawable/profile_pic_bg" />
 
                     <TextView
-                        android:id="@+id/txt_spa_name"
+                        android:id="@+id/txt_spa_name_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageView2"
@@ -58,15 +58,16 @@
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/txt_spa_name"
                         android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
                         android:numStars="5"
                         android:rating="3" />
+
                 </RelativeLayout>
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/txt_spa_dec"
+                android:id="@+id/txt_spa_dec_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp"
@@ -88,7 +89,7 @@
                     android:src="@drawable/ic_location" />
 
                 <TextView
-                    android:id="@+id/txt_spa_addr"
+                    android:id="@+id/txt_spa_addr_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20sp"
@@ -96,7 +97,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/Btn_Skip_Injuries_Fragment"
+                android:id="@+id/Btn_Add_to_fav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|center_vertical"
@@ -106,7 +107,7 @@
                 android:paddingLeft="10sp"
                 android:paddingRight="10sp"
                 android:paddingTop="2sp"
-                android:text="Make an Appointment"
+                android:text="Add to favourites"
                 android:textColor="#ffffff"
                 android:textSize="14sp" />
         </LinearLayout>

@@ -74,6 +74,7 @@ public class ProfileFragment extends FragmentActivity {
 	private int month;
 	private int year;
 
+	
 	Typeface font;
 	public ProfileFragment() {
 	}

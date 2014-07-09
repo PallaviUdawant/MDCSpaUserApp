@@ -10,20 +10,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class SpaProfileActivity extends Activity implements
@@ -42,7 +38,9 @@ public class SpaProfileActivity extends Activity implements
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-
+	String Spa_Name = "";
+	String Spa_Desc="";
+	String Spa_Addr="";
 	Typeface font;
 
 	@Override
@@ -54,6 +52,11 @@ public class SpaProfileActivity extends Activity implements
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
+		Intent i = getIntent();
+		Spa_Name=i.getStringExtra("Spa_Name");
+		Spa_Addr=i.getStringExtra("Spa_Addr");
+		
+		
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -102,17 +105,17 @@ public class SpaProfileActivity extends Activity implements
 		t2.setPadding(0, 20, 0, 0);
 		actionBar.addTab(actionBar.newTab().setTabListener(this)
 				.setCustomView(t2));
-		
+
 		TextView t3 = new TextView(this);
 		t3.setTypeface(font);
 		t3.setTextColor(Color.parseColor("#4e3115"));
 		t3.setTextSize(18);
-		t3.setText("Therapists Details");
+		t3.setText("Offers");
 		t3.setGravity(Gravity.CENTER_HORIZONTAL);
 		t3.setPadding(0, 20, 0, 0);
-		
-		actionBar.addTab(actionBar.newTab()
-				.setTabListener(this).setCustomView(t3));
+
+		actionBar.addTab(actionBar.newTab().setTabListener(this)
+				.setCustomView(t3));
 
 		// For each of the sections in the app, add a tab to the action bar.
 		/*
@@ -129,6 +132,27 @@ public class SpaProfileActivity extends Activity implements
 		 * actionBar.addTab(actionBar.newTab().setText(s)
 		 * .setTabListener(this)); }
 		 */
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			// This ID represents the Home or Up button. In the case of this
+			// activity, the Up button is shown. Use NavUtils to allow users
+			// to navigate up one level in the application structure. For
+			// more details, see the Navigation pattern on Android Design:
+			//
+			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			//
+			// NavUtils.navigateUpFromSameTask(this);
+
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -137,18 +161,6 @@ public class SpaProfileActivity extends Activity implements
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.spa_profile, menu);
 		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -189,13 +201,13 @@ public class SpaProfileActivity extends Activity implements
 			Fragment fragment = null;
 			switch (position) {
 			case 0:
-				fragment = new SpaInfoFragment();
+				fragment = new SpaInfoFragment(Spa_Name,Spa_Addr);
 				return fragment;
 			case 1:
 				fragment = new SpaTherapiesFragment();
 				return fragment;
 			case 2:
-				fragment = new SpaInfoFragment();
+				fragment = new SpaOffersFragment();
 				return fragment;
 			}
 			return fragment;
@@ -216,7 +228,7 @@ public class SpaProfileActivity extends Activity implements
 			case 1:
 				return "Thearapies Details".toUpperCase(l);
 			case 2:
-				return "Therapists Details".toUpperCase(l);
+				return "Offers".toUpperCase(l);
 			}
 			return null;
 		}

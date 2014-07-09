@@ -28,7 +28,7 @@
                 android:src="@drawable/spa_logo" />
 
             <RatingBar
-                android:id="@+id/ratingBar1"
+                android:id="@+id/Spa_ratingBar"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
