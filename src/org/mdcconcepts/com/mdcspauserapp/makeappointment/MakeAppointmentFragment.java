@@ -11,13 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
-import org.mdcconcepts.com.mdcspauserapp.findspa.Spa_Data;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,7 +34,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 

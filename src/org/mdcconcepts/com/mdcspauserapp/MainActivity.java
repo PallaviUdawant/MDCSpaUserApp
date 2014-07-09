@@ -15,6 +15,7 @@ import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerItem;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerListAdapter;
 import org.mdcconcepts.com.mdcspauserapp.profile.MyProfileFragment;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
+import org.mdcconcepts.com.mdcspauserapp.setting.SettingActivity;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.annotation.SuppressLint;
@@ -256,10 +257,12 @@ public class MainActivity extends Activity {
 			 */
 
 			GPSTracker gps = new GPSTracker(this);
-
+			getActionBar().hide();
 			if (gps.canGetLocation()) {
+				
 				fragment = new FindSpaMapFragment();
 
+				
 			} else {
 				// can't get location
 				// GPS or Network is not enabled
@@ -291,7 +294,7 @@ public class MainActivity extends Activity {
 
 		case 7: 	fragment = new HomeFragment();
 			break;
-		case 8: 	fragment = new HomeFragment();
+		case 8: 	fragment = new SettingActivity();
 			break;
 		case 9:
 			Intent i = new Intent(MainActivity.this, LoginActivity.class);

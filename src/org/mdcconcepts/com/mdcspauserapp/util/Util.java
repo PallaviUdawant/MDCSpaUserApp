@@ -122,6 +122,8 @@ public class Util {
 	
 	public static final String getDiseaseData = "http://mdcspa.mdcconcepts.com/GetDiseaseWebservice.php";
 	
+	public static final String getHighestRatedSpa = "http://mdcspa.mdcconcepts.com/GetHighestRatedSpa.php";
+	
 	/**
 	 * This is Get An Single Appointments User Webservice URL.
 	 */

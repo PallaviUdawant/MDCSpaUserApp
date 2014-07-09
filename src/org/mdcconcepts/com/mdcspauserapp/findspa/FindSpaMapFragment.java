@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
+import org.mdcconcepts.com.mdcspauserapp.makeappointment.MakeAppointmentFragment.FetchNearestSpa;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerItem;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
@@ -91,12 +92,20 @@ public class FindSpaMapFragment extends Fragment implements
 	int Selected_Filter;
 	private double mLastLatitude;
 	private double mLastLongitude;
+
 	private FetchNearestSpa getTenNearestSpaTask;
+
+	private FetchHighestRatedSpa getHighestRatedSpaTask;
 	double myCurrentLocationLat = 0.0;
 	double myCurrentLocationlong = 0.0;
+
 	private boolean isloadingNearestSpa = false;
+	private boolean isloadingHighestRatedSpa = false;
 	Spinner filter;
+
 	private boolean isNearestDataAvailable = true;
+	private boolean isHighestRatedDataAvailable = true;
+
 	ProgressWheel progressbar_footer;
 	ProgressWheel progressbar_header;
 	int hit_counter = 0;
@@ -120,12 +129,14 @@ public class FindSpaMapFragment extends Fragment implements
 	static final String SPA_Address = "spa_addr";
 	static final String SPA_LAT = "spa_lat";
 	static final String SPA_LONG = "spa_long";
+	static final String SPA_RATING = "spa_rating";
 	private NearestSpaListviewAdapter adapter;
 	private ArrayList<String> ArrayList_Filter = new ArrayList<String>();
 
 	public FindSpaMapFragment() {
 		// TODO Auto-generated constructor stub
 
+		// getActivity().getActionBar().hide();
 	}
 
 	@Override
@@ -152,8 +163,6 @@ public class FindSpaMapFragment extends Fragment implements
 				.findViewById(R.id.drawer_layout1);
 		mDrawerList = (ListView) rootView.findViewById(R.id.list_slidermenu1);
 
-	
-
 		mDrawerList.setOnScrollListener(this);
 
 		dialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
@@ -175,23 +184,23 @@ public class FindSpaMapFragment extends Fragment implements
 				.findViewById(R.id.progressbar_footer);
 		progressbar_footer.spin();
 
+		
 		if (header == null) {
 			header = inflater.inflate(R.layout.header, null);
 			mDrawerList.addHeaderView(header, null, false);
 		}
 
 		mDrawerList.addFooterView(footer);
-		filter = (Spinner) header.findViewById(R.id.spinner_sort_by);
 
 		
+		filter = (Spinner) header.findViewById(R.id.spinner_sort_by);
+
 		adapter = new NearestSpaListviewAdapter(getActivity(), SpaDetails);
 		mDrawerList.setAdapter(adapter);
-		
+
 		ArrayList_Filter.add("Nearest Spa's");
-		ArrayList_Filter.add("Popularity");
-		ArrayList_Filter.add("Price- High to Low");
-		ArrayList_Filter.add("Price- Low to High");
-		ArrayList_Filter.add("Newest");
+		ArrayList_Filter.add("Highest Rated Spa's");
+		ArrayList_Filter.add("Newest Spa");
 
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
 				getActivity(), R.layout.spinner_item, ArrayList_Filter);
@@ -211,13 +220,23 @@ public class FindSpaMapFragment extends Fragment implements
 
 				case 0:
 					hit_counter = 0;
-					Selected_Filter = 1;
+					// Selected_Filter = 1;
 
 					// dialog.show();
 					getTenNearestSpaTask = new FetchNearestSpa();
 					getTenNearestSpaTask.execute();
 
-					// break;
+					break;
+				case 1:
+					mDrawerList.setAdapter(null);
+					if (!SpaDetails.isEmpty())
+						SpaDetails.clear();
+
+					hit_counter = 0;
+					getHighestRatedSpaTask = new FetchHighestRatedSpa();
+					getHighestRatedSpaTask.execute();
+					break;
+
 				default:
 					break;
 				}
@@ -230,8 +249,8 @@ public class FindSpaMapFragment extends Fragment implements
 			}
 		});
 		// enabling action bar app icon and behaving it as toggle button
-		getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActivity().getActionBar().setHomeButtonEnabled(true);
+		// getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+		// getActivity().getActionBar().setHomeButtonEnabled(true);
 
 		mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout,
 				R.drawable.ic_drawer, // nav menu toggle icon
@@ -249,19 +268,16 @@ public class FindSpaMapFragment extends Fragment implements
 
 			public void onDrawerOpened(View drawerView) {
 				getActivity().getActionBar().setTitle(mDrawerTitle);
-				getActivity().getActionBar().hide();
+				if (getActivity().getActionBar().isShowing())
+					getActivity().getActionBar().hide();
 				// calling onPrepareOptionsMenu() to hide action bar icons
 				getActivity().invalidateOptionsMenu();
 			}
 		};
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		mDrawerLayout.openDrawer(Gravity.RIGHT);
-		if (savedInstanceState == null) {
-			// on first time display view for first nav item
-			// getActivity().displayView(0);
-		}
 
-		// TODO Auto-generated method stub
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		// getActivity().getActionBar().hide();
 
 		/**
 		 * Fetch 10 Nearest Spa's from server
@@ -289,42 +305,6 @@ public class FindSpaMapFragment extends Fragment implements
 		});
 		return rootView;
 	}
-
-	/**
-	 * Slide menu item click listener
-	 * *
-	private class SlideMenuClickListener implements
-			ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			// display view for selected nav drawer item
-			displayView(position);
-		}
-	}
-
-	/**
-	 * Diplaying fragment view for selected nav drawer list item
-	 * *
-	private void displayView(int position) {
-		// update the main content by replacing fragments
-		Fragment fragment = null;
-
-		if (fragment != null) {
-			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction()
-					.replace(R.id.frame_container, fragment).commit();
-
-			// update selected item and title, then close the drawer
-			mDrawerList.setItemChecked(position, true);
-			mDrawerList.setSelection(position);
-			setTitle(navMenuTitles[position]);
-			mDrawerLayout.closeDrawer(mDrawerList);
-		} else {
-			// error in creating fragment
-			Log.e("MainActivity", "Error in creating fragment");
-		}
-	}*/
 
 	public void setTitle(CharSequence title) {
 		mTitle = title;
@@ -461,6 +441,118 @@ public class FindSpaMapFragment extends Fragment implements
 		}
 	}
 
+	public class FetchHighestRatedSpa extends AsyncTask<String, String, String> {
+
+		// private ProgressDialog pDialog;
+
+		int success;
+		JSONParser jsonParser = new JSONParser();
+		private static final String TAG_SUCCESS = "success";
+		private static final String TAG_MESSAGE = "message";
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			// dialog.show();
+
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			SystemClock.sleep(1000);
+			isloadingHighestRatedSpa = true;
+			try {
+				// Building Parameters
+				List<NameValuePair> params1 = new ArrayList<NameValuePair>();
+
+				// check if GPS enabled
+
+				params1.add(new BasicNameValuePair("Hit_Counter", String
+						.valueOf(hit_counter)));
+
+				Log.d("request!", "starting");
+
+				// Posting user data to script
+				JSONObject json = jsonParser.makeHttpRequest(
+						Util.getHighestRatedSpa, "POST", params1);
+
+				Log.d("Hit count", String.valueOf(hit_counter));
+
+				// json success element
+				success = json.getInt(TAG_SUCCESS);
+
+				if (success == 1) {
+
+					JSONArray PostJson = json.getJSONArray("posts");
+					Log.d("Executing Highest Rated ", PostJson.toString());
+					for (int i = 0; i < PostJson.length(); i++) {
+
+						JSONObject Temp = PostJson.getJSONObject(i);
+
+						HashMap<String, String> spaDetails = new HashMap<String, String>();
+						spaDetails.put(SPA_ID, Temp.getString("Spa_Id"));
+						spaDetails.put(SPA_NAME, Temp.getString("Spa_Name"));
+						spaDetails.put(SPA_Address, Temp.getString("Addresss"));
+						spaDetails.put(SPA_LAT, Temp.getString("Spa_Lat"));
+						spaDetails.put(SPA_LONG, Temp.getString("Spa_long"));
+						spaDetails.put(SPA_RATING, Temp.getString("Total_Rating"));
+						NearestLocations.add(new Spa_Data(Temp
+								.getString("Spa_Name"), Temp
+								.getString("Spa_Id"),
+								Temp.getString("Spa_Lat"), Temp
+										.getString("Spa_long"), Temp
+										.getString("Addresss")));
+						// NearestLocations.add(spa_data);
+						SpaDetails.add(spaDetails);
+
+						isNearestDataAvailable = true;
+					}
+
+					return json.getString(TAG_MESSAGE);
+				} else {
+					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+					return json.getString(TAG_MESSAGE);
+
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+
+		}
+
+		/**
+		 * After completing background task Dismiss the progress dialog
+		 **/
+		protected void onPostExecute(String file_url) {
+			// dismiss the dialog once product deleted
+			// pDialog.dismiss();
+			if (dialog.isShowing())
+				dialog.dismiss();
+			isloadingHighestRatedSpa = false;
+
+			if (file_url.contains("Spa Found !")) {
+				mDrawerList.setAdapter(adapter);
+				mDrawerList.setSelectionFromTop(VisiblePosition, distFromTop);
+				hit_counter++;
+
+			} else if (file_url.equalsIgnoreCase("false")) {
+				/**
+				 * Stop loading items if data finished
+				 */
+				mDrawerList.setOnScrollListener(null);
+				mDrawerList.removeFooterView(footer);
+				progressbar_footer.stopSpinning();
+				isHighestRatedDataAvailable = false;
+			}
+			// initilizeMap();
+
+		}
+	}
+
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		// TODO Auto-generated method stub
@@ -472,22 +564,52 @@ public class FindSpaMapFragment extends Fragment implements
 		// TODO Auto-generated method stub
 		int loadedItems = (firstVisibleItem) + visibleItemCount;
 
-		if (isNearestDataAvailable) {
-			if ((loadedItems == totalItemCount) && !isloadingNearestSpa) {
+		switch (Selected_Filter) {
 
-				if (getTenNearestSpaTask != null
-						&& (getTenNearestSpaTask.getStatus() == AsyncTask.Status.FINISHED)) {
-					getTenNearestSpaTask = new FetchNearestSpa();
-					getTenNearestSpaTask.execute();
+		case 0:
+			if (isNearestDataAvailable) {
+				if ((loadedItems == totalItemCount) && !isloadingNearestSpa) {
 
+					if (getTenNearestSpaTask != null
+							&& (getTenNearestSpaTask.getStatus() == AsyncTask.Status.FINISHED)) {
+						getTenNearestSpaTask = new FetchNearestSpa();
+						getTenNearestSpaTask.execute();
+
+					}
 				}
-			}
-		} else {
-			mDrawerList.setOnScrollListener(null);
-			mDrawerList.removeFooterView(footer);
-			progressbar_footer.stopSpinning();
-			// adapter.notifyDataSetChanged();
+			} else {
+				mDrawerList.setOnScrollListener(null);
+				mDrawerList.removeFooterView(footer);
+				progressbar_footer.stopSpinning();
+				// adapter.notifyDataSetChanged();
 
+			}
+			break;
+		case 1:
+			/**
+			 * Select Nearest Spa's On Scroll event- Load 10 items on scroll end
+			 */
+
+			if (isHighestRatedDataAvailable) {
+				if ((loadedItems == totalItemCount)
+						&& !isloadingHighestRatedSpa) {
+
+					if (getHighestRatedSpaTask != null
+							&& (getTenNearestSpaTask.getStatus() == AsyncTask.Status.FINISHED)) {
+						getHighestRatedSpaTask = new FetchHighestRatedSpa();
+						getHighestRatedSpaTask.execute();
+
+					}
+				}
+			} else {
+				mDrawerList.setOnScrollListener(null);
+				mDrawerList.removeFooterView(footer);
+				progressbar_footer.stopSpinning();
+				// adapter.notifyDataSetChanged();
+
+			}
+
+			break;
 		}
 		/**
 		 * When you scroll down and start getting new data store Last Visible
@@ -552,14 +674,7 @@ public class FindSpaMapFragment extends Fragment implements
 				/*** ZoomIn ****/
 
 				CameraPosition cameraPosition = new CameraPosition.Builder()
-						.target(new LatLng(mLastLatitude, mLastLongitude)) // Sets
-																			// the
-																			// center
-																			// of
-																			// the
-																			// map
-																			// to
-						// Golden Gate Bridge
+						.target(new LatLng(mLastLatitude, mLastLongitude)) 
 						.zoom(16) // Sets the zoom
 						.bearing(0) // Sets the orientation of the camera to
 									// east
@@ -576,23 +691,19 @@ public class FindSpaMapFragment extends Fragment implements
 					@Override
 					public View getInfoWindow(Marker marker) {
 						// TODO Auto-generated method stub
-						
-						if ( marker != null &&
-				                marker.isInfoWindowShown() ) {
-				            marker.hideInfoWindow();
-				           marker.showInfoWindow();
-				        }
+
+						if (marker != null && marker.isInfoWindowShown()) {
+							marker.hideInfoWindow();
+							marker.showInfoWindow();
+						}
 						return null;
 					}
 
 					@Override
 					public View getInfoContents(Marker marker) {
 						// TODO Auto-generated method stub
-						infoWindowView = rootActivity.getLayoutInflater().inflate(
-								R.layout.custom_info_window, null);
-						
-						
-					
+						infoWindowView = rootActivity.getLayoutInflater()
+								.inflate(R.layout.custom_info_window, null);
 
 						double search_lat, search_long;
 						search_lat = marker.getPosition().latitude;
@@ -606,7 +717,6 @@ public class FindSpaMapFragment extends Fragment implements
 
 						spa_data = searchDetails(search_lat, search_long);
 
-						
 						Log.d("Spa Address", spa_data.Spa_Address);
 						LatLng newLatLong;
 						double newLat, newLong;
@@ -616,8 +726,6 @@ public class FindSpaMapFragment extends Fragment implements
 						String url = getMapsApiDirectionsUrl(new LatLng(
 								mLastLatitude, mLastLongitude), newLatLong);
 
-						
-					
 						DownloadTask downloadTask = new DownloadTask();
 
 						// Start downloading json data from Google Directions
@@ -627,11 +735,12 @@ public class FindSpaMapFragment extends Fragment implements
 
 						font = Typeface.createFromAsset(getActivity()
 								.getAssets(), "Raleway-Light.otf");
-						txt_spa_name = (TextView)infoWindowView
+						txt_spa_name = (TextView) infoWindowView
 								.findViewById(R.id.txt_spa_name1);
-						txt_distance_time= (TextView) infoWindowView
+						txt_distance_time = (TextView) infoWindowView
 								.findViewById(R.id.txt_distance_time);
-						txt_addr = (TextView) infoWindowView.findViewById(R.id.txt_address);
+						txt_addr = (TextView) infoWindowView
+								.findViewById(R.id.txt_address);
 
 						txt_spa_name.setTypeface(font);
 						txt_addr.setTypeface(font);
@@ -639,7 +748,6 @@ public class FindSpaMapFragment extends Fragment implements
 						txt_spa_name.setText(spa_data.Spa_Name);
 						txt_addr.setText(spa_data.Spa_Address);
 
-						
 						/*
 						 * String url = getMapsApiDirectionsUrl(new LatLng(
 						 * mLastLatitude, mLastLongitude), newLatLong); ReadTask
@@ -647,8 +755,7 @@ public class FindSpaMapFragment extends Fragment implements
 						 * downloadTask.execute(url);
 						 */
 
-					
-//						txt_distance_time.setText(Util.DISTANCE);
+						// txt_distance_time.setText(Util.DISTANCE);
 						return infoWindowView;
 					}
 				});
@@ -665,11 +772,10 @@ public class FindSpaMapFragment extends Fragment implements
 	 */
 	private void addMarkers(LatLng newLatLong) {
 		if (google_map != null) {
-			google_map.addMarker(
-					new MarkerOptions().position(newLatLong).icon(
+			google_map
+					.addMarker(new MarkerOptions().position(newLatLong).icon(
 							BitmapDescriptorFactory
-									.fromResource(R.drawable.ic_marker)))
-					;
+									.fromResource(R.drawable.ic_marker)));
 			CameraPosition cameraPosition = new CameraPosition.Builder()
 					.target(newLatLong) // Sets the center of the map to
 										// Golden Gate Bridge
@@ -898,14 +1004,14 @@ public class FindSpaMapFragment extends Fragment implements
 				for (int j = 0; j < path.size(); j++) {
 					HashMap<String, String> point = path.get(j);
 
-                    if(j==0){    // Get distance from the list
-                        distance = (String)point.get("distance");
-                        continue;
-                    }else if(j==1){ // Get duration from the list
-                        duration = (String)point.get("duration");
-                        continue;
-                    }
-				
+					if (j == 0) { // Get distance from the list
+						distance = (String) point.get("distance");
+						continue;
+					} else if (j == 1) { // Get duration from the list
+						duration = (String) point.get("duration");
+						continue;
+					}
+
 					double lat = Double.parseDouble(point.get("lat"));
 					double lng = Double.parseDouble(point.get("lng"));
 					LatLng position = new LatLng(lat, lng);
@@ -914,7 +1020,7 @@ public class FindSpaMapFragment extends Fragment implements
 
 					points.add(position);
 				}
-				
+
 				polyLineOptions.addAll(points);
 				polyLineOptions.width(5);
 				polyLineOptions.color(Color.BLUE);
@@ -941,10 +1047,14 @@ public class FindSpaMapFragment extends Fragment implements
 			}
 			google_map.addPolyline(polyLineOptions);
 			txt_addr = (TextView) infoWindowView.findViewById(R.id.txt_address);
-			
-//			Util.DISTANCE="Distance "+ distance+" "+"Estimated time taken to reach "+duration;
-			txt_distance_time.setText("Distance "+ distance+" "+"Estimated time taken to reach"+duration);
-			Toast.makeText(getActivity(),"Duration"+ duration+" "+"Distance"+distance, Toast.LENGTH_LONG).show();
+
+			// Util.DISTANCE="Distance "+
+			// distance+" "+"Estimated time taken to reach "+duration;
+			txt_distance_time.setText("Distance " + distance + " "
+					+ "Estimated time taken to reach" + duration);
+			Toast.makeText(getActivity(),
+					"Duration" + duration + " " + "Distance" + distance,
+					Toast.LENGTH_LONG).show();
 		}
 	}
 

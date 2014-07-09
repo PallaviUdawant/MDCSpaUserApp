@@ -27,6 +27,7 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 	String Spa_Id;
 	int count;
 	Context context;
+
 	public NearestSpaListviewAdapter(Activity a,
 			ArrayList<HashMap<String, String>> data) {
 		// TODO Auto-generated constructor stub
@@ -80,7 +81,7 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 
 		spaDetails = data.get(position);
 
-	rootView.setTag(spaDetails);
+		rootView.setTag(spaDetails);
 		Txt_Spa_Name.setText(spaDetails.get("spa_name"));
 		Txt_Spa_Area.setText(spaDetails.get("spa_addr"));
 		

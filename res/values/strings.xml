@@ -47,4 +47,22 @@
     <string name="title_activity_test">Test</string>
     <string name="title_activity_spa_profile">SpaProfileActivity</string>
 
+    
+
+    <!-- Content Description -->
+    <string name="General_Setting">General Setting</string>
+    <string name="Social_Setting">Social Setting</string>
+    <string name="Sopport_Feedback">Sopport And Feedback</string>
+    <string name="title_activity_setting">SettingActivity</string>
+
+    
+    
+    <string name="PushNotification">Push Notification</string>
+    <string name="Notification">Notification</string>
+    <string name="Vibrate">Vibrate</string>
+    <string name="Ringtone">Ringtone</string>
+    <string name="Light">Light</string>
+    <string name="title_activity_setting_fragment">Setting</string>
+    <string name="title_activity_setting__fragment">Setting_Fragment</string>
+    
 </resources>
