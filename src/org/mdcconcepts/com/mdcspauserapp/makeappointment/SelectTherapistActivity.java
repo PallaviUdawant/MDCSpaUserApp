@@ -205,7 +205,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 			pDialog.setMessage("Getting Therapies Data ... ");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(false);
-//			pDialog.show();
+			pDialog.show();
 		}
 
 		@Override
@@ -262,7 +262,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 		 * **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-//			pDialog.dismiss();
+			pDialog.dismiss();
 			if (file_url != null) {
 				// Create the adapter that will return a fragment for each of
 				// the three

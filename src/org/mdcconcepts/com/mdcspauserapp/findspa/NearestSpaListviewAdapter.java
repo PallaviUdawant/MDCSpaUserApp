@@ -81,6 +81,7 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 		spaDetails = data.get(position);
 
 		rootView.setTag(spaDetails);
+		
 		Txt_Spa_Name.setText(spaDetails.get("spa_name"));
 		Txt_Spa_Area.setText(spaDetails.get("spa_addr"));
 		Spa_ratingBar.setRating(Float.parseFloat(spaDetails.get("spa_rating")));

@@ -106,6 +106,7 @@ public class SpaListAdapter extends BaseAdapter {
 //
 //			}
 //		});
+		
 		return rootView;
 	}
 

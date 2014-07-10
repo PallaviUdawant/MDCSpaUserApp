@@ -1,5 +1,6 @@
 package org.mdcconcepts.com.mdcspauserapp.findspa;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.mdcconcepts.com.mdcspauserapp.R;
@@ -39,9 +40,12 @@ public class SpaProfileActivity extends Activity implements
 	 */
 	ViewPager mViewPager;
 	String Spa_Name = "";
-	String Spa_Desc="";
-	String Spa_Addr="";
+	String Spa_Desc = "";
+	String Spa_Addr = "";
+	String Spa_Rating = "";
 	Typeface font;
+
+	HashMap<String, String> selectedSpaDetails = new HashMap<String, String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +57,16 @@ public class SpaProfileActivity extends Activity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Intent i = getIntent();
-		Spa_Name=i.getStringExtra("Spa_Name");
-		Spa_Addr=i.getStringExtra("Spa_Addr");
-		
-		
+
+		selectedSpaDetails = (HashMap<String, String>) i
+				.getSerializableExtra("SelectedSpDetails");
+
+		// Toast.makeText(getApplicationContext(),
+		// selectedSpaDetails.get("spa_rating"), Toast.LENGTH_LONG).show();
+		// Spa_Name=selectedSpaDetails.get("spa_name");
+		// Spa_Addr=selectedSpaDetails.get("spa_addr");
+		// Spa_Rating=selectedSpaDetails.get("spa_rating");
+
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -90,7 +100,7 @@ public class SpaProfileActivity extends Activity implements
 		t1.setTypeface(font);
 		t1.setTextColor(Color.parseColor("#4e3115"));
 		t1.setText("Spa Profile");
-		t1.setTextSize(18);
+		t1.setTextSize(14);
 		t1.setGravity(Gravity.CENTER_HORIZONTAL);
 		t1.setPadding(10, 20, 10, 10);
 		actionBar.addTab(actionBar.newTab().setTabListener(this)
@@ -99,7 +109,7 @@ public class SpaProfileActivity extends Activity implements
 		TextView t2 = new TextView(this);
 		t2.setTypeface(font);
 		t2.setTextColor(Color.parseColor("#4e3115"));
-		t2.setTextSize(18);
+		t2.setTextSize(14);
 		t2.setText("Threapies Details");
 		t2.setGravity(Gravity.CENTER_HORIZONTAL);
 		t2.setPadding(0, 20, 0, 0);
@@ -109,7 +119,7 @@ public class SpaProfileActivity extends Activity implements
 		TextView t3 = new TextView(this);
 		t3.setTypeface(font);
 		t3.setTextColor(Color.parseColor("#4e3115"));
-		t3.setTextSize(18);
+		t3.setTextSize(14);
 		t3.setText("Offers");
 		t3.setGravity(Gravity.CENTER_HORIZONTAL);
 		t3.setPadding(0, 20, 0, 0);
@@ -201,7 +211,7 @@ public class SpaProfileActivity extends Activity implements
 			Fragment fragment = null;
 			switch (position) {
 			case 0:
-				fragment = new SpaInfoFragment(Spa_Name,Spa_Addr);
+				fragment = new SpaInfoFragment(selectedSpaDetails);
 				return fragment;
 			case 1:
 				fragment = new SpaTherapiesFragment();

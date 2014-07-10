@@ -1,6 +1,7 @@
 package org.mdcconcepts.com.mdcspauserapp.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 
@@ -13,6 +14,12 @@ public class Util {
 	 * This is Sign Up User Webservice URL.
 	 */
 	public static final String Sign_Up_URL = "http://mdcspa.mdcconcepts.com/sign_up__webservice.php";
+
+
+	/**
+	 * This is Add to Fav Webservice URL.
+	 */
+	public static final String Add_To_Fav = "http://mdcspa.mdcconcepts.com/AddToFavourites.php";
 
 	/**
 	 * This is Login Up User Webservice URL.
@@ -129,6 +136,8 @@ public class Util {
 	 */
 	public static final String UpdateUserDetails = "http://mdcspa.mdcconcepts.com/UpdateUserProfile_Webservice.php";
 
+	
+	public static HashMap<String, String> selectedSpaDetails = new HashMap<String, String>();
 	
 	public static final String APP_PREFERENCES="MDC_SPA"; 
 	

@@ -10,12 +10,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
+import org.mdcconcepts.com.mdcspauserapp.makeappointment.SelectTherapistActivity;
 import org.mdcconcepts.com.mdcspauserapp.makeappointment.SelectTherapyAdapter;
+import org.mdcconcepts.com.mdcspauserapp.makeappointment.Select_Therapy_Activity;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +30,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -68,7 +74,7 @@ OnScrollListener{
 	static final String THERAPY_DETAILS = "therapy_details";
 
 	TextView txt_dialog_title, txt_dialog_time, txt_dialog_price;
-
+	Typeface font;
 	ViewGroup footer;
 	SeekBar seekBar_time_for_service;
 	ProgressWheel progressbar_footer;
@@ -85,8 +91,16 @@ OnScrollListener{
 		Therapy_List.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 		
-		Typeface font = Typeface.createFromAsset(getActivity().getAssets(),
+		font = Typeface.createFromAsset(getActivity().getAssets(),
 				"Raleway-Light.otf");
+		
+
+		footer = (ViewGroup) inflater.inflate(R.layout.footer, Therapy_List,
+				false);
+
+		progressbar_footer = (ProgressWheel) footer
+				.findViewById(R.id.progressbar_footer);
+		progressbar_footer.spin();
 		
 		getTenTherapies = new GetTenTherapies();
 		getTenTherapies.execute();
@@ -102,6 +116,95 @@ OnScrollListener{
 				.findViewById(R.id.progressBarFour);
 
 		Txt_Title.setTypeface(font);
+		
+
+		/**
+		 * Dialog box for selecting time for service
+		 */
+		dialog = new Dialog(getActivity(),
+				R.style.ThemeWithCorners);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.time_for_service);
+		dialog.setTitle("Select Time for service");
+		dialog.setCancelable(false);
+		
+		// TODO Auto-generated method stub
+		Btn_Service_Ok = (Button) dialog
+				.findViewById(R.id.btn_time_for_service_ok);
+
+		Btn_Service_Cancel = (Button) dialog
+				.findViewById(R.id.btn_time_for_service_cancel);
+
+		txt_dialog_title = (TextView) dialog
+				.findViewById(R.id.txt_dialog_title);
+		txt_dialog_time = (TextView) dialog.findViewById(R.id.txt_dialog_time);
+		txt_dialog_price = (TextView) dialog
+				.findViewById(R.id.txt_dialog_price);
+
+		seekBar_time_for_service = (SeekBar) dialog
+				.findViewById(R.id.seekBar_time_for_service);
+
+		Btn_Service_Ok.setTypeface(font);
+		Btn_Service_Cancel.setTypeface(font);
+		txt_dialog_title.setTypeface(font);
+		txt_dialog_time.setTypeface(font);
+		txt_dialog_price.setTypeface(font);
+		
+		Therapy_List.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				dialog.show();
+				
+			}
+		});
+		
+		final int stepSize=10;
+		seekBar_time_for_service
+				.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						// TODO Auto-generated method stub
+//						txt_dialog_time.setText("SeekBar value is " + progress);
+						   progress = ((int)Math.round(progress/stepSize))*stepSize;
+						   seekBar_time_for_service.setProgress(progress);
+						   txt_dialog_time.setText(progress + "");
+					}
+
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+					}
+
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+					}
+				});
+		
+		Btn_Service_Ok.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intentGetMessage = new Intent(
+						getActivity(),
+						SelectTherapistActivity.class);
+				startActivity(intentGetMessage);
+				dialog.dismiss();
+			}
+		});
+
+		Btn_Service_Cancel.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+			}
+		});
+
+		Therapy_List.addFooterView(footer);
 		return rootView;
 	}
 	class GetTenTherapies extends AsyncTask<String, String, String> {

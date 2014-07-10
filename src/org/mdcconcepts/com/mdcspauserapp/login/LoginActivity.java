@@ -14,12 +14,9 @@ import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.signup.SignUpActivity;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
-import com.todddavies.components.progressbar.ProgressWheel;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,20 +25,20 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.todddavies.components.progressbar.ProgressWheel;
 
 public class LoginActivity extends Activity {
 
@@ -75,7 +72,6 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.test_login);
 
-		
 		/**
 		 * Apply Animation
 		 */
@@ -107,11 +103,6 @@ public class LoginActivity extends Activity {
 
 			}
 		});
-		
-
-		
-		
-		
 
 		// creating connection detector class instance
 		cd = new ConnectionDetector(getApplicationContext());
@@ -132,9 +123,12 @@ public class LoginActivity extends Activity {
 		txt_Create_account.setTypeface(font);
 
 		/**
-		 * Shared preferences to autofill username and password 
+		 * Shared preferences to autofill username and password
 		 */
-		pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for  private  mode
+		pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 -
+																			// for
+																			// private
+																			// mode
 		editor = pref.edit();
 		if (pref.getBoolean("Login_Status", false)) {
 
@@ -213,12 +207,11 @@ public class LoginActivity extends Activity {
 					.findViewById(R.id.txt_alert_text);
 			Txt_Title.setTypeface(font);
 			/**
-			 * custom circular progress bar 
+			 * custom circular progress bar
 			 */
 			ProgressWheel pw_four = (ProgressWheel) dialog
 					.findViewById(R.id.progressBarFour);
 			pw_four.spin();
-			
 
 		}
 
@@ -244,26 +237,30 @@ public class LoginActivity extends Activity {
 				JSONObject json = jsonParser.makeHttpRequest(Util.Login_URL,
 						"POST", params);
 
-				// full json response
-				Log.d("Login attempt", json.toString());
+				if (json != null) {// full json response
+					Log.d("Login attempt", json.toString());
 
-				// json success element
-				success = json.getInt(TAG_SUCCESS);
-				
-				if (success == 1) {
-					Util.Uid = json.getInt("Uid");
-					return json.getString(TAG_MESSAGE);
-				} 
-				else
-				
-				{
-//					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-//					Toast.makeText(LoginActivity.this,
-//							"Wrong Username or Password", Toast.LENGTH_LONG)
-//							.show();
-					return json.getString(TAG_MESSAGE);
+					// json success element
+					success = json.getInt(TAG_SUCCESS);
+
+					if (success == 1) {
+						Util.Uid = json.getInt("Uid");
+						return json.getString(TAG_MESSAGE);
+					} else
+
+					{
+						// Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+						// Toast.makeText(LoginActivity.this,
+						// "Wrong Username or Password", Toast.LENGTH_LONG)
+						// .show();
+						return json.getString(TAG_MESSAGE);
+
+					}
+				} else {
+					return "timeout";
 
 				}
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -279,8 +276,9 @@ public class LoginActivity extends Activity {
 			// dismiss the dialog once product deleted
 			dialog.cancel();
 			if (file_url != null) {
-//				Toast.makeText(LoginActivity.this, file_url, Toast.LENGTH_LONG)
-//						.show();
+				// Toast.makeText(LoginActivity.this, file_url,
+				// Toast.LENGTH_LONG)
+				// .show();
 				if (success == 1) {
 					editor.putBoolean("Login_Status", true);
 					editor.putString("UserName", Username.getText().toString());
@@ -291,10 +289,16 @@ public class LoginActivity extends Activity {
 							MainActivity.class);
 					finish();
 					startActivity(myIntent);
+				} else if (file_url.equalsIgnoreCase("timeout")) {
+					Toast.makeText(
+							LoginActivity.this,
+							"Connection TimeOut..!!! Please try again later..!!!",
+							Toast.LENGTH_LONG).show();
 				} else {
-					Toast.makeText(LoginActivity.this,
-							"Wrong Username or Password.. Please try again..!!!", Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(
+							LoginActivity.this,
+							"Wrong Username or Password.. Please try again..!!!",
+							Toast.LENGTH_LONG).show();
 				}
 			}
 

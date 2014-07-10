@@ -42,6 +42,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
@@ -139,7 +140,7 @@ public class MainActivity extends Activity {
 		// enabling action bar app icon and behaving it as toggle button
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
- 
+
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_drawer, // nav menu toggle icon
 				R.string.app_name, // nav drawer open - description for
@@ -153,7 +154,7 @@ public class MainActivity extends Activity {
 				// calling onPrepareOptionsMenu() to show action bar icons
 				invalidateOptionsMenu();
 			}
-                                                                                                 
+
 			public void onDrawerOpened(View drawerView) {
 				getActionBar().setTitle(mDrawerTitle);
 				getActionBar().hide();
@@ -246,7 +247,7 @@ public class MainActivity extends Activity {
 			break;
 
 		case 1:
-//			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			// getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 			fragment = new MyProfileFragment();
 			break;
 
@@ -259,10 +260,9 @@ public class MainActivity extends Activity {
 			GPSTracker gps = new GPSTracker(this);
 			getActionBar().hide();
 			if (gps.canGetLocation()) {
-				
+
 				fragment = new FindSpaMapFragment();
 
-				
 			} else {
 				// can't get location
 				// GPS or Network is not enabled
@@ -273,7 +273,7 @@ public class MainActivity extends Activity {
 
 		case 3:
 			fragment = new HomeFragment();
-//			fragment = new MakeAppointmentFragment();
+			// fragment = new MakeAppointmentFragment();
 			break;
 
 		case 4:
@@ -288,13 +288,15 @@ public class MainActivity extends Activity {
 			break;
 
 		case 6:
-			 fragment = new HomeFragment();
-			
+			fragment = new HomeFragment();
+
 			break;
 
-		case 7: 	fragment = new HomeFragment();
+		case 7:
+			fragment = new HomeFragment();
 			break;
-		case 8: 	fragment = new SettingActivity();
+		case 8:
+			fragment = new SettingActivity();
 			break;
 		case 9:
 			Intent i = new Intent(MainActivity.this, LoginActivity.class);
@@ -409,26 +411,30 @@ public class MainActivity extends Activity {
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(
 						Util.GetUserDetails, "POST", params);
+				if (json != null) {
+					// full json response
+					Log.d("Login attempt", json.toString());
 
-				// full json response
-				Log.d("Login attempt", json.toString());
+					// json success element
+					success = json.getInt(TAG_SUCCESS);
+					if (success == 1) {
 
-				// json success element
-				success = json.getInt(TAG_SUCCESS);
-				if (success == 1) {
+						Name1 = json.getString("Name");
+						Mobile1 = json.getString("Mobile");
+						Email1 = json.getString("Email");
+						Address1 = json.getString("Address");
+						DOB1 = json.getString("DOB");
+						Anniversary1 = json.getString("Anniversary");
 
-					Name1 = json.getString("Name");
-					Mobile1 = json.getString("Mobile");
-					Email1 = json.getString("Email");
-					Address1 = json.getString("Address");
-					DOB1 = json.getString("DOB");
-					Anniversary1 = json.getString("Anniversary");
+						return json.getString(TAG_MESSAGE);
+					} else {
+						Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+						return json.getString(TAG_MESSAGE);
 
-					return json.getString(TAG_MESSAGE);
+					}
 				} else {
-					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-					return json.getString(TAG_MESSAGE);
 
+					return "timeout";
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -445,12 +451,19 @@ public class MainActivity extends Activity {
 			// dismiss the dialog once product deleted
 			dialog.cancel();
 			if (file_url != null) {
-				Util.User_Name = Name1;
-				Util.User_Contact_Number = Mobile1;
-				Util.User_EmailId = Email1;
-				Util.User_Address = Address1;
-				Util.User_DOB = DOB1;
-				Util.User_Anniversary = Anniversary1;
+
+				if (file_url.equalsIgnoreCase("timeout")) {
+					Toast.makeText(MainActivity.this,
+							"Connection TimeOut..!!! Please try again later..!!!",
+							Toast.LENGTH_LONG).show();
+				} else {
+					Util.User_Name = Name1;
+					Util.User_Contact_Number = Mobile1;
+					Util.User_EmailId = Email1;
+					Util.User_Address = Address1;
+					Util.User_DOB = DOB1;
+					Util.User_Anniversary = Anniversary1;
+				}
 			}
 
 		}
