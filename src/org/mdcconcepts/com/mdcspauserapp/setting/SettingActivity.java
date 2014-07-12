@@ -181,11 +181,11 @@ public class SettingActivity extends Fragment implements ActionBar.TabListener {
 
 			case 1:
 
-				fragment = new General_Setting_Fragment();
+				fragment = new Social_Setting_Fragment();
 				return fragment;
 
 			case 2:
-				fragment = new General_Setting_Fragment();
+				fragment = new Support_And_Feedback_Fragment();
 				return fragment;
 
 			default:

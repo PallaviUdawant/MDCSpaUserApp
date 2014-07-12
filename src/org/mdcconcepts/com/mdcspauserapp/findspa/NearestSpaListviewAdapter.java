@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mdcconcepts.com.mdcspauserapp.R;
+import org.mdcconcepts.com.mdcspauserapp.customitems.ImageLoader;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -22,7 +24,9 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 	ArrayList<HashMap<String, String>> data;
 	TextView Txt_Spa_Name, Txt_Spa_Area;
 	String Spa_Id;
+	ImageView imageView_spa_logo;
 	int count;
+	// ImageLoader imgLoader;
 	Context context;
 
 	public NearestSpaListviewAdapter(Activity a,
@@ -58,21 +62,23 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		final View rootView = inflater.inflate(R.layout.spa_list_item, null,
 				true);
+		context = rootView.getContext();
 
-
-		context=rootView.getContext();
-		
 		Txt_Spa_Name = (TextView) rootView.findViewById(R.id.txt_list_spa_name);
 
 		Txt_Spa_Area = (TextView) rootView
 				.findViewById(R.id.txt_list_spa_name_area);
 
-		RatingBar Spa_ratingBar =(RatingBar)rootView.findViewById(R.id.Spa_ratingBar);
-		
+		imageView_spa_logo = (ImageView) rootView
+				.findViewById(R.id.imageView_spa_logo);
+
+		RatingBar Spa_ratingBar = (RatingBar) rootView
+				.findViewById(R.id.Spa_ratingBar);
+
 		Typeface font = Typeface.createFromAsset(activity.getAssets(),
 				"Raleway-Light.otf");
 
-//		Txt_Spa_Name.setTypeface(font);
+		// Txt_Spa_Name.setTypeface(font);
 		Txt_Spa_Area.setTypeface(font);
 		Txt_Spa_Name.setTypeface(font, Typeface.BOLD);
 
@@ -81,12 +87,16 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 		spaDetails = data.get(position);
 
 		rootView.setTag(spaDetails);
-		
+
 		Txt_Spa_Name.setText(spaDetails.get("spa_name"));
 		Txt_Spa_Area.setText(spaDetails.get("spa_addr"));
 		Spa_ratingBar.setRating(Float.parseFloat(spaDetails.get("spa_rating")));
-//		Spa_ratingBar.setNumStars(Integer.parseInt(spaDetails.get("spa_rating")));
-	
+
+		ImageLoader imgLoader = new ImageLoader(
+				activity);
+		imgLoader.DisplayImage(spaDetails.get("spa_logo"),
+				R.id.imageView_spa_logo, imageView_spa_logo);
+
 		return rootView;
 	}
 

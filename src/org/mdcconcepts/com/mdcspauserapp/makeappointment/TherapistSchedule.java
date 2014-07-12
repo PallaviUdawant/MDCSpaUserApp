@@ -383,7 +383,7 @@ public class TherapistSchedule extends Fragment {
 						// getting
 						// image
 						// image - ImageView
-						imgLoader.DisplayImage(Profile_url.replace("\\", ""),
+						imgLoader.DisplayImage(Profile_url.replace("\\", ""),                                              
 								R.id.ImageviewController_ProfileImage,
 								ImageviewController_ProfileImage);
 					}

@@ -126,7 +126,7 @@
                     android:padding="15dp" >
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/imageView_Spa_Profile_Logo"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/profile_email" />

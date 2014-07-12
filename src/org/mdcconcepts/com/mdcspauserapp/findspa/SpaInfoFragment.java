@@ -9,6 +9,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
+import org.mdcconcepts.com.mdcspauserapp.customitems.ImageLoader;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
@@ -24,8 +25,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
@@ -40,6 +43,8 @@ public class SpaInfoFragment extends Fragment {
 	Button Btn_add_to_fav;
 	Typeface font;
 
+	ImageView imageView_Spa_Profile_Logo;
+	ImageView imageView_Spa_cover_photo;
 	RatingBar spa_profile_ratings;
 
 	String Spa_Name = "";
@@ -73,8 +78,7 @@ public class SpaInfoFragment extends Fragment {
 				.findViewById(R.id.txt_spa_dec_profile);
 		txt_spa_name_profile = (TextView) rootview
 				.findViewById(R.id.txt_spa_name_profile);
-		txt_distance= (TextView) rootview
-				.findViewById(R.id.txt_distance);
+		txt_distance = (TextView) rootview.findViewById(R.id.txt_distance);
 		Btn_add_to_fav = (Button) rootview.findViewById(R.id.Btn_Add_to_fav);
 
 		spa_profile_ratings = (RatingBar) rootview
@@ -87,17 +91,32 @@ public class SpaInfoFragment extends Fragment {
 		txt_spa_desc_profile.setTypeface(font);
 		txt_spa_name_profile.setTypeface(font);
 		txt_distance.setTypeface(font);
-		
+
+		// Toast.makeText(getActivity(), selectedSpaDetails.get("spa_logo"),
+		// Toast.LENGTH_LONG).show();
 		txt_spa_name_profile.setText(selectedSpaDetails.get("spa_name"));
 		txt_spa_addr_profile.setText(selectedSpaDetails.get("spa_addr"));
 		txt_distance.setText(Util.DISTANCE);
+		Btn_add_to_fav.setTypeface(font);
 
+		Toast.makeText(getActivity(), selectedSpaDetails.get("spa_cover_photo"), Toast.LENGTH_LONG).show();
 		// Toast.makeText(getActivity(), "Rating"
 		// +selectedSpaDetails.get("spa_rating"), Toast.LENGTH_LONG).show();
-		spa_profile_ratings.setRating(Float.parseFloat(selectedSpaDetails
-				.get("spa_rating")));
+		spa_profile_ratings.setRating(Float.parseFloat(selectedSpaDetails.get("spa_rating")));
 
-		Btn_add_to_fav.setTypeface(font);
+		imageView_Spa_Profile_Logo=(ImageView)rootview
+				.findViewById(R.id.imageView_Spa_Profile_Logo);
+		
+		imageView_Spa_cover_photo=(ImageView)rootview
+				.findViewById(R.id.imageView_Spa_cover_photo);
+		
+
+		ImageLoader imgLoader = new ImageLoader(getActivity());
+		imgLoader.DisplayImage(selectedSpaDetails.get("spa_logo"),
+				R.id.imageView_Spa_Profile_Logo, imageView_Spa_Profile_Logo);
+		
+		imgLoader.DisplayImage(selectedSpaDetails.get("spa_cover_photo"),
+				R.id.imageView_Spa_cover_photo, imageView_Spa_cover_photo);
 
 		Btn_add_to_fav.setOnClickListener(new View.OnClickListener() {
 
@@ -118,7 +137,7 @@ public class SpaInfoFragment extends Fragment {
 		Dialog dialog;
 		int success;
 
-		TextView Txt_Title ;
+		TextView Txt_Title;
 		/**
 		 * Before starting background thread Show Progress Dialog
 		 * */
@@ -132,8 +151,7 @@ public class SpaInfoFragment extends Fragment {
 			dialog.setContentView(R.layout.custom_progress_dialog);
 			dialog.setCancelable(false);
 
-			 Txt_Title = (TextView) dialog
-					.findViewById(R.id.txt_alert_text);
+			Txt_Title = (TextView) dialog.findViewById(R.id.txt_alert_text);
 			Txt_Title.setTypeface(font);
 			Txt_Title.setText("Adding to favourites....");
 
@@ -141,7 +159,7 @@ public class SpaInfoFragment extends Fragment {
 					.findViewById(R.id.progressBarFour);
 			pw_four.spin();
 			dialog.show();
-			
+
 		}
 
 		@Override
@@ -154,8 +172,8 @@ public class SpaInfoFragment extends Fragment {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
 				params.add(new BasicNameValuePair("Uid", String
 						.valueOf(Util.Uid)));
-				params.add(new BasicNameValuePair("Spa_Id",
-						selectedSpaDetails.get("spa_id")));
+				params.add(new BasicNameValuePair("Spa_Id", selectedSpaDetails
+						.get("spa_id")));
 				Log.d("request!", "starting" + String.valueOf(Util.Uid) + " "
 						+ selectedSpaDetails.get("spa_id"));
 
@@ -189,9 +207,9 @@ public class SpaInfoFragment extends Fragment {
 		 * **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-			
-//			Txt_Title.setText("Added to favourites....");
-//			SystemClock.sleep(2000);
+
+			// Txt_Title.setText("Added to favourites....");
+			// SystemClock.sleep(2000);
 			dialog.dismiss();
 			if (file_url != null) {
 				if (success == 1) {

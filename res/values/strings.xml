@@ -47,22 +47,31 @@
     <string name="title_activity_test">Test</string>
     <string name="title_activity_spa_profile">SpaProfileActivity</string>
 
-    
-
     <!-- Content Description -->
     <string name="General_Setting">General Setting</string>
     <string name="Social_Setting">Social Setting</string>
     <string name="Sopport_Feedback">Sopport And Feedback</string>
     <string name="title_activity_setting">SettingActivity</string>
-
-    
-    
+    <string name="title_activity_setting__fragment">Setting_Fragment</string>
+    <string name="Email_Notification">Email Notification</string>
+    <string name="Current_Email">Current Email</string>
+    <string name="Facebook_Sync">Facebook Sync</string>
+    <string name="Google_plus">Google + Sync</string>
+    <string name="Twitter_Sync">Twitter Sync</string>
+    <string name="Information_And_Support">Information And Support</string>
     <string name="PushNotification">Push Notification</string>
     <string name="Notification">Notification</string>
     <string name="Vibrate">Vibrate</string>
     <string name="Ringtone">Ringtone</string>
     <string name="Light">Light</string>
-    <string name="title_activity_setting_fragment">Setting</string>
-    <string name="title_activity_setting__fragment">Setting_Fragment</string>
-    
+    <string name="About_Us">About Us</string>
+    <string name="Terms_Of_Use">Terms Of Use</string>
+    <string name="Privacy_Policy">Privacy Policy</string>
+    <string name="Feedback">Feedback</string>
+    <string name="Send_Us_Feedback">Send Us Feedback</string>
+    <string name="Share_This_App">Share This App</string>
+    <string name="Rate_This_App">Rate This App</string>
+    <string name="title_activity_send__feed_back">Send Feedback</string>
+    <string name="Send_Feedback">Send Feedback</string>
+
 </resources>

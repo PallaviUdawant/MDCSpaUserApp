@@ -75,7 +75,7 @@
                             android:src="@drawable/ic_notification" />
 
                         <Switch
-                            android:id="@+id/Switch07"
+                            android:id="@+id/Switch_Controller_Push_Noti_Notify"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -113,10 +113,10 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_notification" />
+                            android:src="@drawable/push_noti_vibrate" />
 
                         <Switch
-                            android:id="@+id/Switch05"
+                            android:id="@+id/Switch_Controller_Push_Noti_Vibrate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -154,10 +154,10 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_notification" />
+                            android:src="@drawable/push_noti_rington" />
 
                         <Switch
-                            android:id="@+id/Switch06"
+                            android:id="@+id/Switch_Controller_Push_Noti_Rigtone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -195,10 +195,10 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_notification" />
+                            android:src="@drawable/push_noti_light" />
 
                         <Switch
-                            android:id="@+id/Switch04"
+                            android:id="@+id/Switch_Controller_Push_Noti_Light"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -249,7 +249,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
-                        android:text="@string/PushNotification"
+                        android:text="@string/Email_Notification"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#4e3115" />
                 </RelativeLayout>
@@ -273,10 +273,10 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_notification" />
+                            android:src="@drawable/email_notification" />
 
                         <Switch
-                            android:id="@+id/Switch01"
+                            android:id="@+id/Switch_Controller_Email_Noti_Notify"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -305,48 +305,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp" >
-
-                        <ImageView
-                            android:id="@+id/imageView1"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_notification" />
-
-                        <Switch
-                            android:id="@+id/switch1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="16dp"
-                            android:layout_toRightOf="@+id/imageView1"
-                            android:text="@string/Vibrate" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="#a6988a" >
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp" >
+                        android:layout_marginTop="20dp" >
 
                         <ImageView
                             android:id="@+id/ImageView02"
@@ -355,32 +314,37 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_notification" />
+                            android:src="@drawable/email_current" />
 
-                        <Switch
-                            android:id="@+id/Switch02"
+                        <TextView
+                            android:id="@+id/Textview_Controller_Email_Noti_Current_Email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="40dp"
+                            android:text="Dev1@mdcconcepts.in"
+                            android:textAppearance="?android:attr/textAppearanceLarge" />
 
                         <TextView
                             android:id="@+id/TextView02"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="16dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="19dp"
+                            android:layout_marginTop="8dp"
                             android:layout_toRightOf="@+id/ImageView02"
-                            android:text="@string/Ringtone" />
-                    </RelativeLayout>
+                            android:text="@string/Current_Email" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="#a6988a" >
+                        <ImageView
+                            android:id="@+id/Switch_Controller_Email_Noti_Add_Another_Email"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="19dp"
+                            android:src="@drawable/add_new_email" />
+
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -388,32 +352,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
                         android:layout_marginTop="10dp" >
-
-                        <ImageView
-                            android:id="@+id/ImageView03"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_notification" />
-
-                        <Switch
-                            android:id="@+id/Switch03"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
-
-                        <TextView
-                            android:id="@+id/TextView03"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="16dp"
-                            android:layout_toRightOf="@+id/ImageView03"
-                            android:text="@string/Light" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

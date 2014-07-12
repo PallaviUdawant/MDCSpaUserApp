@@ -17,6 +17,7 @@ import org.mdcconcepts.com.mdcspauserapp.profile.MyProfileFragment;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.setting.SettingActivity;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
+import org.mdcconcepts.com.mdcspauserapp.viewappointments.ViewAppointmentFragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -184,7 +185,7 @@ public class MainActivity extends Activity {
 
 		}
 
-		new GetUserData().execute();
+//		new GetUserData().execute();
 
 	}
 
@@ -242,17 +243,18 @@ public class MainActivity extends Activity {
 
 		switch (position) {
 		case 0:
-
+			//Home Fragment
 			fragment = new HomeFragment();
 			break;
 
 		case 1:
-			// getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			//Profile Fragment
 			fragment = new MyProfileFragment();
 			break;
 
 		case 2:
 
+			//Find Spa Fragment
 			/**
 			 * Check if Gps is On
 			 */
@@ -272,7 +274,8 @@ public class MainActivity extends Activity {
 			break;
 
 		case 3:
-			fragment = new HomeFragment();
+			
+			fragment = new ViewAppointmentFragment();
 			// fragment = new MakeAppointmentFragment();
 			break;
 
