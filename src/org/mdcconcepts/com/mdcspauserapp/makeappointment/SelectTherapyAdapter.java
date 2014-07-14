@@ -90,6 +90,7 @@ public class SelectTherapyAdapter extends BaseAdapter {
 		
 		Txt_Spa_Title.setText(therapyDetails.get(Select_Therapy_Activity.THERAPY));
 		Txt_Spa_Descp.setText(therapyDetails.get(Select_Therapy_Activity.THERAPY_DETAILS));
+		rootView.setTag(therapyDetails);
 			return rootView;
 	}
 

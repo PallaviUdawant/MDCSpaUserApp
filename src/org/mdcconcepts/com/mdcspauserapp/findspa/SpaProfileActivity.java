@@ -22,6 +22,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SpaProfileActivity extends Activity implements
 		ActionBar.TabListener {
@@ -214,7 +215,8 @@ public class SpaProfileActivity extends Activity implements
 				fragment = new SpaInfoFragment(selectedSpaDetails);
 				return fragment;
 			case 1:
-				fragment = new SpaTherapiesFragment();
+				fragment = new SpaTherapiesFragment(selectedSpaDetails);
+//				Toast.makeText(getApplicationContext(), selectedSpaDetails.get("spa_id"), Toast.LENGTH_LONG).show();
 				return fragment;
 			case 2:
 				fragment = new SpaOffersFragment();

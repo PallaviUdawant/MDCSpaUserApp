@@ -121,6 +121,11 @@ public class Util {
 	 * This is to submit paining area details
 	 */
 	public static final String sendPainData = "http://mdcspa.mdcconcepts.com/sendPainData.php";
+
+	/**
+	 * This is to get therapies pricing details
+	 */
+	public static final String GetTherapiesPricingDetails = "http://mdcspa.mdcconcepts.com//GetTimeForServiceWebservice.php";
 	
 	/**
 	 * This is to get paining area details

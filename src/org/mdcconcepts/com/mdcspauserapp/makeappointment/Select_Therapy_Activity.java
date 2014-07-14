@@ -35,6 +35,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
@@ -113,7 +114,7 @@ public class Select_Therapy_Activity extends Activity implements
 		dialog = new Dialog(Select_Therapy_Activity.this,
 				R.style.ThemeWithCorners);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.time_for_service);
+		dialog.setContentView(R.layout.custom_time_for_service);
 		dialog.setTitle("Select Time for service");
 		dialog.setCancelable(false);
 
@@ -154,16 +155,18 @@ public class Select_Therapy_Activity extends Activity implements
 
 		Txt_Title.setTypeface(font);
 		// getDataDialog.show();
- final int stepSize=10;
+		final int stepSize = 10;
 		seekBar_time_for_service
 				.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 					public void onProgressChanged(SeekBar seekBar,
 							int progress, boolean fromUser) {
 						// TODO Auto-generated method stub
-//						txt_dialog_time.setText("SeekBar value is " + progress);
-						   progress = ((int)Math.round(progress/stepSize))*stepSize;
-						   seekBar_time_for_service.setProgress(progress);
-						   txt_dialog_time.setText(progress + "");
+						// txt_dialog_time.setText("SeekBar value is " +
+						// progress);
+						progress = ((int) Math.round(progress / stepSize))
+								* stepSize;
+						seekBar_time_for_service.setProgress(progress);
+						txt_dialog_time.setText(progress + "");
 					}
 
 					public void onStartTrackingTouch(SeekBar seekBar) {
@@ -274,45 +277,49 @@ public class Select_Therapy_Activity extends Activity implements
 				Log.d("requesting 10 therapies!", "starting " + hit_counter);
 
 				// Posting user data to script
-				JSONObject json = jsonParser
-						.makeHttpRequest(
-								Util.get_ten_therapies,
-								"POST", Newparams);
+				JSONObject json = jsonParser.makeHttpRequest(
+						Util.get_ten_therapies, "POST", Newparams);
 
 				// full json response
 				// Log.d("Login attempt", json.toString());
 
-				// json success element
-				success = json.getInt(TAG_SUCCESS);
-				if (success == 1) {
+				if (json != null) {
+					// json success element
+					success = json.getInt(TAG_SUCCESS);
+					if (success == 1) {
 
-					JSONArray PostJson = json.getJSONArray("posts");
-					Log.d("Ten Therapies ", PostJson.toString());
-					for (int i = 0; i < PostJson.length(); i++) {
+						JSONArray PostJson = json.getJSONArray("posts");
+						Log.d("Ten Therapies ", PostJson.toString());
+						for (int i = 0; i < PostJson.length(); i++) {
 
-						JSONObject Temp = PostJson.getJSONObject(i);
+							JSONObject Temp = PostJson.getJSONObject(i);
 
-						HashMap<String, String> spaDetails = new HashMap<String, String>();
+							HashMap<String, String> spaDetails = new HashMap<String, String>();
 
-						spaDetails.put(THERAPY_ID,
-								Temp.getString("Therapies_Id"));
-						spaDetails.put(THERAPY, Temp.getString("Therapy_Name"));
-						spaDetails.put(THERAPY_DETAILS,
-								Temp.getString("Therapy_Description"));
+							spaDetails.put(THERAPY_ID,
+									Temp.getString("Therapies_Id"));
+							spaDetails.put(THERAPY,
+									Temp.getString("Therapy_Name"));
+							spaDetails.put(THERAPY_DETAILS,
+									Temp.getString("Therapy_Description"));
 
-						TherapyDetails.add(spaDetails);
+							TherapyDetails.add(spaDetails);
 
-						isDataAvailable = true;
+							isDataAvailable = true;
+						}
+
+						return json.getString(TAG_MESSAGE);
+					} else if (success == 0) {
+						Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+						isDataAvailable = false;
+						Therapy_List.setOnScrollListener(null);
+						return json.getString(TAG_MESSAGE);
+
 					}
-
-					return json.getString(TAG_MESSAGE);
-				} else if (success == 0) {
-					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-					isDataAvailable = false;
-					Therapy_List.setOnScrollListener(null);
-					return json.getString(TAG_MESSAGE);
-
+				} else {
+					return "timeout";
 				}
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -330,30 +337,37 @@ public class Select_Therapy_Activity extends Activity implements
 			// getDataDialog.dismiss();
 			isloading = false;
 
-			if (file_url.contains("Spa Found !")) {
-				Log.v("onPostLog If", file_url);
+			if (file_url != null) {
+				if (file_url.contains("Spa Found !")) {
+					Log.v("onPostLog If", file_url);
 
-				Therapy_List.setAdapter(adapter);
-				Therapy_List.setSelectionFromTop(VisiblePosition, distFromTop);
-				hit_counter++;
-
-			} else if (file_url.equalsIgnoreCase("false")) {
-				Log.v("onPostLog Else", file_url);
-
-				if (Therapy_List.getFooterViewsCount() > 0) {
-					// Toast.makeText(Select_Therapy_Activity.this,
-					// String.valueOf(Therapy_List.getFooterViewsCount()),
-					// Toast.LENGTH_SHORT).show();
-					Therapy_List.removeFooterView(footer);
 					Therapy_List.setAdapter(adapter);
-					adapter.notifyDataSetChanged();
+					Therapy_List.setSelectionFromTop(VisiblePosition,
+							distFromTop);
+					hit_counter++;
+
+				} else if (file_url.equalsIgnoreCase("false")) {
+					Log.v("onPostLog Else", file_url);
+
+					if (Therapy_List.getFooterViewsCount() > 0) {
+						// Toast.makeText(Select_Therapy_Activity.this,
+						// String.valueOf(Therapy_List.getFooterViewsCount()),
+						// Toast.LENGTH_SHORT).show();
+						Therapy_List.removeFooterView(footer);
+						Therapy_List.setAdapter(adapter);
+						adapter.notifyDataSetChanged();
+					}
+
+					Therapy_List.setOnScrollListener(null);
+
+					// progressbar_footer.stopSpinning();
+					isDataAvailable = false;
+
 				}
-
-				Therapy_List.setOnScrollListener(null);
-
-				// progressbar_footer.stopSpinning();
-				isDataAvailable = false;
-
+				else
+				{
+					Toast.makeText(getApplicationContext(), "Connection TimeOut...!!! Please try again..!!!", Toast.LENGTH_LONG).show();
+				}
 			}
 
 		}

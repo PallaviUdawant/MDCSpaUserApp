@@ -42,7 +42,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/edittext_background"
-                    android:text=""
+                    android:padding="10dp"
+                    android:text="fsfsdf"
                     android:textColor="#4e3115" />
 
             </LinearLayout>
@@ -76,6 +77,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/edittext_background"
+                    android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
 
@@ -110,6 +112,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/edittext_background"
+                    android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
 
@@ -145,6 +148,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/edittext_background"
+                    android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
 
@@ -179,6 +183,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/edittext_background"
+                    android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
 
@@ -213,6 +218,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/edittext_background"
+                    android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
 

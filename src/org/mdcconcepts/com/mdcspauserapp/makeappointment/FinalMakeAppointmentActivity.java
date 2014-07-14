@@ -1,8 +1,11 @@
 package org.mdcconcepts.com.mdcspauserapp.makeappointment;
 
+import java.util.HashMap;
+
 import org.mdcconcepts.com.mdcspauserapp.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,12 +15,16 @@ public class FinalMakeAppointmentActivity extends Activity {
 
 	TextView final_spa_name,final_spa_therapy,final_time_for_service,final_price,final_date,final_time;
 	TextView txt_final_spa_name,txt_final_spa_therapy,txt_final_time_for_service,txt_final_price,txt_final_date,txt_final_time;
+	HashMap<String, String> AllDetails = new HashMap<String, String>();
 	Typeface font;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.final_make_appointment);
+		
+		Intent i=getIntent();
+		AllDetails=(HashMap<String, String>) i.getSerializableExtra("AllDetails");
 		
 		txt_final_spa_name=(TextView)findViewById(R.id.txt_final_spa_name);
 		txt_final_spa_therapy=(TextView)findViewById(R.id.txt_final_spa_therapy);
@@ -41,12 +48,20 @@ public class FinalMakeAppointmentActivity extends Activity {
 		txt_final_price.setTypeface(font);
 		txt_final_date.setTypeface(font);
 		txt_final_time.setTypeface(font);
+		
 		final_spa_name.setTypeface(font);
 		final_spa_therapy.setTypeface(font);
 		final_time_for_service.setTypeface(font);
 		final_price.setTypeface(font);
 		final_date.setTypeface(font);
 		final_time.setTypeface(font);
+		
+		final_spa_name.setText(AllDetails.get("Spa_Name"));
+		final_spa_therapy.setText(AllDetails.get("Therapy_Name"));
+		final_time_for_service.setText(AllDetails.get("Therapy_Time"));
+		final_price.setText(AllDetails.get("Therapy_Price"));
+		final_date.setText(AllDetails.get("Selected_Date"));
+		final_time.setText(AllDetails.get("Selected_Time"));
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		

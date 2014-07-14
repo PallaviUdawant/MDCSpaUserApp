@@ -167,10 +167,12 @@
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/edittext_background"
+                        android:clickable="false"
                         android:ems="10"
                         android:imeOptions="actionNext"
                         android:padding="10dp"
                         android:singleLine="true"
+                        android:editable="false"
                         android:textColor="#4e3115"
                         android:textSize="16sp" >
 
@@ -202,6 +204,7 @@
                         android:imeOptions="actionNext"
                         android:padding="10dp"
                         android:singleLine="true"
+                          android:editable="false"
                         android:textColor="#4e3115"
                         android:textSize="16sp" >
 
@@ -235,6 +238,7 @@
                         android:padding="10dp"
                         android:paddingRight="10dp"
                         android:singleLine="true"
+                      
                         android:textColor="#4e3115"
                         android:textSize="16sp" >
 

@@ -1,6 +1,7 @@
 package org.mdcconcepts.com.mdcspauserapp.makeappointment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -9,13 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
-import org.mdcconcepts.com.mdcspauserapp.makeappointment.SetTherapistActivity.GetTherapies;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -57,7 +56,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 	// ids
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MESSAGE = "message";
-
+	HashMap<String, String> AllDetails=new HashMap<String, String>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,12 @@ public class SelectTherapistActivity extends FragmentActivity {
 //		Bundle bundle = getIntent().getExtras();
 //		Therapies_Id = bundle.getString("Therapies_Id");
 
-		Therapies_Id="1";
+		
+		Intent i=getIntent();
+		AllDetails=(HashMap<String, String>) i.getSerializableExtra("AllDetails");
+		Therapies_Id=AllDetails.get("Therapy_Id");
+//		Toast.makeText(getApplicationContext(), AllDetails.get("Therapy_Id"), Toast.LENGTH_LONG).show();
+//		Therapies_Id="1";
 		new GetTherapies().execute();
 		
 	}
@@ -121,7 +125,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 			// below) with the page number as its lone argument.
 			TherapistSchedule fragment = new TherapistSchedule(
 					ArrayList_AllTherapistIdList.get(position),
-					ArrayList_AllTherapistList.get(position));
+					ArrayList_AllTherapistList.get(position),AllDetails);
 			// Bundle data = new Bundle();
 			// data.putInt("current_page", position + 1);
 			// fragment.setArguments(data);

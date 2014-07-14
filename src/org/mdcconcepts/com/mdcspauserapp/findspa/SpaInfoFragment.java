@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
@@ -99,7 +98,7 @@ public class SpaInfoFragment extends Fragment {
 		txt_distance.setText(Util.DISTANCE);
 		Btn_add_to_fav.setTypeface(font);
 
-		Toast.makeText(getActivity(), selectedSpaDetails.get("spa_cover_photo"), Toast.LENGTH_LONG).show();
+//		Toast.makeText(getActivity(), selectedSpaDetails.get("spa_cover_photo"), Toast.LENGTH_LONG).show();
 		// Toast.makeText(getActivity(), "Rating"
 		// +selectedSpaDetails.get("spa_rating"), Toast.LENGTH_LONG).show();
 		spa_profile_ratings.setRating(Float.parseFloat(selectedSpaDetails.get("spa_rating")));

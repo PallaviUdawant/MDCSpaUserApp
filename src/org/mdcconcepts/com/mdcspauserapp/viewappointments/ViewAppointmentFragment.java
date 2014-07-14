@@ -61,16 +61,16 @@ public class ViewAppointmentFragment extends Fragment {
 		textView_Current_Appointments.setTypeface(font,Typeface.BOLD);
 		textView_History.setTypeface(font,Typeface.BOLD);
 		
-		ArrayList_AppointMent_Service.add("Lorem Ipsum 1");
-		ArrayList_AppointMent_Service.add("Lorem Ipsum 2");
-
-		ArrayList_AppointMent_Time.add("13/07/2014 12.00 pm");
-		ArrayList_AppointMent_Time.add("15/07/2014 2.00 pm");
-
-		ArrayList_AppointMentIDList.add("1");
-		ArrayList_AppointMentIDList.add("2");
+//		ArrayList_AppointMent_Service.add("Lorem Ipsum 1");
+//		ArrayList_AppointMent_Service.add("Lorem Ipsum 2");
+//
+//		ArrayList_AppointMent_Time.add("13/07/2014 12.00 pm");
+//		ArrayList_AppointMent_Time.add("15/07/2014 2.00 pm");
+//
+//		ArrayList_AppointMentIDList.add("1");
+//		ArrayList_AppointMentIDList.add("2");
 		
-		ViewAppointmentCustomList adapter = new ViewAppointmentCustomList(
+		/*ViewAppointmentCustomList adapter = new ViewAppointmentCustomList(
 				getActivity(), ArrayList_AppointMent_Service,
 				ArrayList_AppointMent_Time);
 		listViewController_Appointmentlist.setAdapter(adapter);
@@ -84,9 +84,9 @@ public class ViewAppointmentFragment extends Fragment {
 		ArrayList_AppointMent_Time.add("03/06/2014 12.00 pm");
 		ArrayList_AppointMent_Time.add("05/06/2014 2.00 pm");
 		
-		listViewController_History.setAdapter(adapter1);
+		listViewController_History.setAdapter(adapter1);*/
 		
-//		new GetAppointments().execute();
+		new GetAppointments().execute();
 		return rootView;
 	}
 

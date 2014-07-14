@@ -88,7 +88,8 @@
         </LinearLayout>
     </LinearLayout>
 
-  <!--    <ScrollView
+    <!--
+    <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="200dp" >
@@ -311,7 +312,8 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>-->
+    </ScrollView>
+    -->
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -321,34 +323,34 @@
         android:layout_marginRight="45dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
-   
-    <Button
-        android:id="@+id/btn_show_timeline"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_gravity="right"
-        android:background="@drawable/button_default_bg"
-        android:padding="5sp"
-        android:text="Timeline"
-        android:textColor="#ffffff"
-        android:textSize="16sp" />
-<View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-       android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/btn_feedback"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_gravity="right"
-        android:background="@drawable/button_default_bg"
-        android:padding="5sp"
-        android:text="Feedback"
-        android:textColor="#ffffff"
-        android:textSize="16sp" />
+        <Button
+            android:id="@+id/btn_show_timeline"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:background="@drawable/button_default_bg"
+            android:padding="5sp"
+            android:text="Timeline"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
 
- </LinearLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_feedback"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:background="@drawable/button_default_bg"
+            android:padding="5sp"
+            android:text="Feedback"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+    </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
@@ -386,15 +388,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_background"
+                android:editable="false"
                 android:ems="10"
                 android:imeOptions="actionNext"
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textColor="#4e3115"
                 android:textSize="18sp" >
-
             </EditText>
-            
         </LinearLayout>
 
         <LinearLayout
@@ -417,15 +418,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_background"
+                android:editable="false"
                 android:ems="10"
                 android:imeOptions="actionNext"
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textColor="#4e3115"
                 android:textSize="18sp" >
-
             </EditText>
-
         </LinearLayout>
 
         <LinearLayout
@@ -456,11 +456,10 @@
                 android:paddingRight="10dp"
                 android:paddingTop="10dp"
                 android:singleLine="true"
+                
                 android:textColor="#4e3115"
                 android:textSize="18sp" >
-
             </EditText>
-
         </LinearLayout>
 
         <LinearLayout
@@ -493,9 +492,7 @@
                 android:singleLine="true"
                 android:textColor="#4e3115"
                 android:textSize="18sp" >
-
             </EditText>
-
         </LinearLayout>
     </LinearLayout>
 

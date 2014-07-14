@@ -1,6 +1,11 @@
 package org.mdcconcepts.com.mdcspauserapp.makeappointment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -11,29 +16,38 @@ import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.AppointmentScheduleCustomList;
 import org.mdcconcepts.com.mdcspauserapp.customitems.ImageLoader;
+import org.mdcconcepts.com.mdcspauserapp.profile.ProfileFragment;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 @SuppressLint("ValidFragment")
@@ -64,22 +78,45 @@ public class TherapistSchedule extends Fragment {
 	RatingBar ratingBarController_Therapist;
 	TextView textViewController_No_Of_Rating;
 	TextView txt_service, txt_service_time, txt_date, txt_time;
-	TextView txt_feedback_therapist,txt_feedback_therapist_name,txt_feedback_message,txt_feedkback_title;
-	EditText edt_feedback_message;
-	Button btn_show_timeline,btn_feedback,btn_send_feedback;
-	Spinner Date_Spinner;
+	TextView txt_feedback_therapist, txt_feedback_therapist_name,
+			txt_feedback_message, txt_feedkback_title;
 
+	EditText edt_feedback_message;
+	EditText edt_service;
+	EditText edt_service_time;
+	EditText edt_date;
+	EditText edt_time;
+
+	private Calendar cal;
+	private int day;
+	private int month;
+	private int year;
+
+	Button btn_show_timeline, btn_feedback, btn_send_feedback;
+	Spinner Date_Spinner;
+	HashMap<String, String> AllDetails = new HashMap<String, String>();
 	Dialog feedback_dialog;
+	private int hour;
+	private int minute;
+
+	static final int TIME_DIALOG_ID = 999;
 	public TherapistSchedule() {
 		// TODO Auto-generated constructor stub
 
 	}
 
-	public TherapistSchedule(String Therapist_Id, String Therapist_Name) {
+	public TherapistSchedule(String Therapist_Id, String Therapist_Name,
+			HashMap<String, String> AllDetails) {
 		// TODO Auto-generated constructor stub
 		this.Therapist_Id = Therapist_Id;
 		this.Therapist_name = Therapist_Name;
+		this.AllDetails = AllDetails;
 		Log.d("Therapist_Id", Therapist_Id);
+
+	}
+
+	public TherapistSchedule(String string, String string2) {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -104,13 +141,6 @@ public class TherapistSchedule extends Fragment {
 		Typeface font = Typeface.createFromAsset(getActivity().getAssets(),
 				"Raleway-Light.otf");
 
-		// listViewController_Schedule = (ListView) v
-		// .findViewById(R.id.listViewController_Schedule);
-		//
-		// buttonController_ChooseTherapist = (Button) v
-		// .findViewById(R.id.buttonController_ChooseTherapist);
-		// buttonController_SendFeedback = (Button) v
-		// .findViewById(R.id.buttonController_SendFeedback);
 		textViewController_SpaName = (TextView) v
 				.findViewById(R.id.textViewController_SpaName);
 
@@ -128,13 +158,16 @@ public class TherapistSchedule extends Fragment {
 				.findViewById(R.id.textViewController_No_Of_Rating);
 
 		txt_service = (TextView) v.findViewById(R.id.txt_service);
+
 		txt_service_time = (TextView) v.findViewById(R.id.txt_service_time);
 		txt_date = (TextView) v.findViewById(R.id.txt_date);
 		txt_time = (TextView) v.findViewById(R.id.txt_time);
+		
 
-		textViewController_TherapistName.setText(Therapist_name);
-
-		textViewController_SpaName.setText(Util.Spa_Name);
+		edt_service = (EditText) v.findViewById(R.id.edt_service);
+		edt_service_time = (EditText) v.findViewById(R.id.edt_service_time);
+		edt_date = (EditText) v.findViewById(R.id.edt_date);
+		edt_time=(EditText) v.findViewById(R.id.edt_time);
 
 		Button btn_show_timeline = (Button) v
 				.findViewById(R.id.btn_show_timeline);
@@ -142,24 +175,30 @@ public class TherapistSchedule extends Fragment {
 		Btn_Select_Therapist = (Button) v
 				.findViewById(R.id.Btn_Select_Therapist_final);
 
-		btn_feedback=(Button)v.findViewById(R.id.btn_feedback);
-		
+		btn_feedback = (Button) v.findViewById(R.id.btn_feedback);
+
 		/**
 		 * Feedback Dialog
 		 */
-		feedback_dialog= new Dialog(getActivity());
+		feedback_dialog = new Dialog(getActivity());
 		feedback_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		feedback_dialog.setContentView(R.layout.feedback_dialog);
-		
-		txt_feedback_message=(TextView)feedback_dialog.findViewById(R.id.txt_feedback_message);
-		txt_feedback_therapist=(TextView)feedback_dialog.findViewById(R.id.txt_feedback_therapist);
-		txt_feedback_therapist_name=(TextView)feedback_dialog.findViewById(R.id.txt_feedback_therapist_name);
-		txt_feedkback_title=(TextView)feedback_dialog.findViewById(R.id.txt_feedkback_title);
-		
-		edt_feedback_message=(EditText)feedback_dialog.findViewById(R.id.edt_feedback_message);
-		
-		btn_send_feedback=(Button)feedback_dialog.findViewById(R.id.btn_send_feedback);
-		
+
+		txt_feedback_message = (TextView) feedback_dialog
+				.findViewById(R.id.txt_feedback_message);
+		txt_feedback_therapist = (TextView) feedback_dialog
+				.findViewById(R.id.txt_feedback_therapist);
+		txt_feedback_therapist_name = (TextView) feedback_dialog
+				.findViewById(R.id.txt_feedback_therapist_name);
+		txt_feedkback_title = (TextView) feedback_dialog
+				.findViewById(R.id.txt_feedkback_title);
+
+		edt_feedback_message = (EditText) feedback_dialog
+				.findViewById(R.id.edt_feedback_message);
+
+		btn_send_feedback = (Button) feedback_dialog
+				.findViewById(R.id.btn_send_feedback);
+
 		/**
 		 * Set Fonts
 		 */
@@ -174,14 +213,25 @@ public class TherapistSchedule extends Fragment {
 		txt_feedback_therapist.setTypeface(font);
 		txt_feedback_therapist_name.setTypeface(font);
 		txt_feedkback_title.setTypeface(font);
-		
+
 		edt_feedback_message.setTypeface(font);
+		edt_service.setTypeface(font);
+		edt_service_time.setTypeface(font);
+		edt_time.setTypeface(font);
 
 		Btn_Select_Therapist.setTypeface(font);
 		btn_show_timeline.setTypeface(font);
 		btn_feedback.setTypeface(font);
 		btn_send_feedback.setTypeface(font);
-		
+		edt_date.setTypeface(font);
+
+		/**
+		 * SetText
+		 */
+		edt_service.setText(AllDetails.get("Therapy_Name"));
+		edt_service_time.setText(AllDetails.get("Therapy_Time"));
+		textViewController_TherapistName.setText(Therapist_name);
+		textViewController_SpaName.setText(AllDetails.get("Spa_Name"));
 		/**
 		 * TimeLine Dialog
 		 */
@@ -190,7 +240,8 @@ public class TherapistSchedule extends Fragment {
 		timeline_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		timeline_dialog.setContentView(R.layout.timeline);
 
-		Date_Spinner = (Spinner) timeline_dialog.findViewById(R.id.date_spinner);
+		Date_Spinner = (Spinner) timeline_dialog
+				.findViewById(R.id.date_spinner);
 
 		ArrayList_Dates.add("Today: 17/06/2014");
 		ArrayList_Dates.add("Tommorrow:18/06/2014");
@@ -203,29 +254,113 @@ public class TherapistSchedule extends Fragment {
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		Date_Spinner.setAdapter(dataAdapter);
+
+		cal = Calendar.getInstance();
+		day = cal.get(Calendar.DAY_OF_MONTH);
+		month = cal.get(Calendar.MONTH);
+		year = cal.get(Calendar.YEAR);
+		edt_date.setInputType(InputType.TYPE_NULL);
 		
+		hour = cal.get(Calendar.HOUR_OF_DAY);
+		minute = cal.get(Calendar.MINUTE);
 		
+		edt_date.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showDatepickerDialog();
+			}
+		});
+		
+		edt_time.setInputType(InputType.TYPE_NULL);
+
+		edt_time.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				 final Calendar c = Calendar.getInstance();
+		            final int mHour = c.get(Calendar.HOUR_OF_DAY);
+		            final int mMinute = c.get(Calendar.MINUTE);
+		 
+		            // Launch Time Picker Dialog
+		            TimePickerDialog tpd = new TimePickerDialog(getActivity(),
+		                    new TimePickerDialog.OnTimeSetListener() {
+		 
+		                        @Override
+		                        public void onTimeSet(TimePicker view, int hourOfDay,
+		                                int minute) {
+		                            // Display Selected time in textbox
+		                        	String timeSet = "";
+		                        	edt_time.setText(hourOfDay + ":" + minute);
+		                        
+		                        	/* if (mHour > 12) {
+		                        	        hour -= 12;
+		                        	        timeSet = "PM";
+		                        	        } else if (mHour == 0) {
+		                        	        hour += 12;
+		                        	        timeSet = "AM";
+		                        	        } else if (mHour == 12)
+		                        	        timeSet = "PM";
+		                        	        else
+		                        	        timeSet = "AM";
+
+		                        	        String min = "";
+		                        	        if (mMinute < 10)
+		                        	        min = "0" + mMinute ;
+		                        	        else
+		                        	        min = String.valueOf(mMinute);
+
+		                        	        // Append in a StringBuilder
+		                        	        String aTime = new StringBuilder().append(mHour).append(':')
+		                        	        .append(min ).append(" ").append(timeSet).toString();
+		                        	        
+		                        	        SimpleDateFormat displayFormat = new SimpleDateFormat("hh:mm a");
+		                        	        SimpleDateFormat parseFormat = new SimpleDateFormat("HH:mm:ss");
+		                        	      
+											try {
+												  Date date;
+												date = parseFormat.parse(hourOfDay + ":" + minute);
+												 String convertedTime = displayFormat.format(date);
+												 edt_time.setText(convertedTime);
+											} catch (ParseException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}    */    
+		                        	       
+		                        	        
+		                           
+		                        }
+		                    }, mHour, mMinute, false);
+		            
+		            tpd.show();
+			}
+		});
 		Btn_Select_Therapist.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				Intent i=new Intent(getActivity(),FinalMakeAppointmentActivity.class);
+				Intent i = new Intent(getActivity(),
+						FinalMakeAppointmentActivity.class);
+				AllDetails.put("Selected_Time", edt_service.getText().toString());
+				AllDetails.put("Selected_Date",edt_date.getText().toString());
+				i.putExtra("AllDetails", AllDetails);
+				
 				startActivity(i);
 			}
 		});
-		
+
 		btn_feedback.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				feedback_dialog.show();
 			}
 		});
-
-		
 
 		btn_show_timeline.setOnClickListener(new View.OnClickListener() {
 
@@ -235,8 +370,7 @@ public class TherapistSchedule extends Fragment {
 				timeline_dialog.show();
 			}
 		});
-		
-		
+
 		// buttonController_ChooseTherapist.setEnabled(false);
 		//
 		// buttonController_ChooseTherapist
@@ -278,6 +412,28 @@ public class TherapistSchedule extends Fragment {
 		// new IsTherapistAvailable().execute();
 
 		return v;
+	}
+	
+ 
+	
+	
+	/**
+	 * Date Picker
+	 */
+	public void showDatepickerDialog() {
+//		InputMethodManager imm = (InputMethodManager)getSystemService(
+//			      Context.INPUT_METHOD_SERVICE);
+//			imm.hideSoftInputFromWindow(edt_date.getWindowToken(), 0);
+		DatePickerDialog mDatePicker=new DatePickerDialog(getActivity(), new OnDateSetListener() {                  
+            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                // TODO Auto-generated method stub                      
+                /*      Your code   to get date and time    */
+            		edt_date.setText(selectedyear+"-"+(selectedmonth+1)+"-"+selectedday);
+            		
+            }
+        },year, month, day);
+        mDatePicker.setTitle("Select date");                
+        mDatePicker.show(); 
 	}
 
 	class GetTherapistSchedule extends AsyncTask<String, String, String> {
@@ -383,7 +539,7 @@ public class TherapistSchedule extends Fragment {
 						// getting
 						// image
 						// image - ImageView
-						imgLoader.DisplayImage(Profile_url.replace("\\", ""),                                              
+						imgLoader.DisplayImage(Profile_url.replace("\\", ""),
 								R.id.ImageviewController_ProfileImage,
 								ImageviewController_ProfileImage);
 					}
