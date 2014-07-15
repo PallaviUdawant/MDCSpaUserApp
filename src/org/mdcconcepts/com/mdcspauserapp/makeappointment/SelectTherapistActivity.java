@@ -58,6 +58,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 	private static final String TAG_MESSAGE = "message";
 	HashMap<String, String> AllDetails=new HashMap<String, String>();
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -206,7 +207,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog = new ProgressDialog(SelectTherapistActivity.this);
-			pDialog.setMessage("Getting Therapies Data ... ");
+			pDialog.setMessage("Getting Therapist Data ... ");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(false);
 			pDialog.show();

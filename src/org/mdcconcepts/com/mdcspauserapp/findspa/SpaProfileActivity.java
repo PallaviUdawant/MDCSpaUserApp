@@ -17,12 +17,10 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SpaProfileActivity extends Activity implements
 		ActionBar.TabListener {
@@ -48,6 +46,7 @@ public class SpaProfileActivity extends Activity implements
 
 	HashMap<String, String> selectedSpaDetails = new HashMap<String, String>();
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,7 +87,7 @@ public class SpaProfileActivity extends Activity implements
 					}
 				});
 
-		SpannableString s = new SpannableString("Spa Profile");
+//		SpannableString s = new SpannableString("Spa Profile");
 		// s.setSpan(new TypefaceSpan(SpaProfileActivity.this, Util.fontPath),
 		// 0, s.length(),
 		// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

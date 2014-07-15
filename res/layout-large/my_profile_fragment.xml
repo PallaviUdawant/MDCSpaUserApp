@@ -27,7 +27,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <ImageView
-                        android:id="@+id/ImageviewController_ProfileImage"
+                        android:id="@+id/ImageviewController_ProfileImage1"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:layout_alignParentBottom="true"
@@ -41,8 +41,8 @@
                         android:id="@+id/Name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/ImageviewController_ProfileImage"
-                        android:layout_toRightOf="@+id/ImageviewController_ProfileImage"
+                        android:layout_alignBottom="@+id/ImageviewController_ProfileImage1"
+                        android:layout_toRightOf="@+id/ImageviewController_ProfileImage1"
                         android:padding="5dp"
                         android:text="Name"
                         android:textColor="#ffffff"

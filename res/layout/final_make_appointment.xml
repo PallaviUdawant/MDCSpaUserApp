@@ -2,15 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-   
-    android:background="@drawable/drawer_bg">
+    android:background="@drawable/drawer_bg"
+    android:orientation="vertical" >
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-         android:layout_marginTop="30dp" >
+        android:layout_marginTop="30dp" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -45,7 +44,6 @@
                     android:padding="10dp"
                     android:text="fsfsdf"
                     android:textColor="#4e3115" />
-
             </LinearLayout>
 
             <View
@@ -54,14 +52,14 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
                 android:background="#4e3115" />
-            
-             <LinearLayout
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_marginBottom="25dp"
-                 android:layout_marginTop="25dp"
-                 android:gravity="center"
-                 android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/txt_final_spa_therapy"
@@ -80,7 +78,6 @@
                     android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
-
             </LinearLayout>
 
             <View
@@ -90,13 +87,47 @@
                 android:layout_marginRight="0dp"
                 android:background="#4e3115" />
 
-             <LinearLayout
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_marginBottom="25dp"
-                 android:layout_marginTop="25dp"
-                 android:gravity="center"
-                 android:orientation="horizontal" >
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/txt_final_therapist"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:padding="0dp"
+                    android:text="Therapist"
+                    android:textColor="#4e3115"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/final_therapist"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/edittext_background"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="#4e3115" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#4e3115" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/txt_final_time_for_service"
@@ -115,9 +146,7 @@
                     android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
-
             </LinearLayout>
-
 
             <View
                 android:layout_width="fill_parent"
@@ -126,13 +155,13 @@
                 android:layout_marginRight="0dp"
                 android:background="#4e3115" />
 
-             <LinearLayout
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_marginBottom="25dp"
-                 android:layout_marginTop="25dp"
-                 android:gravity="center"
-                 android:orientation="horizontal" >
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/txt_final_price"
@@ -151,7 +180,6 @@
                     android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
-
             </LinearLayout>
 
             <View
@@ -161,13 +189,13 @@
                 android:layout_marginRight="0dp"
                 android:background="#4e3115" />
 
-             <LinearLayout
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_marginBottom="25dp"
-                 android:layout_marginTop="25dp"
-                 android:gravity="center"
-                 android:orientation="horizontal" >
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/txt_final_date"
@@ -186,7 +214,6 @@
                     android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
-
             </LinearLayout>
 
             <View
@@ -196,13 +223,13 @@
                 android:layout_marginRight="0dp"
                 android:background="#4e3115" />
 
-             <LinearLayout
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_marginBottom="25dp"
-                 android:layout_marginTop="25dp"
-                 android:gravity="center"
-                 android:orientation="horizontal" >
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/txt_final_time"
@@ -221,7 +248,6 @@
                     android:padding="10dp"
                     android:text=""
                     android:textColor="#4e3115" />
-
             </LinearLayout>
 
             <View
@@ -231,22 +257,19 @@
                 android:layout_marginRight="0dp"
                 android:background="#4e3115" />
 
-   <Button
-       android:id="@+id/Btn_Skip_Injuries_Fragment"
-       android:layout_width="200dp"
-       android:layout_height="40dp"
-       android:layout_gravity="right"
-       android:layout_marginBottom="20dp"
-       android:layout_marginTop="20dp"
-       android:background="@drawable/button_default_bg"
-       android:padding="5sp"
-       android:text="Make an appointment"
-       android:textColor="#ffffff"
-       android:textSize="14sp" />
-
+            <Button
+                android:id="@+id/Btn_Skip_Injuries_Fragment"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_default_bg"
+                android:padding="5sp"
+                android:text="Make an appointment"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
-
- 
 
 </LinearLayout>

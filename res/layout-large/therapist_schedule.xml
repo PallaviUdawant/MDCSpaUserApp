@@ -23,7 +23,7 @@
             android:padding="15dp" >
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/Imageview_ProfileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="5dp"
@@ -88,232 +88,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!--
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center"
-                android:gravity="center_vertical|center"
-                android:orientation="vertical" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|center"
-                    android:orientation="horizontal"
-                    android:weightSum="9" >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:orientation="vertical" >
-
-                        <LinearLayout
-                            android:layout_width="150dp"
-                            android:layout_height="120dp"
-                            android:layout_marginTop="107dp"
-                            android:gravity="center_vertical|center_horizontal|center"
-                            android:orientation="horizontal" >
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/drop_sawdow_bk" >
-
-                                <TextView
-                                    android:id="@+id/t4"
-                                    android:layout_width="@dimen/textView_width"
-                                    android:layout_height="wrap_content"
-                                    android:padding="10sp"
-                                    android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="fill_parent"
-                                android:layout_height="2dp"
-                                android:background="#4e3115" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="120dp"
-                            android:layout_marginTop="39dp"
-                            android:gravity="center_vertical|center_horizontal|center"
-                            android:orientation="horizontal" >
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/drop_sawdow_bk" >
-
-                                <TextView
-                                    android:id="@+id/t4"
-                                    android:layout_width="@dimen/textView_width"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical|center"
-                                    android:padding="10sp"
-                                    android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="fill_parent"
-                                android:layout_height="2dp"
-                                android:background="#4e3115" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:layout_margin="2dp"
-                        android:layout_marginTop="0sp"
-                        android:orientation="vertical" >
-
-                        <View
-                            android:layout_width="4dp"
-                            android:layout_height="80dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/rounded_corners" />
-
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/circle_bottom_margin"
-                            android:layout_marginTop="@dimen/circle_top_margin"
-                            android:background="@drawable/circle" />
-
-                        <View
-                            android:layout_width="4dp"
-                            android:layout_height="55dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/rounded_corners" />
-
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/circle_bottom_margin"
-                            android:layout_marginTop="@dimen/circle_top_margin"
-                            android:background="@drawable/circle" />
-
-                        <View
-                            android:layout_width="4dp"
-                            android:layout_height="65dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/rounded_corners" />
-
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/circle_bottom_margin"
-                            android:layout_marginTop="@dimen/circle_top_margin"
-                            android:background="@drawable/circle" />
-
-                        <View
-                            android:layout_width="4dp"
-                            android:layout_height="58dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/rounded_corners" />
-
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/circle_bottom_margin"
-                            android:layout_marginTop="@dimen/circle_top_margin"
-                            android:background="@drawable/circle" />
-
-                        <View
-                            android:layout_width="4dp"
-                            android:layout_height="70dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/rounded_corners" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
-                        android:orientation="vertical" >
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="120dp"
-                            android:layout_marginTop="30dp"
-                            android:gravity="center_vertical|center_horizontal|center"
-                            android:orientation="horizontal" >
-
-                            <View
-                                android:id="@+id/v1"
-                                android:layout_width="26dp"
-                                android:layout_height="2dp"
-                                android:background="#4e3115" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/drop_sawdow_bk" >
-
-                                <TextView
-                                    android:id="@+id/t1"
-                                    android:layout_width="@dimen/textView_width"
-                                    android:layout_height="wrap_content"
-                                    android:padding="10sp"
-                                    android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="120dp"
-                            android:layout_marginTop="42dp"
-                            android:gravity="center"
-                            android:orientation="horizontal" >
-
-                            <View
-                                android:id="@+id/v1"
-                                android:layout_width="26dp"
-                                android:layout_height="2dp"
-                                android:layout_weight="4"
-                                android:background="#4e3115" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/drop_sawdow_bk" >
-
-                                <TextView
-                                    android:id="@+id/t4"
-                                    android:layout_width="@dimen/textView_width"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical|center"
-                                    android:padding="10sp"
-                                    android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-    -->
+   
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -456,7 +231,6 @@
                 android:paddingRight="10dp"
                 android:paddingTop="10dp"
                 android:singleLine="true"
-                
                 android:textColor="#4e3115"
                 android:textSize="18sp" >
             </EditText>
@@ -496,17 +270,32 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/Btn_Select_Therapist_final"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_default_bg"
-        android:text="Select Therapist"
-        android:textColor="#ffffff"
-        android:textSize="16sp" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/Btn_Select_Therapist_final"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_default_bg"
+            android:gravity="fill_vertical|center"
+            android:padding="10dp"
+            android:text="Select Therapist"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_therapist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
 
 </LinearLayout>

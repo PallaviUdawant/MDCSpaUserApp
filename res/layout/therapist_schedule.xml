@@ -29,7 +29,7 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:id="@+id/imageView1"
+                        android:id="@+id/Imageview_ProfileImage"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="5dp"
@@ -91,12 +91,10 @@
                                 android:textColor="#4e3115"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
-
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -168,14 +166,13 @@
                         android:layout_height="40dp"
                         android:background="@drawable/edittext_background"
                         android:clickable="false"
+                        android:editable="false"
                         android:ems="10"
                         android:imeOptions="actionNext"
                         android:padding="10dp"
                         android:singleLine="true"
-                        android:editable="false"
                         android:textColor="#4e3115"
                         android:textSize="16sp" >
-
                     </EditText>
                 </LinearLayout>
 
@@ -200,14 +197,13 @@
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/edittext_background"
+                        android:editable="false"
                         android:ems="10"
                         android:imeOptions="actionNext"
                         android:padding="10dp"
                         android:singleLine="true"
-                          android:editable="false"
                         android:textColor="#4e3115"
                         android:textSize="16sp" >
-
                     </EditText>
                 </LinearLayout>
 
@@ -238,10 +234,8 @@
                         android:padding="10dp"
                         android:paddingRight="10dp"
                         android:singleLine="true"
-                      
                         android:textColor="#4e3115"
                         android:textSize="16sp" >
-
                     </EditText>
                 </LinearLayout>
 
@@ -274,21 +268,38 @@
                         android:singleLine="true"
                         android:textColor="#4e3115"
                         android:textSize="16sp" >
-
                     </EditText>
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+           
             <Button
                 android:id="@+id/Btn_Select_Therapist_final"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:layout_margin="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/button_default_bg"
+                android:gravity="fill_vertical|center"
+                android:padding="10dp"
                 android:text="Select Therapist"
                 android:textColor="#ffffff"
                 android:textSize="14sp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar_therapist"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp" />
+
+             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

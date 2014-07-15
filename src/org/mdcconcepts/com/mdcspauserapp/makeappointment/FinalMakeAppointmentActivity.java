@@ -13,10 +13,11 @@ import android.widget.TextView;
 
 public class FinalMakeAppointmentActivity extends Activity {
 
-	TextView final_spa_name,final_spa_therapy,final_time_for_service,final_price,final_date,final_time;
-	TextView txt_final_spa_name,txt_final_spa_therapy,txt_final_time_for_service,txt_final_price,txt_final_date,txt_final_time;
+	TextView final_spa_name,final_spa_therapy,final_time_for_service,final_price,final_date,final_time,final_therapist;
+	TextView txt_final_spa_name,txt_final_spa_therapy,txt_final_time_for_service,txt_final_price,txt_final_date,txt_final_time,txt_final_therapist;
 	HashMap<String, String> AllDetails = new HashMap<String, String>();
 	Typeface font;
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -32,6 +33,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 		txt_final_price=(TextView)findViewById(R.id.txt_final_price);
 		txt_final_date=(TextView)findViewById(R.id.txt_final_date);
 		txt_final_time=(TextView)findViewById(R.id.txt_final_time);
+		txt_final_therapist=(TextView)findViewById(R.id.txt_final_therapist);
 		
 		final_spa_name=(TextView)findViewById(R.id.final_spa_name);
 		final_spa_therapy=(TextView)findViewById(R.id.final_spa_therapy);
@@ -39,6 +41,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 		final_price=(TextView)findViewById(R.id.final_price);
 		final_date=(TextView)findViewById(R.id.final_date);
 		final_time=(TextView)findViewById(R.id.final_time);
+		final_therapist=(TextView)findViewById(R.id.final_therapist);
 		
 		font=Typeface.createFromAsset(getAssets(), "Raleway-Light.otf");
 		
@@ -48,6 +51,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 		txt_final_price.setTypeface(font);
 		txt_final_date.setTypeface(font);
 		txt_final_time.setTypeface(font);
+		txt_final_therapist.setTypeface(font);
 		
 		final_spa_name.setTypeface(font);
 		final_spa_therapy.setTypeface(font);
@@ -55,6 +59,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 		final_price.setTypeface(font);
 		final_date.setTypeface(font);
 		final_time.setTypeface(font);
+		final_therapist.setTypeface(font);
 		
 		final_spa_name.setText(AllDetails.get("Spa_Name"));
 		final_spa_therapy.setText(AllDetails.get("Therapy_Name"));
@@ -62,6 +67,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 		final_price.setText(AllDetails.get("Therapy_Price"));
 		final_date.setText(AllDetails.get("Selected_Date"));
 		final_time.setText(AllDetails.get("Selected_Time"));
+		final_therapist.setText(AllDetails.get("Selected_Therapist"));
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
