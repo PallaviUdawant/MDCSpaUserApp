@@ -84,6 +84,8 @@ public class Util {
 	 * This is Get An Single Appointments User Webservice URL.
 	 */
 	public static final String GetTherapistSchedule = "http://mdcspa.mdcconcepts.com/GetTherapistSchedule.php";
+	
+	public static final String GetTherapistTimeline = "http://mdcspa.mdcconcepts.com/GetTherapistTimeline.php";
 
 	/**
 	 * This is Get An Single Appointments User Webservice URL.

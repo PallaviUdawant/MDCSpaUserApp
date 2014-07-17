@@ -92,6 +92,11 @@ public class TherapistSchedule extends Fragment {
 	private int month;
 	private int year;
 
+	static String Schedule_Id="Schedule_Id";
+	static String Timeline_Therapist_Id="Therapist_Id";
+	static String Appointment_Start_Time="Start_Time";
+	static String Appointment_End_Time="End_time";
+	
 	Button btn_show_timeline, btn_feedback, btn_send_feedback;
 	Spinner Date_Spinner;
 	HashMap<String, String> AllDetails = new HashMap<String, String>();
@@ -100,7 +105,7 @@ public class TherapistSchedule extends Fragment {
 	static final int TIME_DIALOG_ID = 999;
 	Typeface font;
 	ProgressBar progressBar_therapist;
-
+	ArrayList<HashMap<String, String>> TherapyTimelineDetails = new ArrayList<HashMap<String, String>>();
 	public TherapistSchedule() {
 		// TODO Auto-generated constructor stub
 
@@ -168,8 +173,9 @@ public class TherapistSchedule extends Fragment {
 		edt_service_time = (EditText) v.findViewById(R.id.edt_service_time);
 		edt_date = (EditText) v.findViewById(R.id.edt_date);
 		edt_time = (EditText) v.findViewById(R.id.edt_time);
-		
-		progressBar_therapist=(ProgressBar)v.findViewById(R.id.progressBar_therapist);
+
+		progressBar_therapist = (ProgressBar) v
+				.findViewById(R.id.progressBar_therapist);
 
 		progressBar_therapist.setVisibility(View.GONE);
 		Button btn_show_timeline = (Button) v
@@ -348,14 +354,13 @@ public class TherapistSchedule extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-			
+
 				if (!edt_date.getText().toString().isEmpty()) {
 
 					edt_date.setError(null);
-					if(edt_time.getText().toString().isEmpty())
+					if (edt_time.getText().toString().isEmpty())
 						edt_time.setError("Please enter time..!!!");
-					else
-					if (edt_time.getText().toString() != null) {
+					else if (edt_time.getText().toString() != null) {
 						edt_time.setError(null);
 						new IsTherapistAvailable().execute();
 						progressBar_therapist.setVisibility(View.VISIBLE);
@@ -397,7 +402,8 @@ public class TherapistSchedule extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				timeline_dialog.show();
+				new GetTherapistTimeline().execute();
+//				timeline_dialog.show();
 			}
 		});
 		btn_send_feedback.setOnClickListener(new View.OnClickListener() {
@@ -454,6 +460,7 @@ public class TherapistSchedule extends Fragment {
 		adapter.clear();
 
 		new GetTherapistSchedule().execute();
+		
 		//
 
 		return v;
@@ -597,7 +604,7 @@ public class TherapistSchedule extends Fragment {
 
 				params.add(new BasicNameValuePair("Therapist_Id", ""
 						+ Therapist_Id));
-				Log.d("request!", "starting" + Therapist_Id);
+				Log.d("GetTherapistSchedule!", "starting" + Therapist_Id);
 
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(
@@ -688,6 +695,103 @@ public class TherapistSchedule extends Fragment {
 		}
 	}
 
+	class GetTherapistTimeline extends AsyncTask<String, String, String> {
+
+		int success;
+		/**
+		 * Before starting background thread Show Progress Dialog
+		 * */
+		boolean failure = false;
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			if(TherapyTimelineDetails.size()>0)
+				TherapyTimelineDetails.clear();
+		}
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			try {
+				// Building Parameters
+				List<NameValuePair> params1 = new ArrayList<NameValuePair>();
+
+				params1.add(new BasicNameValuePair("Therapist_Id", ""
+						+ Therapist_Id));
+
+				Log.d("GetTherapistTimeline!", Therapist_Id);
+//				Log.d("Appointment time!", edt_date.getText().toString().trim()
+//						+ " " + Util.Appointment_Time);
+
+				// Posting user data to script
+				JSONObject json = jsonParser.makeHttpRequest(
+						Util.GetTherapistTimeline, "POST", params1);
+
+				if (json != null) {
+					// full json response
+					Log.d("Login attempt", json.toString());
+
+					// json success element
+					success = json.getInt(TAG_SUCCESS);
+					if (success == 1) 
+					{
+						JSONArray PostJson = json.getJSONArray("posts");
+						Log.d("GetTherapistTimeline ", PostJson.toString());
+						for (int i = 0; i < PostJson.length(); i++) {
+
+							JSONObject Temp = PostJson.getJSONObject(i);
+							HashMap<String, String> TherapistScheduleDetails = new HashMap<String, String>();
+
+							TherapistScheduleDetails.put(Schedule_Id,
+									Temp.getString("Schedule_Id"));
+							TherapistScheduleDetails.put(Timeline_Therapist_Id,
+									Temp.getString("Therapist_Id"));
+							TherapistScheduleDetails.put("Start_Time",
+									Temp.getString(Appointment_Start_Time));
+							TherapistScheduleDetails.put(Appointment_End_Time,
+									Temp.getString("End_Time"));
+
+							TherapyTimelineDetails.add(TherapistScheduleDetails);
+
+						}
+
+						return json.getString(TAG_MESSAGE);
+								
+					} else {
+						Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+						return json.getString(TAG_MESSAGE);
+
+					}
+				}
+				else
+				{
+					return "timeout";
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if(result!=null)
+			{
+				if(success==1)
+				{
+					Intent i = new Intent(getActivity(),TimelineDynamicActivity.class);
+					i.putExtra("TimelineData", TherapyTimelineDetails);
+					startActivity(i);
+				}
+			}
+			
+		}
+	}
+
 	class IsTherapistAvailable extends AsyncTask<String, String, String> {
 
 		// Progress Dialog
@@ -723,8 +827,8 @@ public class TherapistSchedule extends Fragment {
 						+ Util.Appointment_Time));
 
 				Log.d("request!", Therapist_Id);
-				Log.d("Appointment time!", edt_date.getText().toString().trim() + " "
-						+ Util.Appointment_Time);
+				Log.d("Appointment time!", edt_date.getText().toString().trim()
+						+ " " + Util.Appointment_Time);
 
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(

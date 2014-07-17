@@ -22,10 +22,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -67,6 +70,7 @@ public class LoginActivity extends Activity {
 	// Connection detector class
 	ConnectionDetector cd;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -113,6 +117,42 @@ public class LoginActivity extends Activity {
 
 		txt_Create_account = (TextView) findViewById(R.id.txt_Create_account);
 
+//		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_LARGE) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+//			Toast.makeText(getApplicationContext(), "High", Toast.LENGTH_LONG)
+//					.show();
+//		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_NORMAL) == Configuration.SCREENLAYOUT_SIZE_NORMAL) { // do
+//																																						// something
+//			Toast.makeText(getApplicationContext(), "Normal", Toast.LENGTH_LONG)
+//					.show();
+//		} else {
+//			Toast.makeText(getApplicationContext(),
+//					"Medium " + getResources().getConfiguration().screenLayout,
+//					Toast.LENGTH_LONG).show();
+//		}
+
+		// final float LOW_LEVEL = 0.75f;
+		// final float MEDIUM_LEVEL = 1.0f;
+		// final float HIGH_LEVEL = 1.5f;
+		//
+		// float level = getApplicationContext().getResources()
+		// .getDisplayMetrics().density;
+		//
+		// if (level == LOW_LEVEL) {
+		//
+		// // do something here
+		// Toast.makeText(getApplicationContext(), "Low", Toast.LENGTH_LONG)
+		// .show();
+		//
+		// } else if (level == MEDIUM_LEVEL) {
+		// Toast.makeText(getApplicationContext(), "Medium ",
+		// Toast.LENGTH_LONG).show();
+		// // do smoothing here
+		//
+		// } else if (level == HIGH_LEVEL) {
+		// // do something here
+		// Toast.makeText(getApplicationContext(), "High", Toast.LENGTH_LONG)
+		// .show();
+		// }
 		/**
 		 * Set Font
 		 */

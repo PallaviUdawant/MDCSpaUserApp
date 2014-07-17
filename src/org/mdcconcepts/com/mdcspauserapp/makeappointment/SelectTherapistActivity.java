@@ -224,7 +224,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 
 				params.add(new BasicNameValuePair("Therapies_Id", ""
 						+ Therapies_Id));
-				Log.d("request!", "starting");
+				Log.d("Get Therapist!", "starting");
 
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(Util.GetTherapist,
