@@ -8,15 +8,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
-import org.mdcconcepts.com.mdcspauserapp.favourites.FavouritesFragment;
 import org.mdcconcepts.com.mdcspauserapp.findspa.FindSpaMapFragment;
 import org.mdcconcepts.com.mdcspauserapp.giftcard.GiftCardFragment;
 import org.mdcconcepts.com.mdcspauserapp.login.LoginActivity;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerItem;
 import org.mdcconcepts.com.mdcspauserapp.navigation.NavDrawerListAdapter;
-import org.mdcconcepts.com.mdcspauserapp.profile.MyProfileFragment;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
-import org.mdcconcepts.com.mdcspauserapp.setting.SettingActivity;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 import org.mdcconcepts.com.mdcspauserapp.viewappointments.ViewAppointmentFragment;
 
@@ -25,7 +22,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -98,39 +94,27 @@ public class MainActivity extends Activity {
 		// Home
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons
 				.getResourceId(0, -1)));
-		// Profile
+		// File Spa
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons
 				.getResourceId(1, -1)));
-		// File Spa
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons
-				.getResourceId(2, -1)));
 
 		// View an appointment
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons
-				.getResourceId(3, -1), true, "22"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons
+				.getResourceId(2, -1), true, "22"));
 
 		// Notifications
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons
-				.getResourceId(5, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons
+				.getResourceId(3, -1)));
 
 		// Send Gift Card
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons
+				.getResourceId(4, -1), true, "50+"));
+
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons
-				.getResourceId(6, -1), true, "50+"));
-
-		// Favourites
+				.getResourceId(5, -1)));
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons
-				.getResourceId(7, -1)));
-		// Offers
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons
-				.getResourceId(8, -1)));
+				.getResourceId(5, -1)));
 
-		// Settings
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons
-				.getResourceId(9, -1)));
-		// Logout
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[9], navMenuIcons
-				.getResourceId(10, -1)));
-		// Recycle the typed array
 		navMenuIcons.recycle();
 
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
@@ -174,22 +158,22 @@ public class MainActivity extends Activity {
 			displayView(0);
 		}
 
-		sharedPreferences = getSharedPreferences(Util.APP_PREFERENCES,
-				Context.MODE_PRIVATE);
-		boolean isFirstRun = sharedPreferences.getBoolean("FIRSTRUN", true);
+//		sharedPreferences = getSharedPreferences(Util.APP_PREFERENCES,
+//				Context.MODE_PRIVATE);
+//		boolean isFirstRun = sharedPreferences.getBoolean("FIRSTRUN", true);
+//
+//		if (isFirstRun) {
+//			// Code to run once
+//			SharedPreferences.Editor editor = sharedPreferences.edit();
+//			editor.putBoolean("FIRSTRUN", false);
+//			editor.commit();
+//
+//			Intent i = new Intent(MainActivity.this, InjuriesActivityMain.class);
+//			startActivity(i);
+//
+//		}
 
-		if (isFirstRun) {
-			// Code to run once
-			SharedPreferences.Editor editor = sharedPreferences.edit();
-			editor.putBoolean("FIRSTRUN", false);
-			editor.commit();
-
-			Intent i = new Intent(MainActivity.this, InjuriesActivityMain.class);
-			startActivity(i);
-
-		}
-
-		new GetUserData().execute();
+//		new GetUserData().execute();
 
 	}
 
@@ -251,12 +235,12 @@ public class MainActivity extends Activity {
 			fragment = new HomeFragment();
 			break;
 
-		case 1:
-			//Profile Fragment
-			fragment = new MyProfileFragment();
-			break;
+//		case 1:
+//			//Profile Fragment
+//			fragment = new MyProfileFragment();
+//			break;
 
-		case 2:
+		case 1:
 
 			//Find Spa Fragment
 			/**
@@ -277,44 +261,43 @@ public class MainActivity extends Activity {
 			}
 			break;
 
-		case 3:
+		case 2:
 			//View Appointment
 			fragment = new ViewAppointmentFragment();
 			// fragment = new MakeAppointmentFragment();
 			break;
 
-		case 4:
+		case 3:
 			//Notifications
 			fragment = new HomeFragment();
-			// fragment = new ViewAppointmentFragment();
 			break;
 
-		case 5:
+		case 4:
 			//Send Gift card
 			fragment = new GiftCardFragment();
 			// fragment = new WhatsHotFragment();
 			break;
 
-		case 6:
-			//Favourites
-			fragment = new FavouritesFragment();
+//		case 6:
+//			//Favourites
+//			fragment = new FavouritesFragment();
+//
+//			break;
 
-			break;
-
-		case 7:
+		case 5:
 			//Offers
 			fragment = new HomeFragment();
 			break;
-		case 8:
-			//Settings
-			fragment = new SettingActivity();
-			break;
-		case 9:
-			//Logout
-			Intent i = new Intent(MainActivity.this, LoginActivity.class);
-			startActivity(i);
-			finish();
-			break;
+//		case 8:
+//			//Settings
+//			fragment = new SettingActivity();
+//			break;
+//		case 9:
+//			//Logout
+//			Intent i = new Intent(MainActivity.this, LoginActivity.class);
+//			startActivity(i);
+//			finish();
+//			break;
 
 		default:
 			break;

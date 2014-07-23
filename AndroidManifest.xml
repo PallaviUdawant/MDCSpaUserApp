@@ -38,16 +38,23 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.SplashScreenActivity"
+            android:label="Login"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="org.mdcconcepts.com.mdcspauserapp.login.LoginActivity"
             android:label="Login"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" >
-             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!-- Main Activity -->
@@ -108,7 +115,6 @@
             android:name="org.mdcconcepts.com.mdcspauserapp.makeappointment.TimelineDynamicActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
-           
         </activity>
 
         <!-- Make an Appointment Activity -->
@@ -138,7 +144,7 @@
         </activity>
 
         <!-- View Appointment -->
-         <activity
+        <activity
             android:name="org.mdcconcepts.com.mdcspauserapp.viewappointments.RescheduleAppointmentActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >

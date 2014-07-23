@@ -258,7 +258,7 @@
                 android:background="#4e3115" />
 
             <Button
-                android:id="@+id/Btn_Skip_Injuries_Fragment"
+                android:id="@+id/Button_Controller_make_an_appointment"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right"
