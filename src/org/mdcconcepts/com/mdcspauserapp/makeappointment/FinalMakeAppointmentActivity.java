@@ -316,7 +316,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 				// Toast.LENGTH_LONG)
 				// .show();
 				if (success == 1) {
-					editor.putBoolean("Login_Status", true);
+					editor.putBoolean("IsLogin", true);
 					editor.putString("UserName",
 							EditText_Controller_Username_Login.getText()
 									.toString());

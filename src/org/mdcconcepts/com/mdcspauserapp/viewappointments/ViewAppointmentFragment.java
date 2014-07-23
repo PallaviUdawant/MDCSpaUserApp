@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
@@ -94,6 +95,7 @@ public class ViewAppointmentFragment extends Fragment {
 		SharedPreferences sharedPreferences = getActivity()
 				.getSharedPreferences(Util.APP_PREFERENCES,
 						Context.MODE_PRIVATE);
+		editor = sharedPreferences.edit();
 		boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
 		loginDialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
 		loginDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -129,8 +131,33 @@ public class ViewAppointmentFragment extends Fragment {
 		Button_Controller_Login.setTypeface(font);
 
 		if (!isLogin) {
+			loginDialog.show();
 
 		}
+		else
+		{
+			new GetAppointments().execute();
+		}
+		Button_Controller_Login.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (EditText_Controller_Username_Login.getText().toString()
+						.trim().isEmpty()) {
+					EditText_Controller_Username_Login
+							.setError("Please Enter Username !");
+				} else if (EditText_Controller_Password_Login.getText()
+						.toString().trim().isEmpty()) {
+					EditText_Controller_Password_Login
+							.setError("Please Enter Password !");
+				} else {
+					new LoginUser().execute();
+				}
+
+			}
+
+		});
 		listViewController_Appointmentlist = (ListView) rootView
 				.findViewById(R.id.listViewController_Appointmentlist);
 
@@ -142,11 +169,148 @@ public class ViewAppointmentFragment extends Fragment {
 
 		Util.isHeader = false;
 		Util.isUpcoming = false;
-		new GetAppointments().execute();
+		
+	
 		return rootView;
 
 	}
+	class LoginUser extends AsyncTask<String, String, String> {
 
+//		private Dialog dialog;
+		int success;
+		/**
+		 * Before starting background thread Show Progress Dialog
+		 * */
+		boolean failure = false;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+//			dialog = new Dialog(FinalMakeAppointmentActivity.this,
+//					R.style.ThemeWithCorners);
+//			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//			dialog.setContentView(R.layout.custom_progress_dialog);
+//			dialog.setCancelable(false);
+////			dialog.show();
+//
+//			TextView Txt_Title = (TextView) dialog
+//					.findViewById(R.id.txt_alert_text);
+//			Txt_Title.setTypeface(font);
+//			/**
+//			 * custom circular progress bar
+//			 */
+//			ProgressWheel pw_four = (ProgressWheel) dialog
+//					.findViewById(R.id.progressBarFour);
+//			pw_four.spin();
+			progressBar_Controller_Login.setVisibility(View.VISIBLE);
+			progressBar_Controller_Login.spin();
+		}
+
+		@Override
+		protected String doInBackground(String... args) {
+			// TODO Auto-generated method stub
+			// Check for success tag
+
+			String Username_Container = EditText_Controller_Username_Login
+					.getText().toString().trim();
+			String Password_Container = EditText_Controller_Password_Login
+					.getText().toString().trim();
+
+			try {
+				// Building Parameters
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("Username",
+						Username_Container));
+				params.add(new BasicNameValuePair("Password",
+						Password_Container));
+
+				Log.d("request!", "starting");
+
+				// Posting user data to script
+				JSONObject json = jsonParser.makeHttpRequest(Util.Login_URL,
+						"POST", params);
+
+				if (json != null) {// full json response
+					Log.d("Login attempt", json.toString());
+
+					// json success element
+					success = json.getInt(TAG_SUCCESS);
+
+					if (success == 1) {
+						Util.Uid = json.getInt("Uid");
+						return json.getString(TAG_MESSAGE);
+					} else
+
+					{
+						// Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+						// Toast.makeText(LoginActivity.this,
+						// "Wrong Username or Password", Toast.LENGTH_LONG)
+						// .show();
+						return json.getString(TAG_MESSAGE);
+
+					}
+				} else {
+					return "timeout";
+
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+
+		}
+
+		/**
+		 * After completing background task Dismiss the progress dialog
+		 **/
+		protected void onPostExecute(String file_url) {
+			// dismiss the dialog once product deleted
+//			dialog.cancel();
+			progressBar_Controller_Login.setVisibility(View.GONE);
+			progressBar_Controller_Login.stopSpinning();
+			if (file_url != null) {
+				// Toast.makeText(LoginActivity.this, file_url,
+				// Toast.LENGTH_LONG)
+				// .show();
+				if (success == 1) {
+					editor.putBoolean("IsLogin", true);
+					editor.putString("UserName",
+							EditText_Controller_Username_Login.getText()
+									.toString());
+					editor.putString("Password",
+							EditText_Controller_Password_Login.getText()
+									.toString());
+					editor.commit();
+					loginDialog.dismiss();
+					
+					new GetAppointments().execute();
+//					Intent myIntent = new Intent(
+//							FinalMakeAppointmentActivity.this,
+//							MainActivity.class);
+//					finish();
+//					startActivity(myIntent);
+				} else if (file_url.equalsIgnoreCase("timeout")) {
+					Toast.makeText(
+							getActivity(),
+							"Connection TimeOut..!!! Please try again later..!!!",
+							Toast.LENGTH_LONG).show();
+				} else {
+					
+					textView_controller_incorrect_credentials
+							.setVisibility(View.VISIBLE);
+//					textView_controller_incorrect_credentials.setTypeface(font);
+//					Toast.makeText(FinalMakeAppointmentActivity.this,
+//							"Wrong Username or Password.. Please try again..!!!",
+//							Toast.LENGTH_LONG).show();
+				}
+			}
+
+		}
+
+	}
 	class GetAppointments extends AsyncTask<String, String, String> {
 
 		// Progress Dialog
