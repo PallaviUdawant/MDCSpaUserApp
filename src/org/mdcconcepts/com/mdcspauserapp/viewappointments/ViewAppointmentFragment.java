@@ -10,12 +10,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
+import org.mdcconcepts.com.mdcspauserapp.customitems.ConnectionDetector;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,23 +38,31 @@ import com.todddavies.components.progressbar.ProgressWheel;
 
 public class ViewAppointmentFragment extends Fragment {
 
-	
-	 public static final String TherapyName="TherapyName";
-	 public static final String Therapist_Name="Therapist_Name";
-	 public static final String Appointment_Time="Appointment_Time";
-	 public static final String Time_For_Service="Time_For_Service";
-	 public static final String Pricing="Pricing";
-	 public static final String status="status";
-	 public static final String Spa_Id="Spa_Id";
-	 public static final String Spa_Name="Spa_Name";
-	 public static final String Therapist_Id="Therapist_Id";
-	 public static final String Appointment_Id="Appointment_Id";
-	 
+	public static final String TherapyName = "TherapyName";
+	public static final String Therapist_Name = "Therapist_Name";
+	public static final String Appointment_Time = "Appointment_Time";
+	public static final String Time_For_Service = "Time_For_Service";
+	public static final String Pricing = "Pricing";
+	public static final String status = "status";
+	public static final String Spa_Id = "Spa_Id";
+	public static final String Spa_Name = "Spa_Name";
+	public static final String Therapist_Id = "Therapist_Id";
+	public static final String Appointment_Id = "Appointment_Id";
+
+	ProgressWheel progressBar_Controller_Login;
+
+	EditText EditText_Controller_Username_Login;
+	EditText EditText_Controller_Password_Login;
+	Dialog loginDialog;
+	Editor editor;
+	ConnectionDetector cd;
+	Boolean isInternetPresent = false;
+	TextView textView_controller_incorrect_credentials;
 	public ViewAppointmentFragment() {
 	}
 
 	ListView listViewController_Appointmentlist;
-	
+
 	TextView textView_Current_Appointments;
 	TextView textView_History;
 	JSONParser jsonParser = new JSONParser();
@@ -56,32 +70,81 @@ public class ViewAppointmentFragment extends Fragment {
 	ArrayList<String> ArrayList_AppointMent_Time = new ArrayList<String>();
 	ArrayList<String> ArrayList_AppointMentIDList = new ArrayList<String>();
 	ArrayList<HashMap<String, String>> ArrayList_AppointMent = new ArrayList<HashMap<String, String>>();
-	HashMap<String, String> MissingArray=new HashMap<String, String>();
+	HashMap<String, String> MissingArray = new HashMap<String, String>();
 
-	  ArrayList<Item> items = new ArrayList<Item>();
+	ArrayList<Item> items = new ArrayList<Item>();
 	// ids
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MESSAGE = "message";
-	Typeface font ;
+	Typeface font;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		cd = new ConnectionDetector(getActivity());
+		isInternetPresent = cd.isConnectingToInternet();
+		if (!isInternetPresent) {
+			View rootView = inflater.inflate(R.layout.fragment_no_internet_connection,
+					container, false);
+			return rootView;
+		}
+		
 		View rootView = inflater.inflate(R.layout.fragment_viewappointment,
 				container, false);
+		SharedPreferences sharedPreferences = getActivity()
+				.getSharedPreferences(Util.APP_PREFERENCES,
+						Context.MODE_PRIVATE);
+		boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
+		loginDialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
+		loginDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		loginDialog.setContentView(R.layout.activity_login);
+		loginDialog.setCancelable(true);
+
+		TextView TextView_Controller_Login_Title = (TextView) loginDialog
+				.findViewById(R.id.textView_Controller_Login_Title);
+		TextView TextView_Controller_Create_account = (TextView) loginDialog
+				.findViewById(R.id.TextView_Controller_Create_account);
+
+		EditText_Controller_Username_Login = (EditText) loginDialog
+				.findViewById(R.id.EditText_Controller_Username_Login);
+		EditText_Controller_Password_Login = (EditText) loginDialog
+				.findViewById(R.id.EditText_Controller_Password_Login);
+
+		textView_controller_incorrect_credentials = (TextView) loginDialog
+				.findViewById(R.id.textView_controller_incorrect_credentials);
+
+		Button Button_Controller_Login = (Button) loginDialog
+				.findViewById(R.id.Button_Controller_Login);
+
+		progressBar_Controller_Login = (ProgressWheel) loginDialog
+				.findViewById(R.id.progressBar_Controller_Login);
+
+		TextView_Controller_Login_Title.setTypeface(font);
+		TextView_Controller_Create_account.setTypeface(font);
+		textView_controller_incorrect_credentials.setTypeface(font);
+
+		EditText_Controller_Password_Login.setTypeface(font);
+		EditText_Controller_Username_Login.setTypeface(font);
+
+		Button_Controller_Login.setTypeface(font);
+
+		if (!isLogin) {
+
+		}
 		listViewController_Appointmentlist = (ListView) rootView
 				.findViewById(R.id.listViewController_Appointmentlist);
 
-		textView_Current_Appointments=(TextView) rootView
+		textView_Current_Appointments = (TextView) rootView
 				.findViewById(R.id.textView_Current_Appointments);
-		font = Typeface.createFromAsset(rootView.getContext().getAssets(), Util.fontPath);
-		textView_Current_Appointments.setTypeface(font,Typeface.BOLD);
-		
-		Util.isHeader=false;
-		Util.isUpcoming=false;
+		font = Typeface.createFromAsset(rootView.getContext().getAssets(),
+				Util.fontPath);
+		textView_Current_Appointments.setTypeface(font, Typeface.BOLD);
+
+		Util.isHeader = false;
+		Util.isUpcoming = false;
 		new GetAppointments().execute();
 		return rootView;
+
 	}
 
 	class GetAppointments extends AsyncTask<String, String, String> {
@@ -94,10 +157,11 @@ public class ViewAppointmentFragment extends Fragment {
 		boolean failure = false;
 
 		Dialog dialog;
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			
+
 			dialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
 			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			dialog.setContentView(R.layout.custom_progress_dialog);
@@ -111,7 +175,7 @@ public class ViewAppointmentFragment extends Fragment {
 			ProgressWheel pw_four = (ProgressWheel) dialog
 					.findViewById(R.id.progressBarFour);
 			pw_four.spin();
-			
+
 		}
 
 		@Override
@@ -141,26 +205,32 @@ public class ViewAppointmentFragment extends Fragment {
 
 					JSONArray PostJson = json.getJSONArray("posts");
 					Log.d("Post Date ", PostJson.toString());
-					for (int i = 0; i < PostJson.length(); i++) 
-					{
+					for (int i = 0; i < PostJson.length(); i++) {
 
-//						HashMap<String, String> Appointment_Details = new HashMap<String, String>();
+						// HashMap<String, String> Appointment_Details = new
+						// HashMap<String, String>();
 						JSONObject Temp = PostJson.getJSONObject(i);
-						if(Temp.getString("Appointment_Status").equalsIgnoreCase("Attended") && Util.isHeader==false )
-						{
-								   items.add(new SectionItem("History"));
-								   Util.isHeader=true;
+						if (Temp.getString("Appointment_Status")
+								.equalsIgnoreCase("Attended")
+								&& Util.isHeader == false) {
+							items.add(new SectionItem("History"));
+							Util.isHeader = true;
 						}
-						if(Temp.getString("Appointment_Status").equalsIgnoreCase("Upcoming") && Util.isUpcoming==false )
-						{
-								   items.add(new SectionItem("Upcoming Appointments"));
-								   Util.isUpcoming=true;
+						if (Temp.getString("Appointment_Status")
+								.equalsIgnoreCase("Upcoming")
+								&& Util.isUpcoming == false) {
+							items.add(new SectionItem("Upcoming Appointments"));
+							Util.isUpcoming = true;
 						}
-							items.add(new EntryItem(Temp.getString("Name"), Temp.getString("Therapist_Name"),
-													Temp.getString("Appointment_DateTime"),Temp.getString("Time"),
-													Temp.getString("Pricing"),Temp.getString("Appointment_Status"),
-													Temp.getString("Spa_Id"),Temp.getString("Spa_Name"),
-													Temp.getString("Therapist_Id"),Temp.getString("Appointment_Id")));
+						items.add(new EntryItem(Temp.getString("Name"), Temp
+								.getString("Therapist_Name"), Temp
+								.getString("Appointment_DateTime"), Temp
+								.getString("Time"), Temp.getString("Pricing"),
+								Temp.getString("Appointment_Status"), Temp
+										.getString("Spa_Id"), Temp
+										.getString("Spa_Name"), Temp
+										.getString("Therapist_Id"), Temp
+										.getString("Appointment_Id")));
 					}
 					return json.getString(TAG_MESSAGE) + " , Please Login !";
 				} else {
@@ -184,62 +254,74 @@ public class ViewAppointmentFragment extends Fragment {
 			dialog.dismiss();
 			if (file_url != null) {
 				if (success == 1) {
-					 EntryAdapter adapter = new EntryAdapter(getActivity(), items);
-					 listViewController_Appointmentlist.setAdapter(adapter);
+					EntryAdapter adapter = new EntryAdapter(getActivity(),
+							items);
+					listViewController_Appointmentlist.setAdapter(adapter);
 					listViewController_Appointmentlist
 							.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 								@Override
 								public void onItemClick(AdapterView<?> parent,
 										View view, int position, long id) {
-//
-									
-									
-									HashMap<String, String>MyAppointmentDetails=new HashMap<String, String>();
-									
-									EntryItem data=(EntryItem) view.getTag();
-									
-									MyAppointmentDetails.put(Spa_Name, data.Spa_Name);
-									MyAppointmentDetails.put(Spa_Id, data.Spa_Id);
-									MyAppointmentDetails.put(TherapyName, data.TherapyName);
-									MyAppointmentDetails.put(Therapist_Id, data.Therapist_Id);
-									MyAppointmentDetails.put(Therapist_Name, data.Therapist_Name);
-									MyAppointmentDetails.put(Time_For_Service, data.Time_For_Service);
-									MyAppointmentDetails.put(Pricing, data.Pricing);
-									MyAppointmentDetails.put(Appointment_Id, data.Appointment_Id);
-									MyAppointmentDetails.put(Appointment_Time, data.Appointment_Time);
-									
-//									MyAppointement.add(data.Spa_Name);
-//									MyAppointement.add(data.TherapyName);
-//									MyAppointement.add(data.Therapist_Name);
-//									MyAppointement.add(data.Time_For_Service);
-//									MyAppointement.add(data.Pricing);
-//									MyAppointement.add(data.Appointment_Time);
-//									MyAppointement.add(data.Therapist_Id);
-									
-									
-									
-									//									MyAppointement.add(data.)
-//									Toast.makeText(getActivity(), data.status.toString(), Toast.LENGTH_LONG).show();
-								if(data.status.toString().equalsIgnoreCase("Upcoming"))
-								{
-									Intent i=new Intent(getActivity(),RescheduleAppointmentActivity.class);
-									i.putExtra("AppointmentDetails", MyAppointmentDetails);
-									startActivityForResult(i, 2);
-									
-								}
-								else
-									if(data.status.toString().equalsIgnoreCase("Attended"));
-									
-//									Intent intentGetMessage = new Intent(
-//											getActivity(),
-//											SeeApointmentActivity.class);
-//
-//									intentGetMessage.putExtra("Appointment_Id",
-//											ArrayList_AppointMentIDList
-//													.get(position));
-//
-//									startActivity(intentGetMessage);
+									//
+
+									HashMap<String, String> MyAppointmentDetails = new HashMap<String, String>();
+
+									EntryItem data = (EntryItem) view.getTag();
+
+									MyAppointmentDetails.put(Spa_Name,
+											data.Spa_Name);
+									MyAppointmentDetails.put(Spa_Id,
+											data.Spa_Id);
+									MyAppointmentDetails.put(TherapyName,
+											data.TherapyName);
+									MyAppointmentDetails.put(Therapist_Id,
+											data.Therapist_Id);
+									MyAppointmentDetails.put(Therapist_Name,
+											data.Therapist_Name);
+									MyAppointmentDetails.put(Time_For_Service,
+											data.Time_For_Service);
+									MyAppointmentDetails.put(Pricing,
+											data.Pricing);
+									MyAppointmentDetails.put(Appointment_Id,
+											data.Appointment_Id);
+									MyAppointmentDetails.put(Appointment_Time,
+											data.Appointment_Time);
+
+									// MyAppointement.add(data.Spa_Name);
+									// MyAppointement.add(data.TherapyName);
+									// MyAppointement.add(data.Therapist_Name);
+									// MyAppointement.add(data.Time_For_Service);
+									// MyAppointement.add(data.Pricing);
+									// MyAppointement.add(data.Appointment_Time);
+									// MyAppointement.add(data.Therapist_Id);
+
+									// MyAppointement.add(data.)
+									// Toast.makeText(getActivity(),
+									// data.status.toString(),
+									// Toast.LENGTH_LONG).show();
+									if (data.status.toString()
+											.equalsIgnoreCase("Upcoming")) {
+										Intent i = new Intent(
+												getActivity(),
+												RescheduleAppointmentActivity.class);
+										i.putExtra("AppointmentDetails",
+												MyAppointmentDetails);
+										startActivityForResult(i, 2);
+
+									} else if (data.status.toString()
+											.equalsIgnoreCase("Attended"))
+										;
+
+									// Intent intentGetMessage = new Intent(
+									// getActivity(),
+									// SeeApointmentActivity.class);
+									//
+									// intentGetMessage.putExtra("Appointment_Id",
+									// ArrayList_AppointMentIDList
+									// .get(position));
+									//
+									// startActivity(intentGetMessage);
 
 									// // Toast.makeText(
 									// // ManageAppointmentActivity.this,
@@ -266,22 +348,20 @@ public class ViewAppointmentFragment extends Fragment {
 
 		}
 	}
-	 @Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data)  
-     {  
-               super.onActivityResult(requestCode, resultCode, data);  
-                   
-                // check if the request code is same as what is passed  here it is 2  
-                 if(requestCode==2)  
-                 {  
-                	 Util.isHeader=false;
-             		Util.isUpcoming=false;
-             		items.clear();
-             		listViewController_Appointmentlist.setAdapter(null);
-             		new GetAppointments().execute();
-             		
-                	 	
-                 }  
-   
-   }  
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		// check if the request code is same as what is passed here it is 2
+		if (requestCode == 2) {
+			Util.isHeader = false;
+			Util.isUpcoming = false;
+			items.clear();
+			listViewController_Appointmentlist.setAdapter(null);
+			new GetAppointments().execute();
+
+		}
+
+	}
 }

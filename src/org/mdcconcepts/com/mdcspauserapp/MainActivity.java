@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.customitems.ConnectionDetector;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
 import org.mdcconcepts.com.mdcspauserapp.findspa.FindSpaMapFragment;
 import org.mdcconcepts.com.mdcspauserapp.giftcard.GiftCardFragment;
@@ -19,9 +20,12 @@ import org.mdcconcepts.com.mdcspauserapp.viewappointments.ViewAppointmentFragmen
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -66,7 +70,8 @@ public class MainActivity extends Activity {
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
-
+	ConnectionDetector cd;
+	Boolean isInternetPresent = false;
 	SharedPreferences sharedPreferences;
 
 	@Override
@@ -75,6 +80,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		font = Typeface.createFromAsset(getAssets(), "Raleway-Light.otf");
+		cd = new ConnectionDetector(getApplicationContext());
 
 		mTitle = mDrawerTitle = getTitle();
 
@@ -149,8 +155,8 @@ public class MainActivity extends Activity {
 				invalidateOptionsMenu();
 			}
 		};
-		ImageView view = (ImageView)findViewById(android.R.id.home);
-		view.setPadding(10,10, 10, 10);
+		ImageView view = (ImageView) findViewById(android.R.id.home);
+		view.setPadding(10, 10, 10, 10);
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		if (savedInstanceState == null) {
@@ -158,22 +164,22 @@ public class MainActivity extends Activity {
 			displayView(0);
 		}
 
-//		sharedPreferences = getSharedPreferences(Util.APP_PREFERENCES,
-//				Context.MODE_PRIVATE);
-//		boolean isFirstRun = sharedPreferences.getBoolean("FIRSTRUN", true);
-//
-//		if (isFirstRun) {
-//			// Code to run once
-//			SharedPreferences.Editor editor = sharedPreferences.edit();
-//			editor.putBoolean("FIRSTRUN", false);
-//			editor.commit();
-//
-//			Intent i = new Intent(MainActivity.this, InjuriesActivityMain.class);
-//			startActivity(i);
-//
-//		}
+		// sharedPreferences = getSharedPreferences(Util.APP_PREFERENCES,
+		// Context.MODE_PRIVATE);
+		// boolean isFirstRun = sharedPreferences.getBoolean("FIRSTRUN", true);
+		//
+		// if (isFirstRun) {
+		// // Code to run once
+		// SharedPreferences.Editor editor = sharedPreferences.edit();
+		// editor.putBoolean("FIRSTRUN", false);
+		// editor.commit();
+		//
+		// Intent i = new Intent(MainActivity.this, InjuriesActivityMain.class);
+		// startActivity(i);
+		//
+		// }
 
-//		new GetUserData().execute();
+		// new GetUserData().execute();
 
 	}
 
@@ -228,76 +234,84 @@ public class MainActivity extends Activity {
 	private void displayView(int position) {
 		// update the main content by replacing fragments
 		Fragment fragment = null;
-
+		isInternetPresent = cd.isConnectingToInternet();
 		switch (position) {
 		case 0:
-			//Home Fragment
+			// Home Fragment
 			fragment = new HomeFragment();
 			break;
 
-//		case 1:
-//			//Profile Fragment
-//			fragment = new MyProfileFragment();
-//			break;
+		// case 1:
+		// //Profile Fragment
+		// fragment = new MyProfileFragment();
+		// break;
 
 		case 1:
 
-			//Find Spa Fragment
+			// Find Spa Fragment
 			/**
 			 * Check if Gps is On
 			 */
 
-			GPSTracker gps = new GPSTracker(this);
-			getActionBar().hide();
-			if (gps.canGetLocation()) {
+			if (isInternetPresent) {
+				GPSTracker gps = new GPSTracker(this);
+				getActionBar().hide();
+				if (gps.canGetLocation()) {
 
-				fragment = new FindSpaMapFragment();
+					fragment = new FindSpaMapFragment();
 
-			} else {
-				// can't get location
-				// GPS or Network is not enabled
-				// Ask user to enable GPS/network in settings
-				gps.showSettingsAlert();
+				} else {
+					// can't get location
+					// GPS or Network is not enabled
+					// Ask user to enable GPS/network in settings
+					gps.showSettingsAlert();
+				}
+			}
+			else
+			{
+				showAlertDialog(MainActivity.this,
+						"No Internet Connection",
+						"You don't have internet connection.", false);
 			}
 			break;
 
 		case 2:
-			//View Appointment
+			// View Appointment
 			fragment = new ViewAppointmentFragment();
 			// fragment = new MakeAppointmentFragment();
 			break;
 
 		case 3:
-			//Notifications
+			// Notifications
 			fragment = new HomeFragment();
 			break;
 
 		case 4:
-			//Send Gift card
+			// Send Gift card
 			fragment = new GiftCardFragment();
 			// fragment = new WhatsHotFragment();
 			break;
 
-//		case 6:
-//			//Favourites
-//			fragment = new FavouritesFragment();
-//
-//			break;
+		// case 6:
+		// //Favourites
+		// fragment = new FavouritesFragment();
+		//
+		// break;
 
 		case 5:
-			//Offers
+			// Offers
 			fragment = new HomeFragment();
 			break;
-//		case 8:
-//			//Settings
-//			fragment = new SettingActivity();
-//			break;
-//		case 9:
-//			//Logout
-//			Intent i = new Intent(MainActivity.this, LoginActivity.class);
-//			startActivity(i);
-//			finish();
-//			break;
+		// case 8:
+		// //Settings
+		// fragment = new SettingActivity();
+		// break;
+		// case 9:
+		// //Logout
+		// Intent i = new Intent(MainActivity.this, LoginActivity.class);
+		// startActivity(i);
+		// finish();
+		// break;
 
 		default:
 			break;
@@ -342,6 +356,29 @@ public class MainActivity extends Activity {
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	public void showAlertDialog(Context context, String title, String message,
+			Boolean status) {
+		AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+
+		// Setting Dialog Title
+		alertDialog.setTitle(title);
+
+		// Setting Dialog Message
+		alertDialog.setMessage(message);
+
+		// Setting alert dialog icon
+		alertDialog.setIcon((status) ? R.drawable.ic_launcher
+				: R.drawable.ic_launcher);
+
+		// Setting OK Button
+		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+
+		// Showing Alert Message
+		alertDialog.show();
 	}
 
 	/**
@@ -448,7 +485,8 @@ public class MainActivity extends Activity {
 			if (file_url != null) {
 
 				if (file_url.equalsIgnoreCase("timeout")) {
-					Toast.makeText(MainActivity.this,
+					Toast.makeText(
+							MainActivity.this,
 							"Connection TimeOut..!!! Please try again later..!!!",
 							Toast.LENGTH_LONG).show();
 				} else {
@@ -475,7 +513,7 @@ public class MainActivity extends Activity {
 				R.style.ThemeWithCorners);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.custom_alert_box);
-//		dialog.setCancelable(false);
+		// dialog.setCancelable(false);
 		dialog.show();
 
 		TextView title;

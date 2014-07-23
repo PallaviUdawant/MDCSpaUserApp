@@ -28,7 +28,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -217,7 +216,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 
 	class LoginUser extends AsyncTask<String, String, String> {
 
-		private Dialog dialog;
+//		private Dialog dialog;
 		int success;
 		/**
 		 * Before starting background thread Show Progress Dialog
