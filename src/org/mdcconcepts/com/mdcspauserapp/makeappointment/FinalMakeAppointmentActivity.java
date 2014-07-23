@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class FinalMakeAppointmentActivity extends Activity {
@@ -70,7 +71,8 @@ public class FinalMakeAppointmentActivity extends Activity {
 		final_therapist.setText(AllDetails.get("Selected_Therapist"));
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
+		ImageView view = (ImageView)findViewById(android.R.id.home);
+		view.setPadding(10, 10, 10, 10);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

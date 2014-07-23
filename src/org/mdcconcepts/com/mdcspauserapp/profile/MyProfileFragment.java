@@ -2,6 +2,7 @@ package org.mdcconcepts.com.mdcspauserapp.profile;
 
 import org.mdcconcepts.com.mdcspauserapp.InjuriesActivityMain;
 import org.mdcconcepts.com.mdcspauserapp.R;
+import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -16,10 +17,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MyProfileFragment extends Fragment {
-
-	
 
 	ProfileListViewAdapter customAdapter;
 	/**
@@ -45,8 +45,12 @@ public class MyProfileFragment extends Fragment {
 		rootView = inflater.inflate(R.layout.my_profile_fragment, container,
 				false);
 
+		TextView User_Name=(TextView)rootView.findViewById(R.id.User_Name);
+		User_Name.setText(Util.User_Name.toString());
+		
+		Typeface font=Typeface.createFromAsset(getActivity().getAssets(), Util.fontPath);
+		User_Name.setTypeface(font,Typeface.BOLD);
 		listView_tabs = (ListView) rootView.findViewById(R.id.listView_tabs);
-
 
 		customAdapter = new ProfileListViewAdapter(getActivity());
 		listView_tabs.setAdapter(customAdapter);
@@ -59,16 +63,17 @@ public class MyProfileFragment extends Fragment {
 				// TODO Auto-generated method stub
 				switch (position) {
 				case 0:
-						i= new Intent(getActivity(),ProfileFragment.class);
-						startActivity(i);
+					i = new Intent(getActivity(), ProfileFragment.class);
+					startActivity(i);
 					break;
-				case 1:i= new Intent(getActivity(),InjuriesActivityMain.class);
-				startActivity(i);
-			break;
+				case 1:
+					i = new Intent(getActivity(), InjuriesActivityMain.class);
+					startActivity(i);
+					break;
 				}
 			}
 		});
-		
+
 		return rootView;
 	}
 
@@ -79,8 +84,6 @@ public class MyProfileFragment extends Fragment {
 		actionBar.removeAllTabs();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		super.onDestroy();
-		// final ActionBar actionBar =getActivity().getActionBar();
-		// actionBar.removeAllTabs();
 
 	}
 

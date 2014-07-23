@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mdcconcepts.com.mdcspauserapp.R;
+import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TimelineDynamicActivity extends Activity {
 
@@ -27,50 +27,32 @@ public class TimelineDynamicActivity extends Activity {
 	View verticalLine;
 	View Circle;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
+		
 		 Intent i = getIntent();
 		 TherapyTimelineDetails=(ArrayList<HashMap<String, String>>)
 		 i.getSerializableExtra("TimelineData");
-
+		 getActionBar().setDisplayHomeAsUpEnabled(true);
 		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_LARGE) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
 			View v = Timeline_Large_Screen();
 			this.setContentView(v);
-			// Toast.makeText(getApplicationContext(), "High",
-			// Toast.LENGTH_LONG).show();
 		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_NORMAL) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-			// do something
 			View v = Timeline_Small_Screen();
 			this.setContentView(v);
-			Toast.makeText(getApplicationContext(), "Low", Toast.LENGTH_LONG)
-					.show();
 		} else {
 			View v = Timeline_Large_Screen();
 			this.setContentView(v);
-			Toast.makeText(getApplicationContext(), "Medium", Toast.LENGTH_LONG)
-					.show();
 		}
 
-		/*
-		 * TextView tv = new TextView(this); tv.setText("Dynamic layouts ftw!");
-		 * ll.addView(tv);
-		 * 
-		 * EditText et = new EditText(this); et.setText("weeeeeeeeeee~!");
-		 * ll.addView(et);
-		 * 
-		 * Button b = new Button(this);
-		 * b.setText("I don't do anything, but I was added dynamically. :)");
-		 * ll.addView(b);
-		 * 
-		 * for(int i = 0; i < 20; i++) { CheckBox cb = new CheckBox(this);
-		 * cb.setText("I'm dynamic!"); ll.addView(cb); }
-		 */
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private View Timeline_Small_Screen() {
 		// TODO Auto-generated method stub
 
@@ -194,6 +176,8 @@ public class TimelineDynamicActivity extends Activity {
 			Linear_Child1_Child.setLayoutParams(layoutParams);
 
 			TextView tv = new TextView(this);
+			Typeface font=Typeface.createFromAsset(getAssets(), Util.fontPath);
+			tv.setTypeface(font);
 			String Appointment_Time = TherapyTimelineDetails.get(j).get(
 					TherapistSchedule.Appointment_Start_Time);
 			String Appointment_End_Time = TherapyTimelineDetails.get(j).get(
@@ -341,10 +325,30 @@ public class TimelineDynamicActivity extends Activity {
 		// Linear_Child2.addView(view1);
 		mainLayout.addView(sv);
 
+		
 		return mainLayout;
 
 	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			// This ID represents the Home or Up button. In the case of this
+			// activity, the Up button is shown. Use NavUtils to allow users
+			// to navigate up one level in the application structure. For
+			// more details, see the Navigation pattern on Android Design:
+			//
+			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			//
+			// NavUtils.navigateUpFromSameTask(this);
 
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@SuppressWarnings("deprecation")
 	private View Timeline_Large_Screen() {
 		// TODO Auto-generated method stub
 
@@ -358,6 +362,18 @@ public class TimelineDynamicActivity extends Activity {
 		mainLayout.setLayoutParams(layoutParams);
 		mainLayout.setGravity(Gravity.CENTER_VERTICAL);
 
+		LinearLayout headerLayout = new LinearLayout(this);
+		mainLayout.setOrientation(LinearLayout.HORIZONTAL);
+		layoutParams = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.FILL_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT);
+		layoutParams.gravity = Gravity.CENTER_VERTICAL;
+		mainLayout.setLayoutParams(layoutParams);
+		mainLayout.setGravity(Gravity.CENTER_VERTICAL);
+		
+		ImageView profile_pic=new ImageView(this);
+		
+		
 		/*** ScrollView ***/
 		ScrollView sv = new ScrollView(this);
 		layoutParams = new LinearLayout.LayoutParams(
@@ -450,7 +466,7 @@ public class TimelineDynamicActivity extends Activity {
 
 		int k = 0;
 		for (int j = 0; j < TherapyTimelineDetails.size(); j++) {
-
+//		for (int j = 0; j <4; j++) {
 			if (k == 6)
 				k = 1;
 
@@ -477,7 +493,7 @@ public class TimelineDynamicActivity extends Activity {
 			LinearLayout.LayoutParams layoutParamsParent = new LinearLayout.LayoutParams(
 					250, LayoutParams.WRAP_CONTENT);
 			layoutParamsParent.gravity = Gravity.CENTER;
-			Linear_Child1_Parent.setBackgroundColor(Color.LTGRAY);
+//			Linear_Child1_Parent.setBackgroundColor(Color.LTGRAY);
 
 			LinearLayout Linear_Child1_Child = new LinearLayout(this);
 			Linear_Child1_Child.setOrientation(LinearLayout.HORIZONTAL);
@@ -494,7 +510,10 @@ public class TimelineDynamicActivity extends Activity {
 					TherapistSchedule.Appointment_End_Time);
 			String Timeline_Data = "Therapist Busy \n From " + Appointment_Time
 					+ " to " + Appointment_End_Time;
+//			String Timeline_Data = "Therapist Busy \n From 22-06-2014 to 22-06-2014";
 			tv.setText(Timeline_Data);
+			Typeface font=Typeface.createFromAsset(getAssets(), Util.fontPath);
+			tv.setTypeface(font);
 //			tv.setText("Therapist Busy \n From 12/12/2013 12:00 to 12/12/2013 1:00");
 			
 			tv.setPadding(10, 10, 10, 10);
@@ -502,14 +521,14 @@ public class TimelineDynamicActivity extends Activity {
 
 			View viewHorizontal = new View(this);
 
-			if (j % 2 == 0) {
+			if (j % 2 != 0) {
 				LinearLayout.LayoutParams ViewHorizontalParam = new LinearLayout.LayoutParams(
 						LayoutParams.FILL_PARENT, 3);
 				ViewHorizontalParam.gravity = Gravity.CENTER_VERTICAL;
 				viewHorizontal.setLayoutParams(ViewHorizontalParam);
 				viewHorizontal.setBackgroundColor(0xff4e3115);
 				/** Even Child1 ***/
-				if (j == 0)
+				if (j == 1)
 					/** First Child **/
 					layoutParamsParent.topMargin = 240;
 				else
@@ -539,7 +558,7 @@ public class TimelineDynamicActivity extends Activity {
 				// viewHorizontal.setBackgroundColor(0xff4e3115);
 
 				/** Odd Child ***/
-				if (j == 1)
+				if (j == 0)
 					/** First Child **/
 					layoutParamsParent.topMargin = 23;
 				else

@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class NearestSpaListviewAdapter extends BaseAdapter {
@@ -71,9 +70,9 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 
 		imageView_spa_logo = (ImageView) rootView
 				.findViewById(R.id.imageView_spa_logo);
-
-		RatingBar Spa_ratingBar = (RatingBar) rootView
-				.findViewById(R.id.Spa_ratingBar);
+//
+//		RatingBar Spa_ratingBar = (RatingBar) rootView
+//				.findViewById(R.id.Spa_ratingBar);
 
 		Typeface font = Typeface.createFromAsset(activity.getAssets(),
 				"Raleway-Light.otf");
@@ -90,7 +89,7 @@ public class NearestSpaListviewAdapter extends BaseAdapter {
 
 		Txt_Spa_Name.setText(spaDetails.get("spa_name"));
 		Txt_Spa_Area.setText(spaDetails.get("spa_addr"));
-		Spa_ratingBar.setRating(Float.parseFloat(spaDetails.get("spa_rating")));
+//		Spa_ratingBar.setRating(Float.parseFloat(spaDetails.get("spa_rating")));
 
 		ImageLoader imgLoader = new ImageLoader(
 				activity);

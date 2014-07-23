@@ -80,8 +80,8 @@ public class SpaInfoFragment extends Fragment {
 		txt_distance = (TextView) rootview.findViewById(R.id.txt_distance);
 		Btn_add_to_fav = (Button) rootview.findViewById(R.id.Btn_Add_to_fav);
 
-		spa_profile_ratings = (RatingBar) rootview
-				.findViewById(R.id.spa_profile_ratings);
+//		spa_profile_ratings = (RatingBar) rootview
+//				.findViewById(R.id.spa_profile_ratings);
 
 		font = Typeface.createFromAsset(getActivity().getAssets(),
 				Util.fontPath);
@@ -101,7 +101,7 @@ public class SpaInfoFragment extends Fragment {
 //		Toast.makeText(getActivity(), selectedSpaDetails.get("spa_cover_photo"), Toast.LENGTH_LONG).show();
 		// Toast.makeText(getActivity(), "Rating"
 		// +selectedSpaDetails.get("spa_rating"), Toast.LENGTH_LONG).show();
-		spa_profile_ratings.setRating(Float.parseFloat(selectedSpaDetails.get("spa_rating")));
+//		spa_profile_ratings.setRating(Float.parseFloat(selectedSpaDetails.get("spa_rating")));
 
 		imageView_Spa_Profile_Logo=(ImageView)rootview
 				.findViewById(R.id.imageView_Spa_Profile_Logo);

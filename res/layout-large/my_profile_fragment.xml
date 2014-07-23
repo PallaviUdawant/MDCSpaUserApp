@@ -17,15 +17,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp" >
 
-                    <TextView
-                        android:id="@+id/textViewController_TherapistName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ImageviewController_ProfileImage"
-                        android:layout_centerHorizontal="true"
-                        android:text="Medium Text"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
                     <ImageView
                         android:id="@+id/ImageviewController_ProfileImage1"
                         android:layout_width="75dp"
@@ -38,7 +29,7 @@
                         android:src="@drawable/avtar" />
 
                     <TextView
-                        android:id="@+id/Name"
+                        android:id="@+id/User_Name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/ImageviewController_ProfileImage1"

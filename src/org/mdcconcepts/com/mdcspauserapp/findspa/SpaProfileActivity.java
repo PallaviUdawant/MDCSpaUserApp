@@ -20,6 +20,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SpaProfileActivity extends Activity implements
@@ -61,14 +62,6 @@ public class SpaProfileActivity extends Activity implements
 		selectedSpaDetails = (HashMap<String, String>) i
 				.getSerializableExtra("SelectedSpDetails");
 
-		// Toast.makeText(getApplicationContext(),
-		// selectedSpaDetails.get("spa_rating"), Toast.LENGTH_LONG).show();
-		// Spa_Name=selectedSpaDetails.get("spa_name");
-		// Spa_Addr=selectedSpaDetails.get("spa_addr");
-		// Spa_Rating=selectedSpaDetails.get("spa_rating");
-
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the activity.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
 		font = Typeface.createFromAsset(getAssets(), Util.fontPath);
@@ -127,23 +120,11 @@ public class SpaProfileActivity extends Activity implements
 		actionBar.addTab(actionBar.newTab().setTabListener(this)
 				.setCustomView(t3));
 
-		// For each of the sections in the app, add a tab to the action bar.
-		/*
-		 * for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) { //
-		 * Create a tab with text corresponding to the page title defined by //
-		 * the adapter. Also specify this Activity object, which implements //
-		 * the TabListener interface, as the callback (listener) for when //
-		 * this tab is selected. /*actionBar.addTab(actionBar.newTab()
-		 * .setText(mSectionsPagerAdapter.getPageTitle(i))
-		 * .setTabListener(this)); SpannableString s = new SpannableString(
-		 * mSectionsPagerAdapter.getPageTitle(i)); s.setSpan(new
-		 * TypefaceSpan(Util.fontPath), 0, s.length(),
-		 * Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		 * actionBar.addTab(actionBar.newTab().setText(s)
-		 * .setTabListener(this)); }
-		 */
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		ImageView view = (ImageView)findViewById(android.R.id.home);
+		view.setPadding(10, 10, 10, 10);
+//		final LayoutParams iconLp = (LayoutParams) view.getLayoutParams();
 	}
 
 	@Override
@@ -245,31 +226,4 @@ public class SpaProfileActivity extends Activity implements
 		}
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 * 
-	 * public static class PlaceholderFragment extends Fragment { /** The
-	 * fragment argument representing the section number for this fragment.
-	 */
-	private static final String ARG_SECTION_NUMBER = "section_number";
-
-	/**
-	 * Returns a new instance of this fragment for the given section number.
-	 * 
-	 * public static PlaceholderFragment newInstance(int sectionNumber) {
-	 * PlaceholderFragment fragment = new PlaceholderFragment(); Bundle args =
-	 * new Bundle(); args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-	 * fragment.setArguments(args); return fragment; }
-	 * 
-	 * public PlaceholderFragment() { }
-	 * 
-	 * @Override public View onCreateView(LayoutInflater inflater, ViewGroup
-	 *           container, Bundle savedInstanceState) { View rootView =
-	 *           inflater.inflate(R.layout.fragment_spa_profile, container,
-	 *           false); TextView textView = (TextView) rootView
-	 *           .findViewById(R.id.section_label);
-	 *           textView.setText(Integer.toString(getArguments().getInt(
-	 *           ARG_SECTION_NUMBER))); return rootView; } }
-	 */
-
-}
+	}

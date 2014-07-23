@@ -32,6 +32,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
@@ -41,10 +42,6 @@ public class ProfileFragment extends FragmentActivity {
 
 	// JSON parser class
 	JSONParser jsonParser = new JSONParser();
-
-	// ids
-	// private static final String TAG_SUCCESS = "success";
-	// private static final String TAG_MESSAGE = "message";
 
 	TextView Name;
 	TextView PersonalInfoTitle;
@@ -74,8 +71,8 @@ public class ProfileFragment extends FragmentActivity {
 	private int month;
 	private int year;
 
-	
 	Typeface font;
+
 	public ProfileFragment() {
 	}
 
@@ -85,7 +82,6 @@ public class ProfileFragment extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_profile);
 
-		// Name = (TextView) findViewById(R.id.Name);
 		Mobile = (TextView) findViewById(R.id.Mobile);
 		Email = (TextView) findViewById(R.id.Email);
 		Address = (TextView) findViewById(R.id.Address);
@@ -108,9 +104,7 @@ public class ProfileFragment extends FragmentActivity {
 		PersonalInfoTitle.setTextSize(20);
 		PersonalInfoTitle.setTextColor(Color.parseColor("#ffffff"));
 
-		 font = Typeface.createFromAsset(getAssets(),
-				"Raleway-Light.otf");
-		// Name.setTypeface(font);
+		font = Typeface.createFromAsset(getAssets(), "Raleway-Light.otf");
 		Mobile.setTypeface(font);
 		Email.setTypeface(font);
 		Address.setTypeface(font);
@@ -124,7 +118,6 @@ public class ProfileFragment extends FragmentActivity {
 		//
 		Button_Save.setTypeface(font);
 
-		// Name.setText(Util.User_Name);
 		Mobile.setText(Util.User_Contact_Number);
 		Email.setText(Util.User_EmailId);
 		Address.setText(Util.User_Address);
@@ -197,40 +190,41 @@ public class ProfileFragment extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(Edt_Mobile.getText().toString().trim().isEmpty())
+				if (Edt_Mobile.getText().toString().trim().isEmpty())
 					Edt_Mobile.setError("Please Enter Mobile Number");
+				else if (Edt_Addr.getText().toString().trim().isEmpty())
+					Edt_Addr.setError("Please Enter Adrress");
+				else if (Edt_DOB.getText().toString().trim().isEmpty())
+					Edt_DOB.setError("Please Enter DOB");
 				else
-					if(Edt_Addr.getText().toString().trim().isEmpty())
-						Edt_Addr.setError("Please Enter Adrress");
-					else
-						if(Edt_DOB.getText().toString().trim().isEmpty())
-							Edt_DOB.setError("Please Enter DOB");
-						else
-							new UpdateUserDetails().execute();
+					new UpdateUserDetails().execute();
 			}
 		});
-		 
+		ImageView view = (ImageView) findViewById(android.R.id.home);
+		view.setPadding(10, 10, 10, 10);
 	}
 
 	public void showDatepickerDialog(final View v) {
-		InputMethodManager imm = (InputMethodManager)getSystemService(
-			      Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(Edt_DOB.getWindowToken(), 0);
-		DatePickerDialog mDatePicker=new DatePickerDialog(ProfileFragment.this, new OnDateSetListener() {                  
-            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                // TODO Auto-generated method stub                      
-                /*      Your code   to get date and time    */
-            	if(v==Edt_DOB)
-            	Edt_DOB.setText(selectedyear+"-"+(selectedmonth+1)+"-"+selectedday);
-            	else
-            		Edt_Anniversary.setText(selectedyear+"-"+(selectedmonth+1)+"-"+selectedday);
-            }
-        },year, month, day);
-        mDatePicker.setTitle("Select date");                
-        mDatePicker.show(); 
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(Edt_DOB.getWindowToken(), 0);
+		DatePickerDialog mDatePicker = new DatePickerDialog(
+				ProfileFragment.this, new OnDateSetListener() {
+					public void onDateSet(DatePicker datepicker,
+							int selectedyear, int selectedmonth, int selectedday) {
+						// TODO Auto-generated method stub
+						/* Your code to get date and time */
+						if (v == Edt_DOB)
+							Edt_DOB.setText(selectedyear + "-"
+									+ (selectedmonth + 1) + "-" + selectedday);
+						else
+							Edt_Anniversary.setText(selectedyear + "-"
+									+ (selectedmonth + 1) + "-" + selectedday);
+					}
+				}, year, month, day);
+		mDatePicker.setTitle("Select date");
+		mDatePicker.show();
 	}
 
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -250,8 +244,13 @@ public class ProfileFragment extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	class UpdateUserDetails extends AsyncTask<String, String, String>
-	{
+	/**
+	 * Update User Details
+	 * 
+	 * @author Pallavi Udawant
+	 * 
+	 */
+	class UpdateUserDetails extends AsyncTask<String, String, String> {
 		private Dialog dialog;
 		/**
 		 * Before starting background thread Show Progress Dialog
@@ -284,20 +283,21 @@ public class ProfileFragment extends FragmentActivity {
 					.findViewById(R.id.progressBarFour);
 			pw_four.spin();
 
-			Mobile1= Edt_Mobile.getText().toString();
-			Address1=Edt_Addr.getText().toString();
-			DOB1=Edt_DOB.getText().toString();
-			Anniversary1=Edt_Anniversary.getText().toString();
+			Mobile1 = Edt_Mobile.getText().toString();
+			Address1 = Edt_Addr.getText().toString();
+			DOB1 = Edt_DOB.getText().toString();
+			Anniversary1 = Edt_Anniversary.getText().toString();
 		}
 
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			final String TAG_SUCCESS = "success";;
+			final String TAG_SUCCESS = "success";
+			;
 			int success;
 
 			try {
-				
+
 				// Building Parameters
 				List<NameValuePair> param = new ArrayList<NameValuePair>();
 				param.add(new BasicNameValuePair("Uid", String
@@ -307,63 +307,71 @@ public class ProfileFragment extends FragmentActivity {
 				param.add(new BasicNameValuePair("DOB", DOB1));
 				param.add(new BasicNameValuePair("Anniversary", Anniversary1));
 
-
 				Log.d("request!", "starting");
 
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(
 						Util.UpdateUserDetails, "POST", param);
 
-				// full json response
-				Log.d("Update Status", json.toString());
-				success = json.getInt(TAG_SUCCESS);
-				if (success == 1) {
-					
-					
+				if (json != null) {
+
+					// full json response
+					Log.d("Update Status", json.toString());
+					success = json.getInt(TAG_SUCCESS);
+					if (success == 1) {
+						Mobile.setText(Mobile1);
+						Address.setText(Address1);
+						DOB.setText(DOB1);
+						Anniversary.setText(Anniversary1);
+
+						Button_Save.setVisibility(View.GONE);
+
+						Edt_Mobile.setVisibility(View.GONE);
+						Edt_Addr.setVisibility(View.GONE);
+						Edt_DOB.setVisibility(View.GONE);
+						Edt_Anniversary.setVisibility(View.GONE);
+
+						Mobile.setVisibility(View.VISIBLE);
+						Address.setVisibility(View.VISIBLE);
+						DOB.setVisibility(View.VISIBLE);
+						Anniversary.setVisibility(View.VISIBLE);
+
+						ImageView_Edit_Number.setVisibility(View.VISIBLE);
+						ImageView_Edit_Addr.setVisibility(View.VISIBLE);
+						ImageView_Edit_DOB.setVisibility(View.VISIBLE);
+						ImageView_Edit_Anniversary.setVisibility(View.VISIBLE);
+
+						Util.User_Contact_Number = Mobile1;
+						Util.User_Address = Address1;
+						Util.User_DOB = DOB1;
+						Util.User_Anniversary = Anniversary1;
+					}
+
+				} else {
+					return "timeout";
 				}
-			}
-			catch(Exception e)
-			{
-				
+			} catch (Exception e) {
+
 			}
 			return null;
 		}
+
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
-			Mobile.setText(Mobile1);
-			Address.setText(Address1);
-			DOB.setText(DOB1);
-			Anniversary.setText(Anniversary1);
-			
-			Button_Save.setVisibility(View.GONE);
-			
-			Edt_Mobile.setVisibility(View.GONE);
-			Edt_Addr.setVisibility(View.GONE);
-			Edt_DOB.setVisibility(View.GONE);
-			Edt_Anniversary.setVisibility(View.GONE);
-			
-			Mobile.setVisibility(View.VISIBLE);
-			Address.setVisibility(View.VISIBLE);
-			DOB.setVisibility(View.VISIBLE);
-			Anniversary.setVisibility(View.VISIBLE);
-			
-			
-			ImageView_Edit_Number.setVisibility(View.VISIBLE);
-			ImageView_Edit_Addr.setVisibility(View.VISIBLE);
-			ImageView_Edit_DOB .setVisibility(View.VISIBLE);
-			ImageView_Edit_Anniversary .setVisibility(View.VISIBLE);
-			
-			Util.User_Contact_Number=Mobile1;
-			Util.User_Address=Address1;
-			Util.User_DOB=DOB1;
-			Util.User_Anniversary=Anniversary1;
-			
-			
-			dialog.dismiss();
-			
+			if (result != null) {
+
+				if (result.equalsIgnoreCase("timeout")) {
+					Toast.makeText(
+							ProfileFragment.this,
+							"Connection TimeOut..!!! Please try again later..!!!",
+							Toast.LENGTH_LONG).show();
+				}
+
+				dialog.dismiss();
+
+			}
 		}
 	}
 }

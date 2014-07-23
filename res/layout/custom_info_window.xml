@@ -42,7 +42,7 @@
                     android:textColor="#4e3315"
                     android:textStyle="bold" />
 
-                <RatingBar
+                <!--  <RatingBar
                     android:id="@+id/ratingBar1"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
                     android:layout_marginRight="5sp"
                     android:layout_marginTop="2sp"
                     android:numStars="5"
-                    android:rating="3" />
+                    android:rating="3" />-->
 
                 <TextView
                     android:id="@+id/txt_address"

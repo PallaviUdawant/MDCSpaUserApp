@@ -12,14 +12,16 @@
     android:orientation="horizontal"
     android:padding="8dp" 
     android:layout_margin="10dp"  >
+
      <ImageView
          android:id="@+id/icon"
-         android:layout_width="50sp"
-         android:layout_height="50sp"
+         android:layout_width="30dp"
+         android:layout_height="30dp"
          android:layout_gravity="center"
+         android:layout_margin="5dp"
          android:layout_weight="0.00"
          android:contentDescription="@string/desc_list_item_icon"
-         android:src="@drawable/ic_drawer" />
+         android:src="@drawable/drawer_icon" />
 
     <TextView
         android:id="@+id/title"

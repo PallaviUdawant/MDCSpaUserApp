@@ -1,33 +1,18 @@
 package org.mdcconcepts.com.mdcspauserapp;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
-
-import com.todddavies.components.progressbar.ProgressWheel;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 @SuppressLint("NewApi")
 public class HumanBodyFragment extends Fragment {
@@ -74,11 +59,12 @@ public class HumanBodyFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.injuries, container, false);
-
-		
+		font = Typeface.createFromAsset(getActivity().getAssets(), Util.fontPath);
 		
 		Btn_Skip_Injuries_Fragment = (Button) rootView
 				.findViewById(R.id.Btn_Skip_Injuries_Fragment);
+		Btn_Skip_Injuries_Fragment.setTypeface(font);
+		
 		Btn_Skip_Injuries_Fragment
 				.setOnClickListener(new View.OnClickListener() {
 
@@ -99,7 +85,6 @@ public class HumanBodyFragment extends Fragment {
 				.setOnClickListener(new View.OnClickListener() {
 
 					public void onClick(View v) {
-						JSONObject jsonPainObject = new JSONObject();
 						if (!Util.isSelected_ImageView_Controller_Activity_BodyPart_Head) {
 
 							ImageView_Controller_Activity_BodyPart_Head_Selection

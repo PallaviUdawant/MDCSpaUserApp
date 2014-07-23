@@ -24,6 +24,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
@@ -40,7 +41,7 @@ public class DiseaseFragment extends Fragment {
 	private CheckBox CheckBox_Pregnant;
 	private CheckBox CheckBox_Other;
 
-	private Button Btn_Submit_Disease,Btn_Skip_Disease_Fragment;
+	private Button Btn_Submit_Disease, Btn_Skip_Disease_Fragment;
 	private Typeface font;
 
 	JSONParser jsonParser = new JSONParser();
@@ -88,49 +89,50 @@ public class DiseaseFragment extends Fragment {
 		CheckBox_Arthritis.setTypeface(font);
 		CheckBox_Pregnant.setTypeface(font);
 		CheckBox_Other.setTypeface(font);
-		
-		if(Util.isChecked_Heart)
+
+		if (Util.isChecked_Heart)
 			CheckBox_Heart.setChecked(true);
-		
-		if(Util.isChecked_Hepatitis)
+
+		if (Util.isChecked_Hepatitis)
 			CheckBox_Hepatitis.setChecked(true);
-		
-		if(Util.isChecked_Diabeties)
+
+		if (Util.isChecked_Diabeties)
 			CheckBox_Diabeties.setChecked(true);
-		
-		if(Util.isChecked_Lung)
+
+		if (Util.isChecked_Lung)
 			CheckBox_Hepatitis.setChecked(true);
-		
-		if(Util.isChecked_Lung)
+
+		if (Util.isChecked_Lung)
 			CheckBox_Hepatitis.setChecked(true);
-		
-		if(Util.isChecked_Hypotension)
+
+		if (Util.isChecked_Hypotension)
 			CheckBox_Hypotension.setChecked(true);
-		
-		if(Util.isChecked_Skin)
+
+		if (Util.isChecked_Skin)
 			CheckBox_Skin.setChecked(true);
-		
-		if(Util.isChecked_BP)
+
+		if (Util.isChecked_BP)
 			CheckBox_BP.setChecked(true);
-		
-		if(Util.isChecked_BP)
+
+		if (Util.isChecked_BP)
 			CheckBox_Arthritis.setChecked(true);
-		
-		if(Util.isChecked_Arthritis)
+
+		if (Util.isChecked_Arthritis)
 			CheckBox_Arthritis.setChecked(true);
-		
-		if(Util.isChecked_Pregnant)
+
+		if (Util.isChecked_Pregnant)
 			CheckBox_Pregnant.setChecked(true);
-		
-		if(Util.isChecked_Other)
+
+		if (Util.isChecked_Other)
 			CheckBox_Other.setChecked(true);
 
 		Btn_Submit_Disease = (Button) v.findViewById(R.id.Btn_Submit_Disease);
 		Btn_Submit_Disease.setTypeface(font);
 
-		Btn_Skip_Disease_Fragment=(Button) v.findViewById(R.id.Btn_Skip_Disease_Fragment);
+		Btn_Skip_Disease_Fragment = (Button) v
+				.findViewById(R.id.Btn_Skip_Disease_Fragment);
 		Btn_Skip_Disease_Fragment.setTypeface(font);
-		
+
 		Btn_Submit_Disease.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -140,16 +142,17 @@ public class DiseaseFragment extends Fragment {
 				new SendInjuriesData().execute();
 			}
 		});
-		
-		Btn_Skip_Disease_Fragment.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-			
-				getActivity().finish();
-			}
-		});
+
+		Btn_Skip_Disease_Fragment
+				.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+
+						getActivity().finish();
+					}
+				});
 
 		return v;
 	}
@@ -168,7 +171,7 @@ public class DiseaseFragment extends Fragment {
 			pdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			pdialog.setContentView(R.layout.custom_progress_dialog);
 			pdialog.setCancelable(false);
-			 pdialog.show();
+			pdialog.show();
 
 			Txt_Title = (TextView) pdialog.findViewById(R.id.txt_alert_text);
 			Txt_Title.setTypeface(font);
@@ -187,95 +190,76 @@ public class DiseaseFragment extends Fragment {
 			// TODO Auto-generated method stub
 
 			try {
-					JSONArray jsonPainArray = new JSONArray();
+				JSONArray jsonPainArray = new JSONArray();
 
-					for (int i = 0; i < Util.PainAreas.size(); i++)
-					{
+				for (int i = 0; i < Util.PainAreas.size(); i++) {
 
-						JSONObject jsonPainObject = new JSONObject();
-//					 	jsonPainObject.put("Uid", 2);
+					JSONObject jsonPainObject = new JSONObject();
+					// jsonPainObject.put("Uid", 2);
 
-						jsonPainObject.put("Pain_Id", Util.PainAreas.get(i));
-						jsonPainArray.put(jsonPainObject);
-						Log.d("Util PAIN", Util.PainAreas.get(i));
+					jsonPainObject.put("Pain_Id", Util.PainAreas.get(i));
+					jsonPainArray.put(jsonPainObject);
+					Log.d("Util PAIN", Util.PainAreas.get(i));
+				}
+
+				Util.UserDisease.clear();
+
+				if (CheckBox_Heart.isChecked())
+					Util.UserDisease.add("1");
+				if (CheckBox_Hepatitis.isChecked())
+					Util.UserDisease.add("2");
+				if (CheckBox_Diabeties.isChecked())
+					Util.UserDisease.add("3");
+				if (CheckBox_Lung.isChecked())
+					Util.UserDisease.add("4");
+				if (CheckBox_Hypotension.isChecked())
+					Util.UserDisease.add("5");
+				if (CheckBox_Skin.isChecked())
+					Util.UserDisease.add("6");
+				if (CheckBox_BP.isChecked())
+					Util.UserDisease.add("7");
+				if (CheckBox_Arthritis.isChecked())
+					Util.UserDisease.add("8");
+				if (CheckBox_Pregnant.isChecked())
+					Util.UserDisease.add("9");
+				if (CheckBox_Other.isChecked())
+					Util.UserDisease.add("10");
+
+				JSONArray jsonDiseaseArray = new JSONArray();
+				for (int i = 0; i < Util.UserDisease.size(); i++) {
+
+					JSONObject jsonDiseaseObject = new JSONObject();
+
+					jsonDiseaseObject
+							.put("Disease_Id", Util.UserDisease.get(i));
+					jsonDiseaseArray.put(jsonDiseaseObject);
+					Log.d("JSON DISEASE", Util.UserDisease.get(i));
+				}
+
+				List<NameValuePair> jsonInjuriesList = new ArrayList<NameValuePair>(
+						3);
+				jsonInjuriesList.add(new BasicNameValuePair("PainArray",
+						jsonPainArray.toString()));
+				jsonInjuriesList.add(new BasicNameValuePair("Uid", String
+						.valueOf(Util.Uid)));
+				jsonInjuriesList.add(new BasicNameValuePair("DiseaseArray",
+						jsonDiseaseArray.toString()));
+
+				Log.d("JSON PAIN  OBJECT", jsonInjuriesList.toString());
+				JSONObject json = jsonParser.makeHttpRequest(Util.sendPainData,
+						"POST", jsonInjuriesList);
+				if (json != null) {
+					Log.d("JSON PAIN RETURN OBJECT", json.toString());
+					success = json.getInt(TAG_SUCCESS);
+					if (success == 1) {
+
+						return json.getString(TAG_MESSAGE);
+					} else {
+						return json.getString(TAG_MESSAGE);
 					}
-
-					
-					
-					Util.UserDisease.clear();
-					
-					if(CheckBox_Heart.isChecked())
-						Util.UserDisease.add("1");
-					if(CheckBox_Hepatitis.isChecked())
-						Util.UserDisease.add("2");
-					if(CheckBox_Diabeties.isChecked())
-						Util.UserDisease.add("3");
-					if(CheckBox_Lung.isChecked())
-						Util.UserDisease.add("4");
-					if(CheckBox_Hypotension.isChecked())
-						Util.UserDisease.add("5");
-					if(CheckBox_Skin.isChecked())
-						Util.UserDisease.add("6");
-					if(CheckBox_BP.isChecked())
-						Util.UserDisease.add("7");
-					if(CheckBox_Arthritis.isChecked())
-						Util.UserDisease.add("8");
-					if(CheckBox_Pregnant.isChecked())
-						Util.UserDisease.add("9");
-					if(CheckBox_Other.isChecked())
-						Util.UserDisease.add("10");
-				
-					JSONArray jsonDiseaseArray=new JSONArray();
-					for (int i = 0; i < Util.UserDisease.size(); i++)
-					{
-
-						JSONObject jsonDiseaseObject = new JSONObject();
-//					 	jsonPainObject.put("Uid", 2);
-
-						jsonDiseaseObject.put("Disease_Id", Util.UserDisease.get(i));
-						jsonDiseaseArray.put(jsonDiseaseObject);
-						Log.d("JSON DISEASE", Util.UserDisease.get(i));
-					}
-
-//					List<NameValuePair> jsonDiseaseList = new ArrayList<NameValuePair>(
-//						1);
-//					jsonDiseaseList.add(new BasicNameValuePair("DiseaseArray",
-//							jsonDiseaseArray.toString()));
-//					Log.d("JSON DISEASE  OBJECT", jsonDiseaseList.toString());
-				
-					
-					List<NameValuePair> jsonInjuriesList = new ArrayList<NameValuePair>(
-							3);
-					jsonInjuriesList.add(new BasicNameValuePair("PainArray",
-							jsonPainArray.toString()));
-					jsonInjuriesList.add(new BasicNameValuePair("Uid", String
-								.valueOf(Util.Uid)));
-					jsonInjuriesList.add(new BasicNameValuePair("DiseaseArray",
-								jsonDiseaseArray.toString()));
-						
-						Log.d("JSON PAIN  OBJECT", jsonInjuriesList.toString());
-				 JSONObject json =
-				 jsonParser.makeHttpRequest(Util.sendPainData,
-				 "POST", jsonInjuriesList);
-				
-				 Log.d("JSON PAIN RETURN OBJECT", json.toString());
-				 // Log.d("JSON PAIN RETURN OBJECT", json.toString());
-				 success = json.getInt(TAG_SUCCESS);
-				
-				 if (success == 1) {
-					 
-					 
-//				 Util.Uid = json.getInt("Uid");
-				 return json.getString(TAG_MESSAGE);
-				 } else
-				 {
-				 // Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-				 // Toast.makeText(LoginActivity.this,
-				 // "Wrong Username or Password", Toast.LENGTH_LONG)
-				 // .show();
-				 return json.getString(TAG_MESSAGE);
-				
-				 } 
+				} else {
+					return "timeout";
+				}
 			} catch (Exception e) {
 
 			}
@@ -283,14 +267,19 @@ public class DiseaseFragment extends Fragment {
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(String file_url) {
 			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			// pdialog.dismiss();
+			super.onPostExecute(file_url);
 			if (success == 1) {
 				Txt_Title.setText("Data Sent");
 				SystemClock.sleep(2000);
 				pdialog.dismiss();
+			}
+			if (file_url != null) {
+				if (file_url.equalsIgnoreCase("timeout")) {
+					Toast.makeText(getActivity(), "Connection Timeout...!!!",
+							Toast.LENGTH_LONG).show();
+				}
 			}
 			getActivity().finish();
 		}

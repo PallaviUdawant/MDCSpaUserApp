@@ -2,22 +2,17 @@ package org.mdcconcepts.com.mdcspauserapp.makeappointment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.mdcconcepts.com.mdcspauserapp.R;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SpaListAdapter extends BaseAdapter {
 
@@ -58,10 +53,10 @@ public class SpaListAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		LayoutInflater inflater = activity.getLayoutInflater();
+//		LayoutInflater inflater = activity.getLayoutInflater();
 		final View rootView = inflater.inflate(R.layout.spa_list_item, null,
 				true);
-		final Context context = rootView.getContext();
+//		final Context context = rootView.getContext();
 
 //		Button btn_choose = (Button) rootView.findViewById(R.id.btn_choose);
 

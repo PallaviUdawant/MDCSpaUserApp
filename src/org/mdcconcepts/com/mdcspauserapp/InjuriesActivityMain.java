@@ -24,10 +24,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class InjuriesActivityMain extends FragmentActivity {
 	SectionsPagerAdapter mSectionsPagerAdapter;
@@ -44,7 +47,28 @@ public class InjuriesActivityMain extends FragmentActivity {
 		new GetPainingAreas().execute();
 
 		font = Typeface.createFromAsset(getAssets(), Util.fontPath);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		ImageView view = (ImageView) findViewById(android.R.id.home);
+		view.setPadding(10, 10, 10, 10);
+	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			// This ID represents the Home or Up button. In the case of this
+			// activity, the Up button is shown. Use NavUtils to allow users
+			// to navigate up one level in the application structure. For
+			// more details, see the Navigation pattern on Android Design:
+			//
+			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			//
+			// NavUtils.navigateUpFromSameTask(this);
+
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -70,9 +94,6 @@ public class InjuriesActivityMain extends FragmentActivity {
 				break;
 			}
 
-			// Bundle data = new Bundle();
-			// data.putInt("current_page", position + 1);
-			// fragment.setArguments(data);
 			return fragment;
 		}
 
@@ -132,7 +153,6 @@ public class InjuriesActivityMain extends FragmentActivity {
 		TextView Txt_Title;
 
 		private static final String TAG_SUCCESS = "success";
-		private static final String TAG_MESSAGE = "message";
 
 		@Override
 		protected void onPreExecute() {
@@ -173,89 +193,94 @@ public class InjuriesActivityMain extends FragmentActivity {
 				JSONObject json = jsonParser.makeHttpRequest(Util.getPainData,
 						"POST", params1);
 
-				// full json response
-				Log.d("Pain Ids", json.toString());
+				if (json != null) {
+					// full json response
+					Log.d("Pain Ids", json.toString());
 
-				// json success element
-				success = json.getInt(TAG_SUCCESS);
-				if (success == 1) {
+					// json success element
+					success = json.getInt(TAG_SUCCESS);
+					if (success == 1) {
 
-					JSONArray PostJson = json.getJSONArray("posts");
-					Log.d("Post Date ", PostJson.toString());
-					for (int i = 0; i < PostJson.length(); i++) {
+						JSONArray PostJson = json.getJSONArray("posts");
+						Log.d("Post Date ", PostJson.toString());
+						for (int i = 0; i < PostJson.length(); i++) {
 
-						JSONObject Temp = PostJson.getJSONObject(i);
-						int Pain_Id = Integer.parseInt(Temp
-								.getString("Pain_Id"));
-						switch (Pain_Id) {
-						case 1:
-							// Head
-							Util.isSelected_ImageView_Controller_Activity_BodyPart_Head = true;
-							Util.PainAreas.add("1");
-							Log.d("Head",
-									String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Head));
-							break;
-						case 2:
-							// Neck
-							Util.isSelected_ImageView_Controller_Activity_BodyPart_Neck = true;
-							Util.PainAreas.add("2");
-							Log.d("Neck",
-									String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Neck));
-							break;
-						case 3:
-							// Shoulder
-							Util.isSelected_ImageView_Controller_Activity_BodyPart_Shoulder = true;
-							Util.PainAreas.add("3");
-							Log.d("Shoulder",
-									String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Shoulder));
-							break;
-						case 4:
-							// Arm
-							Util.isSelected_ImageView_Controller_Activity_BodyPart_Arm = true;
-							Util.PainAreas.add("4");
-							Log.d("Arm",
-									String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Arm));
-							break;
-						case 5:
-							// Waist
-							Util.isSelected_ImageView_Controller_Activity_BodyPart_Waist = true;
-							Util.PainAreas.add("5");
-							Log.d("Waist",
-									String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Waist));
-							break;
-						case 6:
-							// Back
-							Util.isSelected_ImageView_Controller_Activity_BodyPart_Back = true;
-							Util.PainAreas.add("6");
-							Log.d("Back",
-									String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Back));
-							break;
-						case 7:
-							// Thigh
-							Util.isSelected_ImageView_Controller_Activity_BodyPart_Thigh = true;
-							Util.PainAreas.add("7");
-							Log.d("Thigh",
-									String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Thigh));
-							break;
-						case 8:
-							// Calf
-							Util.isSelected_ImageView_Controller_Activity_BodyPart_Calf = true;
-							Util.PainAreas.add("8");
-							Log.d("Calf",
-									String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Calf));
-							break;
-						case 9:
-							// Sole
-							Util.PainAreas.add("9");
-							Util.isSelected_ImageView_Controller_Activity_BodyPart_Sole = true;
-							Log.d("Sole",
-									String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Sole));
-							break;
+							JSONObject Temp = PostJson.getJSONObject(i);
+							int Pain_Id = Integer.parseInt(Temp
+									.getString("Pain_Id"));
+							switch (Pain_Id) {
+							case 1:
+								// Head
+								Util.isSelected_ImageView_Controller_Activity_BodyPart_Head = true;
+								Util.PainAreas.add("1");
+								Log.d("Head",
+										String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Head));
+								break;
+							case 2:
+								// Neck
+								Util.isSelected_ImageView_Controller_Activity_BodyPart_Neck = true;
+								Util.PainAreas.add("2");
+								Log.d("Neck",
+										String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Neck));
+								break;
+							case 3:
+								// Shoulder
+								Util.isSelected_ImageView_Controller_Activity_BodyPart_Shoulder = true;
+								Util.PainAreas.add("3");
+								Log.d("Shoulder",
+										String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Shoulder));
+								break;
+							case 4:
+								// Arm
+								Util.isSelected_ImageView_Controller_Activity_BodyPart_Arm = true;
+								Util.PainAreas.add("4");
+								Log.d("Arm",
+										String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Arm));
+								break;
+							case 5:
+								// Waist
+								Util.isSelected_ImageView_Controller_Activity_BodyPart_Waist = true;
+								Util.PainAreas.add("5");
+								Log.d("Waist",
+										String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Waist));
+								break;
+							case 6:
+								// Back
+								Util.isSelected_ImageView_Controller_Activity_BodyPart_Back = true;
+								Util.PainAreas.add("6");
+								Log.d("Back",
+										String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Back));
+								break;
+							case 7:
+								// Thigh
+								Util.isSelected_ImageView_Controller_Activity_BodyPart_Thigh = true;
+								Util.PainAreas.add("7");
+								Log.d("Thigh",
+										String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Thigh));
+								break;
+							case 8:
+								// Calf
+								Util.isSelected_ImageView_Controller_Activity_BodyPart_Calf = true;
+								Util.PainAreas.add("8");
+								Log.d("Calf",
+										String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Calf));
+								break;
+							case 9:
+								// Sole
+								Util.PainAreas.add("9");
+								Util.isSelected_ImageView_Controller_Activity_BodyPart_Sole = true;
+								Log.d("Sole",
+										String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Sole));
+								break;
 
+							}
 						}
 					}
-				}
+					return "true";
 
+				} else {
+					return "timeout";
+				}
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -266,12 +291,17 @@ public class InjuriesActivityMain extends FragmentActivity {
 			// dismiss the dialog once product deleted
 			pdialog.dismiss();
 
-			new GetDisease().execute();
-			// FragmentManager fm=getSupportFragmentManager();
-			// mSectionsPagerAdapter = new SectionsPagerAdapter(fm);
-			// // // Set up the ViewPager with the sections adapter.
-			// mViewPager = (ViewPager) findViewById(R.id.injuries_pager);
-			// mViewPager.setAdapter(mSectionsPagerAdapter);
+			if (file_url != null) {
+				if (file_url.equalsIgnoreCase("timeout")) {
+					Toast.makeText(InjuriesActivityMain.this,
+							"Connection Timeout...!!!", Toast.LENGTH_LONG)
+							.show();
+					finish();
+				}
+
+				else if (file_url.equalsIgnoreCase("true"))
+					new GetDisease().execute();
+			}
 		}
 	}
 
@@ -282,7 +312,6 @@ public class InjuriesActivityMain extends FragmentActivity {
 		TextView Txt_Title;
 
 		private static final String TAG_SUCCESS = "success";
-		private static final String TAG_MESSAGE = "message";
 
 		@Override
 		protected void onPreExecute() {
@@ -319,74 +348,80 @@ public class InjuriesActivityMain extends FragmentActivity {
 
 				Log.d("request!", "starting");
 
-				if(!Util.getDiseaseData.isEmpty())
-				{// Posting user data to script
-				JSONObject json = jsonParser.makeHttpRequest(
-						Util.getDiseaseData, "POST", params1);
+				if (!Util.getDiseaseData.isEmpty()) {// Posting user data to
+														// script
+					JSONObject json = jsonParser.makeHttpRequest(
+							Util.getDiseaseData, "POST", params1);
 
-				// full json response
-				Log.d("Pain Ids", json.toString());
+					// full json response
 
-				// json success element
-				success = json.getInt(TAG_SUCCESS);
-				if (success == 1) {
+					if (json != null) {
+						Log.d("Pain Ids", json.toString());
+						// json success element
+						success = json.getInt(TAG_SUCCESS);
+						if (success == 1) {
 
-					JSONArray PostJson = json.getJSONArray("posts");
-					Log.d("Post Date ", PostJson.toString());
-					for (int i = 0; i < PostJson.length(); i++) {
+							JSONArray PostJson = json.getJSONArray("posts");
+							Log.d("Post Date ", PostJson.toString());
+							for (int i = 0; i < PostJson.length(); i++) {
 
-						JSONObject Temp = PostJson.getJSONObject(i);
-						int Pain_Id = Integer.parseInt(Temp
-								.getString("Disease_Id"));
-						switch (Pain_Id) {
-						case 1:
-							// Heart
-							Util.isChecked_Heart = true;
-							// Log.d("Head",
-							// String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Head));
-							break;
-						case 2:
-							// Hepatitis
-							Util.isChecked_Hepatitis = true;
-							// Log.d("Neck",
-							// String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Neck));
-							break;
-						case 3:
-							// Shoulder
-							Util.isChecked_Diabeties = true;
-							break;
-						case 4:
-							// Arm
-							Util.isChecked_Lung = true;
-							break;
-						case 5:
-							// Waist
-							Util.isChecked_Hypotension = true;
-							break;
-						case 6:
-							// Back
-							Util.isChecked_Skin = true;
-							break;
-						case 7:
-							// Thigh
-							Util.isChecked_BP = true;
-							break;
-						case 8:
-							// Calf
-							Util.isChecked_Arthritis = true;
-							break;
-						case 9:
-							// Sole
-							Util.isChecked_Pregnant = true;
-							break;
-						case 10:
-							// Sole
-							Util.isChecked_Other = true;
-							break;
+								JSONObject Temp = PostJson.getJSONObject(i);
+								int Pain_Id = Integer.parseInt(Temp
+										.getString("Disease_Id"));
+								switch (Pain_Id) {
+								case 1:
+									// Heart
+									Util.isChecked_Heart = true;
+									// Log.d("Head",
+									// String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Head));
+									break;
+								case 2:
+									// Hepatitis
+									Util.isChecked_Hepatitis = true;
+									// Log.d("Neck",
+									// String.valueOf(Util.isSelected_ImageView_Controller_Activity_BodyPart_Neck));
+									break;
+								case 3:
+									// Shoulder
+									Util.isChecked_Diabeties = true;
+									break;
+								case 4:
+									// Arm
+									Util.isChecked_Lung = true;
+									break;
+								case 5:
+									// Waist
+									Util.isChecked_Hypotension = true;
+									break;
+								case 6:
+									// Back
+									Util.isChecked_Skin = true;
+									break;
+								case 7:
+									// Thigh
+									Util.isChecked_BP = true;
+									break;
+								case 8:
+									// Calf
+									Util.isChecked_Arthritis = true;
+									break;
+								case 9:
+									// Sole
+									Util.isChecked_Pregnant = true;
+									break;
+								case 10:
+									// Sole
+									Util.isChecked_Other = true;
+									break;
 
+								}
+							}
+							return "true";
 						}
+
+					} else {
+						return "timeout";
 					}
-				}
 
 				}
 			} catch (Exception e) {
@@ -398,7 +433,12 @@ public class InjuriesActivityMain extends FragmentActivity {
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
 			pdialog.dismiss();
-
+			if (file_url != null) {
+				if (file_url.equals("timeout"))
+					Toast.makeText(InjuriesActivityMain.this,
+							"Connection Timeout...!!!!", Toast.LENGTH_LONG)
+							.show();
+			}
 			FragmentManager fm = getSupportFragmentManager();
 			mSectionsPagerAdapter = new SectionsPagerAdapter(fm);
 			// // Set up the ViewPager with the sections adapter.

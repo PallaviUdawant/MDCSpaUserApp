@@ -8,6 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
+import org.mdcconcepts.com.mdcspauserapp.favourites.FavouritesFragment;
 import org.mdcconcepts.com.mdcspauserapp.findspa.FindSpaMapFragment;
 import org.mdcconcepts.com.mdcspauserapp.giftcard.GiftCardFragment;
 import org.mdcconcepts.com.mdcspauserapp.login.LoginActivity;
@@ -41,6 +42,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -143,7 +145,7 @@ public class MainActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, // nav menu toggle icon
+				R.drawable.drawer_icon, // nav menu toggle icon
 				R.string.app_name, // nav drawer open - description for
 									// accessibility
 				R.string.app_name // nav drawer close - description for
@@ -163,6 +165,8 @@ public class MainActivity extends Activity {
 				invalidateOptionsMenu();
 			}
 		};
+		ImageView view = (ImageView)findViewById(android.R.id.home);
+		view.setPadding(10,10, 10, 10);
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		if (savedInstanceState == null) {
@@ -185,7 +189,7 @@ public class MainActivity extends Activity {
 
 		}
 
-//		new GetUserData().execute();
+		new GetUserData().execute();
 
 	}
 
@@ -274,34 +278,39 @@ public class MainActivity extends Activity {
 			break;
 
 		case 3:
-			
+			//View Appointment
 			fragment = new ViewAppointmentFragment();
 			// fragment = new MakeAppointmentFragment();
 			break;
 
 		case 4:
-
+			//Notifications
 			fragment = new HomeFragment();
 			// fragment = new ViewAppointmentFragment();
 			break;
 
 		case 5:
+			//Send Gift card
 			fragment = new GiftCardFragment();
 			// fragment = new WhatsHotFragment();
 			break;
 
 		case 6:
-			fragment = new HomeFragment();
+			//Favourites
+			fragment = new FavouritesFragment();
 
 			break;
 
 		case 7:
+			//Offers
 			fragment = new HomeFragment();
 			break;
 		case 8:
+			//Settings
 			fragment = new SettingActivity();
 			break;
 		case 9:
+			//Logout
 			Intent i = new Intent(MainActivity.this, LoginActivity.class);
 			startActivity(i);
 			finish();
@@ -483,7 +492,7 @@ public class MainActivity extends Activity {
 				R.style.ThemeWithCorners);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.custom_alert_box);
-		dialog.setCancelable(false);
+//		dialog.setCancelable(false);
 		dialog.show();
 
 		TextView title;

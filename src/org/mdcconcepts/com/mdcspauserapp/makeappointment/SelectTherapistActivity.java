@@ -13,8 +13,9 @@ import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,15 +24,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.todddavies.components.progressbar.ProgressWheel;
 
 public class SelectTherapistActivity extends FragmentActivity {
-	
+
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -52,12 +55,12 @@ public class SelectTherapistActivity extends FragmentActivity {
 	JSONParser jsonParser = new JSONParser();
 
 	private String Therapies_Id;
-
+	Typeface font;
 	// ids
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MESSAGE = "message";
-	HashMap<String, String> AllDetails=new HashMap<String, String>();
-	
+	HashMap<String, String> AllDetails = new HashMap<String, String>();
+
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,19 +70,19 @@ public class SelectTherapistActivity extends FragmentActivity {
 
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		ImageView view = (ImageView) findViewById(android.R.id.home);
+		view.setPadding(10, 10, 10, 10);
+		font = Typeface.createFromAsset(getAssets(), "Raleway-Light.otf");
 
-//		Bundle bundle = getIntent().getExtras();
-//		Therapies_Id = bundle.getString("Therapies_Id");
+		Intent i = getIntent();
+		AllDetails = (HashMap<String, String>) i
+				.getSerializableExtra("AllDetails");
+		Therapies_Id = AllDetails.get("Therapy_Id");
 
-		
-		Intent i=getIntent();
-		AllDetails=(HashMap<String, String>) i.getSerializableExtra("AllDetails");
-		Therapies_Id=AllDetails.get("Therapy_Id");
-//		Toast.makeText(getApplicationContext(), AllDetails.get("Therapy_Id"), Toast.LENGTH_LONG).show();
-//		Therapies_Id="1";
 		new GetTherapies().execute();
-		
+
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -126,7 +129,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 			// below) with the page number as its lone argument.
 			TherapistSchedule fragment = new TherapistSchedule(
 					ArrayList_AllTherapistIdList.get(position),
-					ArrayList_AllTherapistList.get(position),AllDetails);
+					ArrayList_AllTherapistList.get(position), AllDetails);
 			// Bundle data = new Bundle();
 			// data.putInt("current_page", position + 1);
 			// fragment.setArguments(data);
@@ -155,33 +158,6 @@ public class SelectTherapistActivity extends FragmentActivity {
 		}
 	}
 
-	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
-	 */
-	public static class DummySectionFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		public static final String ARG_SECTION_NUMBER = "section_number";
-
-		public DummySectionFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(
-					R.layout.fragment_set_therapist_dummy, container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
-			return rootView;
-		}
-	}
-
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
@@ -196,7 +172,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 	class GetTherapies extends AsyncTask<String, String, String> {
 
 		// Progress Dialog
-		private ProgressDialog pDialog;
+		Dialog dialog;
 		int success;
 		/**
 		 * Before starting background thread Show Progress Dialog
@@ -206,11 +182,22 @@ public class SelectTherapistActivity extends FragmentActivity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(SelectTherapistActivity.this);
-			pDialog.setMessage("Getting Therapist Data ... ");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
+			dialog = new Dialog(SelectTherapistActivity.this,
+					R.style.ThemeWithCorners);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.custom_progress_dialog);
+			dialog.setCancelable(false);
+			dialog.show();
+
+			TextView Txt_Title = (TextView) dialog
+					.findViewById(R.id.txt_alert_text);
+			Txt_Title.setTypeface(font);
+			Txt_Title.setText("Getting Therapist Details....");
+
+			ProgressWheel pw_four = (ProgressWheel) dialog
+					.findViewById(R.id.progressBarFour);
+			pw_four.spin();
+
 		}
 
 		@Override
@@ -230,29 +217,35 @@ public class SelectTherapistActivity extends FragmentActivity {
 				JSONObject json = jsonParser.makeHttpRequest(Util.GetTherapist,
 						"POST", params);
 
-				// full json response
-				Log.d("Login attempt", json.toString());
+				if (json != null) {
+					// json success element
+					// full json response
+					Log.d("Login attempt", json.toString());
 
-				// json success element
-				success = json.getInt(TAG_SUCCESS);
-				if (success == 1) {
+					success = json.getInt(TAG_SUCCESS);
+					if (success == 1) {
 
-					JSONArray PostJson = json.getJSONArray("posts");
-					Log.d("Post Date ", PostJson.toString());
-					for (int i = 0; i < PostJson.length(); i++) {
+						JSONArray PostJson = json.getJSONArray("posts");
+						Log.d("Post Date ", PostJson.toString());
+						for (int i = 0; i < PostJson.length(); i++) {
 
-						JSONObject Temp = PostJson.getJSONObject(i);
+							JSONObject Temp = PostJson.getJSONObject(i);
 
-						ArrayList_AllTherapistList.add(Temp.getString("Name"));
-						ArrayList_AllTherapistIdList.add(Temp
-								.getString("Therapist_Id"));
+							ArrayList_AllTherapistList.add(Temp
+									.getString("Name"));
+							ArrayList_AllTherapistIdList.add(Temp
+									.getString("Therapist_Id"));
+
+						}
+						return json.getString(TAG_MESSAGE)
+								+ " , Please Login !";
+					} else {
+						Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+						return json.getString(TAG_MESSAGE);
 
 					}
-					return json.getString(TAG_MESSAGE) + " , Please Login !";
 				} else {
-					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-					return json.getString(TAG_MESSAGE);
-
+					return "timeout";
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -267,8 +260,12 @@ public class SelectTherapistActivity extends FragmentActivity {
 		 * **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-			pDialog.dismiss();
+			dialog.dismiss();
 			if (file_url != null) {
+				if (file_url.equalsIgnoreCase("timeout"))
+					Toast.makeText(SelectTherapistActivity.this,
+							"Connection Timeout..!!!", Toast.LENGTH_LONG)
+							.show();
 				// Create the adapter that will return a fragment for each of
 				// the three
 				// primary sections of the app.

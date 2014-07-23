@@ -14,8 +14,7 @@ public class Util {
 	 * This is Sign Up User Webservice URL.
 	 */
 	public static final String Sign_Up_URL = "http://mdcspa.mdcconcepts.com/sign_up__webservice.php";
-
-
+	public static final String GetFavouriteSpa = "http://mdcspa.mdcconcepts.com/GetFavouriteSpa.php";
 	/**
 	 * This is Add to Fav Webservice URL.
 	 */
@@ -39,6 +38,10 @@ public class Util {
 	 * This is Get Appointments User Webservice URL.
 	 */
 	public static final String Get_Appointments_URL = "http://mdcspa.mdcconcepts.com/getappointments.php";
+	/**
+	 * This is Get Appointments User Webservice URL.
+	 */
+	public static final String Reschedule_Appointments_URL = "http://mdcspa.mdcconcepts.com/RescheduleAppointment.php";
 
 	/**
 	 * This is Get An Single Appointments User Webservice URL.
@@ -160,6 +163,7 @@ public class Util {
 	public static String User_DOB;
 	public static String User_Anniversary;
 
+	public static Boolean isHeader=false;
 	public static String fontPath="Raleway-Light.otf";
 	
 	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Head = false;
@@ -194,4 +198,7 @@ public class Util {
  	
 	public static FragmentManager fm;
 	 public static String DISTANCE="";
+
+
+	public static boolean isUpcoming=false;
 }

@@ -6,6 +6,7 @@
         <item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="android:actionBarTabTextStyle">@style/MyActionbarTabTextStyle</item>
+         <item name="android:homeAsUpIndicator">@drawable/actionbar_home</item>
     </style>
 
     <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -21,6 +22,9 @@
     <style name="ActionBarTabStyle" parent="android:style/Widget.Holo.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_selector</item>
     </style>
+    <style name="Theme.MyFancyTheme" parent="android:Theme.Holo">
+    <item name="android:homeAsUpIndicator">@drawable/back_button</item>
+</style>
     
     <!-- ActionBar Tab Text Properties -->
     <style name="MyActionbarTabTextStyle" parent="@android:Widget.Holo.Light.ActionBar.TabText">

@@ -45,8 +45,6 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -92,16 +90,16 @@ public class FindSpaMapFragment extends Fragment implements
 
 	private FetchNearestSpa getTenNearestSpaTask;
 
-	private FetchHighestRatedSpa getHighestRatedSpaTask;
+//	private FetchHighestRatedSpa getHighestRatedSpaTask;
 	double myCurrentLocationLat = 0.0;
 	double myCurrentLocationlong = 0.0;
 
 	private boolean isloadingNearestSpa = false;
-	private boolean isloadingHighestRatedSpa = false;
+//	private boolean isloadingHighestRatedSpa = false;
 	Spinner filter;
 
 	private boolean isNearestDataAvailable = true;
-	private boolean isHighestRatedDataAvailable = true;
+//	private boolean isHighestRatedDataAvailable = true;
 
 	ProgressWheel progressbar_footer;
 	ProgressWheel progressbar_header;
@@ -131,7 +129,7 @@ public class FindSpaMapFragment extends Fragment implements
 	static final String SPA_COVER_PHOTO = "spa_cover_photo";
 	private NearestSpaListviewAdapter adapter;
 	ImageLoader imgLoader;
-	private ArrayList<String> ArrayList_Filter = new ArrayList<String>();
+//	private ArrayList<String> ArrayList_Filter = new ArrayList<String>();
 
 	public FindSpaMapFragment() {
 		// TODO Auto-generated constructor stub
@@ -159,8 +157,6 @@ public class FindSpaMapFragment extends Fragment implements
 		imgLoader = new ImageLoader(rootActivity);
 		font = Typeface.createFromAsset(getActivity().getAssets(),
 				"Raleway-Light.otf");
-		// String []
-		// images={"http://t2.gstatic.com/images?q=tbn:ANd9GcSZrajzoEXNlRWjMGE9L3kqI1EsFN9P5HCNhMo4xaqLkWuhAixo","http://t0.gstatic.com/images?q=tbn:ANd9GcQH7hisM_szjOKlVdQvq6m_J4lETkWxQOlAk3SMWs051TFFnmWMCA","http://3.bp.blogspot.com/-kAhN0HX-MBk/T_5bApfhbJI/AAAAAAAAAuI/lUww8xT9yV8/s1600/smileys_001_01.png"};
 		mDrawerLayout = (DrawerLayout) rootView
 				.findViewById(R.id.drawer_layout1);
 		mDrawerList = (ListView) rootView.findViewById(R.id.list_slidermenu1);
@@ -197,71 +193,71 @@ public class FindSpaMapFragment extends Fragment implements
 
 		mDrawerList.addFooterView(footer);
 
-		filter = (Spinner) header.findViewById(R.id.spinner_sort_by);
+//		filter = (Spinner) header.findViewById(R.id.spinner_sort_by);
 
 		adapter = new NearestSpaListviewAdapter(getActivity(), SpaDetails);
 		mDrawerList.setAdapter(adapter);
 
-		ArrayList_Filter.add("Nearest Spa's");
-		ArrayList_Filter.add("Highest Rated Spa's");
-		// ArrayList_Filter.add("Newest Spa");
-
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
-				getActivity(), R.layout.spinner_item, ArrayList_Filter);
-
-		dataAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		filter.setAdapter(dataAdapter);
-		filter.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-
-				switch (position) {
-
-				case 0:
-					hit_counter = 0;
-					Selected_Filter = 0;
-					mDrawerList.setAdapter(null);
-					if (!SpaDetails.isEmpty())
-						SpaDetails.clear();
-					// dialog.show();
-					getTenNearestSpaTask = new FetchNearestSpa();
-					getTenNearestSpaTask.execute();
-
-					break;
-				case 1:
-					Selected_Filter = 1;
-					mDrawerList.setAdapter(null);
-					if (!SpaDetails.isEmpty())
-						SpaDetails.clear();
-
-					hit_counter = 0;
-					getHighestRatedSpaTask = new FetchHighestRatedSpa();
-					getHighestRatedSpaTask.execute();
-					break;
-
-				default:
-					break;
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+//		ArrayList_Filter.add("Nearest Spa's");
+//		// ArrayList_Filter.add("Highest Rated Spa's");
+//		// ArrayList_Filter.add("Newest Spa");
+//
+//		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
+//				getActivity(), R.layout.spinner_item, ArrayList_Filter);
+//		//
+//		dataAdapter
+//				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		//
+//		filter.setAdapter(dataAdapter);
+		// filter.setOnItemSelectedListener(new OnItemSelectedListener() {
+		//
+		// @Override
+		// public void onItemSelected(AdapterView<?> parent, View view,
+		// int position, long id) {
+		// // TODO Auto-generated method stub
+		//
+		// switch (position) {
+		//
+		// case 0:
+		// hit_counter = 0;
+		// Selected_Filter = 0;
+		// mDrawerList.setAdapter(null);
+		// if (!SpaDetails.isEmpty())
+		// SpaDetails.clear();
+		// // dialog.show();
+		// getTenNearestSpaTask = new FetchNearestSpa();
+		// getTenNearestSpaTask.execute();
+		//
+		// break;
+		// case 1:
+		// Selected_Filter = 1;
+		// mDrawerList.setAdapter(null);
+		// if (!SpaDetails.isEmpty())
+		// SpaDetails.clear();
+		//
+		// hit_counter = 0;
+		// getHighestRatedSpaTask = new FetchHighestRatedSpa();
+		// getHighestRatedSpaTask.execute();
+		// break;
+		//
+		// default:
+		// break;
+		// }
+		// }
+		//
+		// @Override
+		// public void onNothingSelected(AdapterView<?> parent) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		// });
 
 		// enabling action bar app icon and behaving it as toggle button
 		// getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 		// getActivity().getActionBar().setHomeButtonEnabled(true);
 
 		mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout,
-				R.drawable.ic_drawer, // nav menu toggle icon
+				R.drawable.drawer_icon, // nav menu toggle icon
 				R.string.app_name, // nav drawer open - description for
 									// accessibility
 				R.string.app_name // nav drawer close - description for
@@ -291,8 +287,8 @@ public class FindSpaMapFragment extends Fragment implements
 		 * Fetch 10 Nearest Spa's from server
 		 */
 
-		// getTenNearestSpaTask = new FetchNearestSpa();
-		// getTenNearestSpaTask.execute();
+		getTenNearestSpaTask = new FetchNearestSpa();
+		getTenNearestSpaTask.execute();
 
 		mDrawerList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -307,20 +303,10 @@ public class FindSpaMapFragment extends Fragment implements
 				LatLng locateOnMap = new LatLng(Double.parseDouble(spaDetails
 						.get("spa_lat")), Double.parseDouble(spaDetails
 						.get("spa_long")));
-				//
-				// LatLng newLatLong;
-				//
-				//
-				// double newLat, newLong;
-				// newLat = Double.parseDouble(spa_data.Spa_Lat);
-				// newLong = Double.parseDouble(spa_data.Spa_Long);
-				// newLatLong = new LatLng(newLat, newLong);
-
 				String url = getMapsApiDirectionsUrl(new LatLng(mLastLatitude,
 						mLastLongitude), locateOnMap);
 				DownloadTask downloadTask = new DownloadTask();
 				downloadTask.execute(url);
-
 				Util.selectedSpaDetails = spaDetails;
 				addMarkers(locateOnMap);
 				mDrawerLayout.closeDrawers();
@@ -498,148 +484,106 @@ public class FindSpaMapFragment extends Fragment implements
 		}
 	}
 
-	public class FetchHighestRatedSpa extends AsyncTask<String, String, String> {
-
-		// private ProgressDialog pDialog;
-
-		int success;
-		JSONParser jsonParser = new JSONParser();
-		private static final String TAG_SUCCESS = "success";
-		private static final String TAG_MESSAGE = "message";
-
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			super.onPreExecute();
-			// dialog.show();
-
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
-			SystemClock.sleep(1000);
-			isloadingHighestRatedSpa = true;
-			try {
-				// Building Parameters
-				List<NameValuePair> params1 = new ArrayList<NameValuePair>();
-
-				// check if GPS enabled
-
-				params1.add(new BasicNameValuePair("Hit_Counter", String
-						.valueOf(hit_counter)));
-
-				Log.d("request!", "starting highest rated spa");
-
-				// Posting user data to script
-				JSONObject json = jsonParser.makeHttpRequest(
-						Util.getHighestRatedSpa, "POST", params1);
-
-				Log.d("Hit count", String.valueOf(hit_counter));
-
-				if (json != null) {
-					// json success element
-					success = json.getInt(TAG_SUCCESS);
-
-					if (success == 1) {
-
-						JSONArray PostJson = json.getJSONArray("posts");
-						Log.d("Executing Highest Rated ", PostJson.toString());
-						for (int i = 0; i < PostJson.length(); i++) {
-
-							JSONObject Temp = PostJson.getJSONObject(i);
-
-							HashMap<String, String> spaDetails = new HashMap<String, String>();
-							spaDetails.put(SPA_ID, Temp.getString("Spa_Id"));
-							spaDetails
-									.put(SPA_NAME, Temp.getString("Spa_Name"));
-							spaDetails.put(SPA_Address,
-									Temp.getString("Addresss"));
-							spaDetails.put(SPA_LAT, Temp.getString("Spa_Lat"));
-							spaDetails
-									.put(SPA_LONG, Temp.getString("Spa_long"));
-							spaDetails.put(SPA_RATING,
-									Temp.getString("Total_Rating"));
-							String logo_url = Temp.getString("Spa_Logo_Url");
-							if (logo_url.isEmpty())
-								logo_url = "http://mdcspa.mdcconcepts.com/spa_logos/spa_logo.jpg";
-							else
-								logo_url = logo_url.replace("\\", "");
-							spaDetails.put(SPA_LOGO, logo_url);
-
-							String cover_url = Temp
-									.getString("Spa_Cover_Photo_Url");
-							if (cover_url.isEmpty())
-								cover_url = "http://mdcspa.mdcconcepts.com/spa_cover_photos/sp_profile_cover.png";
-							else
-								cover_url = cover_url.replace("\\", "");
-							spaDetails.put(SPA_COVER_PHOTO, cover_url);
-
-							NearestLocations
-									.add(new Spa_Data(Temp
-											.getString("Spa_Name"), Temp
-											.getString("Spa_Id"), Temp
-											.getString("Spa_Lat"), Temp
-											.getString("Spa_long"), Temp
-											.getString("Addresss"), logo_url,
-											cover_url));
-							// NearestLocations.add(spa_data);
-							SpaDetails.add(spaDetails);
-
-							isHighestRatedDataAvailable = true;
-						}
-
-						return json.getString(TAG_MESSAGE);
-					} else {
-						Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-						return json.getString(TAG_MESSAGE);
-
-					}
-				} else {
-					return "timeout";
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-
-		}
-
-		/**
-		 * After completing background task Dismiss the progress dialog
-		 **/
-		protected void onPostExecute(String file_url) {
-			// dismiss the dialog once product deleted
-			// pDialog.dismiss();
-//			if (dialog.isShowing())
-//				dialog.dismiss();
-			isloadingHighestRatedSpa = false;
-
-			if (file_url!=null) {
-				if (file_url.contains("Spa Found !")) {
-					mDrawerList.setAdapter(adapter);
-					mDrawerList.setSelectionFromTop(VisiblePosition,
-							distFromTop);
-					hit_counter++;
-
-				} else if (file_url.equalsIgnoreCase("false")) {
-					/**
-					 * Stop loading items if data finished
-					 */
-					mDrawerList.setOnScrollListener(null);
-					mDrawerList.removeFooterView(footer);
-					progressbar_footer.stopSpinning();
-					isHighestRatedDataAvailable = false;
-				} else if (file_url.equalsIgnoreCase("timeout")) {
-					Toast.makeText(getActivity(), "Connection TimeOut..!!!",
-							Toast.LENGTH_LONG).show();
-				}
-			}
-			// initilizeMap();
-
-		}
-	}
+	/*
+	 * public class FetchHighestRatedSpa extends AsyncTask<String, String,
+	 * String> {
+	 * 
+	 * // private ProgressDialog pDialog;
+	 * 
+	 * int success; JSONParser jsonParser = new JSONParser(); private static
+	 * final String TAG_SUCCESS = "success"; private static final String
+	 * TAG_MESSAGE = "message";
+	 * 
+	 * @Override protected void onPreExecute() { // TODO Auto-generated method
+	 * stub super.onPreExecute(); // dialog.show();
+	 * 
+	 * }
+	 * 
+	 * @Override protected String doInBackground(String... params) { // TODO
+	 * Auto-generated method stub SystemClock.sleep(1000);
+	 * isloadingHighestRatedSpa = true; try { // Building Parameters
+	 * List<NameValuePair> params1 = new ArrayList<NameValuePair>();
+	 * 
+	 * // check if GPS enabled
+	 * 
+	 * params1.add(new BasicNameValuePair("Hit_Counter", String
+	 * .valueOf(hit_counter)));
+	 * 
+	 * Log.d("request!", "starting highest rated spa");
+	 * 
+	 * // Posting user data to script JSONObject json =
+	 * jsonParser.makeHttpRequest( Util.getHighestRatedSpa, "POST", params1);
+	 * 
+	 * Log.d("Hit count", String.valueOf(hit_counter));
+	 * 
+	 * if (json != null) { // json success element success =
+	 * json.getInt(TAG_SUCCESS);
+	 * 
+	 * if (success == 1) {
+	 * 
+	 * JSONArray PostJson = json.getJSONArray("posts");
+	 * Log.d("Executing Highest Rated ", PostJson.toString()); for (int i = 0; i
+	 * < PostJson.length(); i++) {
+	 * 
+	 * JSONObject Temp = PostJson.getJSONObject(i);
+	 * 
+	 * HashMap<String, String> spaDetails = new HashMap<String, String>();
+	 * spaDetails.put(SPA_ID, Temp.getString("Spa_Id")); spaDetails
+	 * .put(SPA_NAME, Temp.getString("Spa_Name")); spaDetails.put(SPA_Address,
+	 * Temp.getString("Addresss")); spaDetails.put(SPA_LAT,
+	 * Temp.getString("Spa_Lat")); spaDetails .put(SPA_LONG,
+	 * Temp.getString("Spa_long")); spaDetails.put(SPA_RATING,
+	 * Temp.getString("Total_Rating")); String logo_url =
+	 * Temp.getString("Spa_Logo_Url"); if (logo_url.isEmpty()) logo_url =
+	 * "http://mdcspa.mdcconcepts.com/spa_logos/spa_logo.jpg"; else logo_url =
+	 * logo_url.replace("\\", ""); spaDetails.put(SPA_LOGO, logo_url);
+	 * 
+	 * String cover_url = Temp .getString("Spa_Cover_Photo_Url"); if
+	 * (cover_url.isEmpty()) cover_url =
+	 * "http://mdcspa.mdcconcepts.com/spa_cover_photos/sp_profile_cover.png";
+	 * else cover_url = cover_url.replace("\\", "");
+	 * spaDetails.put(SPA_COVER_PHOTO, cover_url);
+	 * 
+	 * NearestLocations .add(new Spa_Data(Temp .getString("Spa_Name"), Temp
+	 * .getString("Spa_Id"), Temp .getString("Spa_Lat"), Temp
+	 * .getString("Spa_long"), Temp .getString("Addresss"), logo_url,
+	 * cover_url)); // NearestLocations.add(spa_data);
+	 * SpaDetails.add(spaDetails);
+	 * 
+	 * isHighestRatedDataAvailable = true; }
+	 * 
+	 * return json.getString(TAG_MESSAGE); } else { Log.d("Login Failure!",
+	 * json.getString(TAG_MESSAGE)); return json.getString(TAG_MESSAGE);
+	 * 
+	 * } } else { return "timeout"; }
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); } return null;
+	 * 
+	 * }
+	 * 
+	 * /** After completing background task Dismiss the progress dialog
+	 * 
+	 * protected void onPostExecute(String file_url) { // dismiss the dialog
+	 * once product deleted // pDialog.dismiss(); // if (dialog.isShowing()) //
+	 * dialog.dismiss(); isloadingHighestRatedSpa = false;
+	 * 
+	 * if (file_url!=null) { if (file_url.contains("Spa Found !")) {
+	 * mDrawerList.setAdapter(adapter);
+	 * mDrawerList.setSelectionFromTop(VisiblePosition, distFromTop);
+	 * hit_counter++;
+	 * 
+	 * } else if (file_url.equalsIgnoreCase("false")) { /** Stop loading items
+	 * if data finished
+	 * 
+	 * mDrawerList.setOnScrollListener(null);
+	 * mDrawerList.removeFooterView(footer); progressbar_footer.stopSpinning();
+	 * isHighestRatedDataAvailable = false; } else if
+	 * (file_url.equalsIgnoreCase("timeout")) { Toast.makeText(getActivity(),
+	 * "Connection TimeOut..!!!", Toast.LENGTH_LONG).show(); } } //
+	 * initilizeMap();
+	 * 
+	 * } }
+	 */
 
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -652,54 +596,55 @@ public class FindSpaMapFragment extends Fragment implements
 		// TODO Auto-generated method stub
 		int loadedItems = (firstVisibleItem) + visibleItemCount;
 
-		switch (Selected_Filter) {
+		// switch (Selected_Filter) {
+		//
+		// case 0:
+		if (isNearestDataAvailable) {
+			if ((loadedItems == totalItemCount) && !isloadingNearestSpa) {
 
-		case 0:
-			if (isNearestDataAvailable) {
-				if ((loadedItems == totalItemCount) && !isloadingNearestSpa) {
+				if (getTenNearestSpaTask != null
+						&& (getTenNearestSpaTask.getStatus() == AsyncTask.Status.FINISHED)) {
+					getTenNearestSpaTask = new FetchNearestSpa();
+					getTenNearestSpaTask.execute();
 
-					if (getTenNearestSpaTask != null
-							&& (getTenNearestSpaTask.getStatus() == AsyncTask.Status.FINISHED)) {
-						getTenNearestSpaTask = new FetchNearestSpa();
-						getTenNearestSpaTask.execute();
-
-					}
 				}
-			} else {
-				mDrawerList.setOnScrollListener(null);
-				mDrawerList.removeFooterView(footer);
-				progressbar_footer.stopSpinning();
-				// adapter.notifyDataSetChanged();
-
 			}
-			break;
-		case 1:
-			/**
-			 * Select Nearest Spa's On Scroll event- Load 10 items on scroll end
-			 */
+		} else {
+			mDrawerList.setOnScrollListener(null);
+			mDrawerList.removeFooterView(footer);
+			progressbar_footer.stopSpinning();
+			// adapter.notifyDataSetChanged();
 
-			if (isHighestRatedDataAvailable) {
-				if ((loadedItems == totalItemCount)
-						&& !isloadingHighestRatedSpa) {
-
-					if (getHighestRatedSpaTask != null
-							&& (getHighestRatedSpaTask.getStatus() == AsyncTask.Status.FINISHED)) {
-
-						getHighestRatedSpaTask = new FetchHighestRatedSpa();
-						getHighestRatedSpaTask.execute();
-
-					}
-				}
-			} else {
-				mDrawerList.setOnScrollListener(null);
-				mDrawerList.removeFooterView(footer);
-				progressbar_footer.stopSpinning();
-				// adapter.notifyDataSetChanged();
-
-			}
-
-			break;
 		}
+		// break;
+		// case 1:
+		// /**
+		// * Select Nearest Spa's On Scroll event- Load 10 items on scroll end
+		// */
+		//
+		// if (isHighestRatedDataAvailable) {
+		// if ((loadedItems == totalItemCount)
+		// && !isloadingHighestRatedSpa) {
+		//
+		// if (getHighestRatedSpaTask != null
+		// && (getHighestRatedSpaTask.getStatus() == AsyncTask.Status.FINISHED))
+		// {
+		//
+		// getHighestRatedSpaTask = new FetchHighestRatedSpa();
+		// getHighestRatedSpaTask.execute();
+		//
+		// }
+		// }
+		// } else {
+		// mDrawerList.setOnScrollListener(null);
+		// mDrawerList.removeFooterView(footer);
+		// progressbar_footer.stopSpinning();
+		// // adapter.notifyDataSetChanged();
+		//
+		// }
+		//
+		// break;
+		// }
 		/**
 		 * When you scroll down and start getting new data store Last Visible
 		 * Position in some variables using this method
@@ -1171,8 +1116,7 @@ public class FindSpaMapFragment extends Fragment implements
 
 		Intent i = new Intent(getActivity(), SpaProfileActivity.class);
 
-		if (Util.selectedSpaDetails.get("Spa_Id") == spa_data.Spa_Id)
-			;
+		if (Util.selectedSpaDetails.get("Spa_Id") == spa_data.Spa_Id);
 		i.putExtra("SelectedSpDetails", Util.selectedSpaDetails);
 		// i.putExtra("Spa_Data", )
 		// i.putExtra("Spa_Name", spa_data.Spa_Name);

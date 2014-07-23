@@ -1,6 +1,7 @@
 package org.mdcconcepts.com.mdcspauserapp.viewappointments;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -12,8 +13,8 @@ import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
+import android.app.Dialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -22,12 +23,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.todddavies.components.progressbar.ProgressWheel;
+
 public class ViewAppointmentFragment extends Fragment {
 
+	
+	 public static final String TherapyName="TherapyName";
+	 public static final String Therapist_Name="Therapist_Name";
+	 public static final String Appointment_Time="Appointment_Time";
+	 public static final String Time_For_Service="Time_For_Service";
+	 public static final String Pricing="Pricing";
+	 public static final String status="status";
+	 public static final String Spa_Id="Spa_Id";
+	 public static final String Spa_Name="Spa_Name";
+	 public static final String Therapist_Id="Therapist_Id";
+	 public static final String Appointment_Id="Appointment_Id";
+	 
 	public ViewAppointmentFragment() {
 	}
 
@@ -39,9 +55,14 @@ public class ViewAppointmentFragment extends Fragment {
 	ArrayList<String> ArrayList_AppointMent_Service = new ArrayList<String>();
 	ArrayList<String> ArrayList_AppointMent_Time = new ArrayList<String>();
 	ArrayList<String> ArrayList_AppointMentIDList = new ArrayList<String>();
+	ArrayList<HashMap<String, String>> ArrayList_AppointMent = new ArrayList<HashMap<String, String>>();
+	HashMap<String, String> MissingArray=new HashMap<String, String>();
+
+	  ArrayList<Item> items = new ArrayList<Item>();
 	// ids
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MESSAGE = "message";
+	Typeface font ;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,38 +75,11 @@ public class ViewAppointmentFragment extends Fragment {
 
 		textView_Current_Appointments=(TextView) rootView
 				.findViewById(R.id.textView_Current_Appointments);
-		textView_History=(TextView) rootView
-		.findViewById(R.id.textView_History);
-		
-		Typeface font = Typeface.createFromAsset(rootView.getContext().getAssets(), Util.fontPath);
+		font = Typeface.createFromAsset(rootView.getContext().getAssets(), Util.fontPath);
 		textView_Current_Appointments.setTypeface(font,Typeface.BOLD);
-		textView_History.setTypeface(font,Typeface.BOLD);
 		
-//		ArrayList_AppointMent_Service.add("Lorem Ipsum 1");
-//		ArrayList_AppointMent_Service.add("Lorem Ipsum 2");
-//
-//		ArrayList_AppointMent_Time.add("13/07/2014 12.00 pm");
-//		ArrayList_AppointMent_Time.add("15/07/2014 2.00 pm");
-//
-//		ArrayList_AppointMentIDList.add("1");
-//		ArrayList_AppointMentIDList.add("2");
-		
-		/*ViewAppointmentCustomList adapter = new ViewAppointmentCustomList(
-				getActivity(), ArrayList_AppointMent_Service,
-				ArrayList_AppointMent_Time);
-		listViewController_Appointmentlist.setAdapter(adapter);
-		
-		ListView listViewController_History=(ListView)rootView.findViewById(R.id.listViewController_History);
-
-		ViewAppointmentCustomList adapter1 = new ViewAppointmentCustomList(
-				getActivity(), ArrayList_AppointMent_Service,
-				ArrayList_AppointMent_Time);
-		ArrayList_AppointMent_Time.clear();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-		ArrayList_AppointMent_Time.add("03/06/2014 12.00 pm");
-		ArrayList_AppointMent_Time.add("05/06/2014 2.00 pm");
-		
-		listViewController_History.setAdapter(adapter1);*/
-		
+		Util.isHeader=false;
+		Util.isUpcoming=false;
 		new GetAppointments().execute();
 		return rootView;
 	}
@@ -93,21 +87,31 @@ public class ViewAppointmentFragment extends Fragment {
 	class GetAppointments extends AsyncTask<String, String, String> {
 
 		// Progress Dialog
-		private ProgressDialog pDialog;
 		int success;
 		/**
 		 * Before starting background thread Show Progress Dialog
 		 * */
 		boolean failure = false;
 
+		Dialog dialog;
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(getActivity());
-			pDialog.setMessage("Getting Your Appointments ... ");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
+			
+			dialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.custom_progress_dialog);
+			dialog.setCancelable(false);
+			dialog.show();
+
+			TextView Txt_Title = (TextView) dialog
+					.findViewById(R.id.txt_alert_text);
+			Txt_Title.setTypeface(font);
+			Txt_Title.setText("Getting Your Appointments ... ");
+			ProgressWheel pw_four = (ProgressWheel) dialog
+					.findViewById(R.id.progressBarFour);
+			pw_four.spin();
+			
 		}
 
 		@Override
@@ -137,16 +141,26 @@ public class ViewAppointmentFragment extends Fragment {
 
 					JSONArray PostJson = json.getJSONArray("posts");
 					Log.d("Post Date ", PostJson.toString());
-					for (int i = 0; i < PostJson.length(); i++) {
+					for (int i = 0; i < PostJson.length(); i++) 
+					{
 
+//						HashMap<String, String> Appointment_Details = new HashMap<String, String>();
 						JSONObject Temp = PostJson.getJSONObject(i);
-						ArrayList_AppointMent_Service.add(Temp
-								.getString("name"));
-						ArrayList_AppointMent_Time.add(Temp
-								.getString("Appointment_DateTime"));
-						ArrayList_AppointMentIDList.add(Temp
-								.getString("Appointment_Id"));
-
+						if(Temp.getString("Appointment_Status").equalsIgnoreCase("Attended") && Util.isHeader==false )
+						{
+								   items.add(new SectionItem("History"));
+								   Util.isHeader=true;
+						}
+						if(Temp.getString("Appointment_Status").equalsIgnoreCase("Upcoming") && Util.isUpcoming==false )
+						{
+								   items.add(new SectionItem("Upcoming Appointments"));
+								   Util.isUpcoming=true;
+						}
+							items.add(new EntryItem(Temp.getString("Name"), Temp.getString("Therapist_Name"),
+													Temp.getString("Appointment_DateTime"),Temp.getString("Time"),
+													Temp.getString("Pricing"),Temp.getString("Appointment_Status"),
+													Temp.getString("Spa_Id"),Temp.getString("Spa_Name"),
+													Temp.getString("Therapist_Id"),Temp.getString("Appointment_Id")));
 					}
 					return json.getString(TAG_MESSAGE) + " , Please Login !";
 				} else {
@@ -167,30 +181,65 @@ public class ViewAppointmentFragment extends Fragment {
 		 * **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-			pDialog.dismiss();
+			dialog.dismiss();
 			if (file_url != null) {
 				if (success == 1) {
-
-					ViewAppointmentCustomList adapter = new ViewAppointmentCustomList(
-							getActivity(), ArrayList_AppointMent_Service,
-							ArrayList_AppointMent_Time);
-					listViewController_Appointmentlist.setAdapter(adapter);
+					 EntryAdapter adapter = new EntryAdapter(getActivity(), items);
+					 listViewController_Appointmentlist.setAdapter(adapter);
 					listViewController_Appointmentlist
 							.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 								@Override
 								public void onItemClick(AdapterView<?> parent,
 										View view, int position, long id) {
-
-									Intent intentGetMessage = new Intent(
-											getActivity(),
-											SeeApointmentActivity.class);
-
-									intentGetMessage.putExtra("Appointment_Id",
-											ArrayList_AppointMentIDList
-													.get(position));
-
-									startActivity(intentGetMessage);
+//
+									
+									
+									HashMap<String, String>MyAppointmentDetails=new HashMap<String, String>();
+									
+									EntryItem data=(EntryItem) view.getTag();
+									
+									MyAppointmentDetails.put(Spa_Name, data.Spa_Name);
+									MyAppointmentDetails.put(Spa_Id, data.Spa_Id);
+									MyAppointmentDetails.put(TherapyName, data.TherapyName);
+									MyAppointmentDetails.put(Therapist_Id, data.Therapist_Id);
+									MyAppointmentDetails.put(Therapist_Name, data.Therapist_Name);
+									MyAppointmentDetails.put(Time_For_Service, data.Time_For_Service);
+									MyAppointmentDetails.put(Pricing, data.Pricing);
+									MyAppointmentDetails.put(Appointment_Id, data.Appointment_Id);
+									MyAppointmentDetails.put(Appointment_Time, data.Appointment_Time);
+									
+//									MyAppointement.add(data.Spa_Name);
+//									MyAppointement.add(data.TherapyName);
+//									MyAppointement.add(data.Therapist_Name);
+//									MyAppointement.add(data.Time_For_Service);
+//									MyAppointement.add(data.Pricing);
+//									MyAppointement.add(data.Appointment_Time);
+//									MyAppointement.add(data.Therapist_Id);
+									
+									
+									
+									//									MyAppointement.add(data.)
+//									Toast.makeText(getActivity(), data.status.toString(), Toast.LENGTH_LONG).show();
+								if(data.status.toString().equalsIgnoreCase("Upcoming"))
+								{
+									Intent i=new Intent(getActivity(),RescheduleAppointmentActivity.class);
+									i.putExtra("AppointmentDetails", MyAppointmentDetails);
+									startActivityForResult(i, 2);
+									
+								}
+								else
+									if(data.status.toString().equalsIgnoreCase("Attended"));
+									
+//									Intent intentGetMessage = new Intent(
+//											getActivity(),
+//											SeeApointmentActivity.class);
+//
+//									intentGetMessage.putExtra("Appointment_Id",
+//											ArrayList_AppointMentIDList
+//													.get(position));
+//
+//									startActivity(intentGetMessage);
 
 									// // Toast.makeText(
 									// // ManageAppointmentActivity.this,
@@ -217,4 +266,22 @@ public class ViewAppointmentFragment extends Fragment {
 
 		}
 	}
+	 @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)  
+     {  
+               super.onActivityResult(requestCode, resultCode, data);  
+                   
+                // check if the request code is same as what is passed  here it is 2  
+                 if(requestCode==2)  
+                 {  
+                	 Util.isHeader=false;
+             		Util.isUpcoming=false;
+             		items.clear();
+             		listViewController_Appointmentlist.setAdapter(null);
+             		new GetAppointments().execute();
+             		
+                	 	
+                 }  
+   
+   }  
 }
