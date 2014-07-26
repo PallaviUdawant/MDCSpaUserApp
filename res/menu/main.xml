@@ -5,16 +5,30 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="Login"/>
-      <item
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Profile"/>
+    <item
         android:id="@+id/action_fav"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="Favourite Spa"/>
-       <item
+        android:title="Favourite SPA"/>
+    <item
+        android:id="@+id/action_help"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Help"/>
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
-      
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Logout"/>
 
 </menu>

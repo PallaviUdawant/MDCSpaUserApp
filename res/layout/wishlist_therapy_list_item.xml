@@ -29,8 +29,8 @@
 
     <ImageButton
         android:id="@+id/Imageview_Controller_Delete_Wishlist"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_gravity="right"
         android:layout_marginRight="15dp"
         android:background="@drawable/wishlist_iteam_delete_image_selector" />

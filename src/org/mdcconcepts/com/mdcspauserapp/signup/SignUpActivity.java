@@ -8,27 +8,37 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.InjuriesActivityMain;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.CustomValidator;
-import org.mdcconcepts.com.mdcspauserapp.login.LoginActivity;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.InputType;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.InflateException;
+import android.view.LayoutInflater;
+import android.view.LayoutInflater.Factory;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.todddavies.components.progressbar.ProgressWheel;
 
 public class SignUpActivity extends Activity {
 
@@ -61,7 +71,7 @@ public class SignUpActivity extends Activity {
 	TextView Txt_DoB;
 	TextView Txt_Anniversary;
 	TextView txt_alreadyHaveAccount;
-
+	Typeface font;
 	public int whoCalls;
 
 	@Override
@@ -90,7 +100,7 @@ public class SignUpActivity extends Activity {
 		txt_Full_Name=(TextView)findViewById(R.id.txt_full_name_create_acc);
 		txt_alreadyHaveAccount=(TextView)findViewById(R.id.txt_alreadyHaveAccount);
 		
-		Typeface font = Typeface.createFromAsset(getAssets(),"Raleway-Light.otf");	
+		font = Typeface.createFromAsset(getAssets(),"Raleway-Light.otf");	
 		
 		Txt_Uname.setTypeface(font);
 		Txt_Addr.setTypeface(font);
@@ -106,6 +116,9 @@ public class SignUpActivity extends Activity {
 		Sign_Up_ButtonController = (Button) findViewById(R.id.Sign_Up);
 		Sign_Up_ButtonController.setTypeface(font);
 
+		if (getLayoutInflater().getFactory() == null)
+			setMenuBackground();
+		
 		Sign_Up_ButtonController.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -150,10 +163,10 @@ public class SignUpActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent myIntent = new Intent(SignUpActivity.this,
-						LoginActivity.class);
+//				Intent myIntent = new Intent(SignUpActivity.this,
+//						SplashScreenActivity.class);
 				finish();
-				startActivity(myIntent);
+//				startActivity(myIntent);
 			}
 		});
 //
@@ -169,7 +182,7 @@ public class SignUpActivity extends Activity {
 //						startActivity(myIntent);
 //					}
 //				});
-
+		DOB.setInputType(InputType.TYPE_NULL);
 		DOB.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -186,6 +199,7 @@ public class SignUpActivity extends Activity {
 				dialog.show();
 			}
 		});
+		Anniversary.setInputType(InputType.TYPE_NULL);
 		Anniversary.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -231,25 +245,80 @@ public class SignUpActivity extends Activity {
 
 		}
 	}
+	protected void setMenuBackground() {
 
+		// Log.d("in", "Enterting setMenuBackGround");
+
+		getLayoutInflater().setFactory(new Factory() {
+
+			@Override
+			public View onCreateView(String name, Context context,
+					AttributeSet attrs) {
+				// Log.d("Enterting onCreateView", name);
+				LayoutInflater f = getLayoutInflater();
+				if (name.equalsIgnoreCase("TextView")) {
+
+					try { // Ask our inflater to create the view
+
+						final View view = f.createView(name, null, attrs);
+						/*
+						 * The background gets refreshed each time a new item is
+						 * added the options menu. So each time Android applies
+						 * the default background we need to set our own
+						 * background. This is done using a thread giving the
+						 * background change as runnable object
+						 */
+						new Handler().post(new Runnable() {
+							public void run() {
+								// ((TextView)
+								// view).setTextColor(Color.parseColor("#4e3115"));
+								((TextView) view).setTypeface(font);
+							}
+						});
+						return view;
+					} catch (InflateException e) {
+					} catch (ClassNotFoundException e) {
+					}
+				}
+				return null;
+			}
+		});
+	}
 	class CreateUser extends AsyncTask<String, String, String> {
 
 		// Progress Dialog
-		private ProgressDialog pDialog;
+//		private ProgressDialog pDialog;
 		int success;
 		/**
 		 * Before starting background thread Show Progress Dialog
 		 * */
 		boolean failure = false;
-
+		private Dialog dialog;
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(SignUpActivity.this);
-			pDialog.setMessage("Creating User...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
+			dialog = new Dialog(SignUpActivity.this, R.style.ThemeWithCorners);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.custom_progress_dialog);
+			dialog.setCancelable(false);
+			dialog.show();
+
+			TextView Txt_Title = (TextView) dialog
+					.findViewById(R.id.txt_alert_text);
+			Txt_Title.setTypeface(font);
+			
+			Txt_Title.setText("Registering...");
+			/**
+			 * custom circular progress bar
+			 */
+			ProgressWheel pw_four = (ProgressWheel) dialog
+					.findViewById(R.id.progressBarFour);
+			pw_four.spin();
+//			pDialog = new ProgressDialog(SignUpActivity.this);
+//			pDialog.setMessage("Creating User...");
+//			pDialog.setIndeterminate(false);
+//			pDialog.setCancelable(false);
+//			pDialog.show();
 		}
 
 		@Override
@@ -293,6 +362,9 @@ public class SignUpActivity extends Activity {
 				success = json.getInt(TAG_SUCCESS);
 				if (success == 1) {
 
+					
+					Util.Uid=Integer.parseInt(json.getString("Uid"));
+					Log.d("Uid after registration", json.getString("Uid"));
 					return json.getString(TAG_MESSAGE) + " , Please Login !";
 				} else {
 					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
@@ -312,13 +384,13 @@ public class SignUpActivity extends Activity {
 		 * **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-			pDialog.dismiss();
+			dialog.dismiss();
 			if (file_url != null) {
 				Toast.makeText(SignUpActivity.this, file_url, Toast.LENGTH_LONG)
 						.show();
 				if (success == 1) {
 					Intent myIntent = new Intent(SignUpActivity.this,
-							LoginActivity.class);
+							InjuriesActivityMain.class);
 					finish();
 					startActivity(myIntent);
 				}
@@ -332,8 +404,8 @@ public class SignUpActivity extends Activity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 //		super.onBackPressed();
-		Intent i=new Intent(SignUpActivity.this,LoginActivity.class);
-		startActivity(i);
+//		Intent i=new Intent(SignUpActivity.this,SplashScreenActivity.class);
+//		startActivity(i);
 		SignUpActivity.this.finish();
 	}
 }

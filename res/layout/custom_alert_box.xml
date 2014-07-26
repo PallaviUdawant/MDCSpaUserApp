@@ -24,24 +24,26 @@
         <Button
             android:id="@+id/btn_yes"
             android:layout_width="100sp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_margin="10sp"
             android:background="@drawable/button_default_bg"
             android:padding="10sp"
             android:text="Yes"
             android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/btn_no"
             android:layout_width="100sp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_margin="10sp"
             android:background="@drawable/button_default_bg"
             android:padding="10sp"
             android:text="No"
             android:textColor="#ffffff"
             android:textSize="16sp" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -14,8 +14,9 @@ import org.mdcconcepts.com.mdcspauserapp.findspa.SpaProfileActivity;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -23,8 +24,8 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -36,9 +37,10 @@ import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
-public class FavouritesFragment extends Fragment implements OnScrollListener{
+@SuppressLint("InflateParams")
+public class FavouritesFragment extends Activity implements OnScrollListener {
 
-	View rootView;
+	// View rootView;
 	ListView listView_controller_favourite;
 	private boolean isloading = false;
 	static final String SPA_ID = "spa_id";
@@ -58,54 +60,75 @@ public class FavouritesFragment extends Fragment implements OnScrollListener{
 	int VisiblePosition, distFromTop;
 	private NearestSpaListviewAdapter adapter;
 	ArrayList<HashMap<String, String>> SpaDetails = new ArrayList<HashMap<String, String>>();
+	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_favourites);
 		// TODO Auto-generated method stub
 
-		rootView = inflater.inflate(R.layout.fragment_favourites, null);
-		listView_controller_favourite = (ListView) rootView
-				.findViewById(R.id.listView_controller_favourite);
+		// rootView = inflater.inflate(R.layout.fragment_favourites, null);
+		listView_controller_favourite = (ListView) findViewById(R.id.listView_controller_favourite);
 
-		font = Typeface.createFromAsset(getActivity().getAssets(),
-				"Raleway-Light.otf");
-		
+		font = Typeface.createFromAsset(getAssets(), "Raleway-Light.otf");
+
 		listView_controller_favourite.setOnScrollListener(this);
 
-		footer = inflater.inflate(R.layout.footer, null);
-		
-		TextView txt_footer_text=(TextView)footer.findViewById(R.id.txt_footer_text);
+		footer = ((LayoutInflater) FavouritesFragment.this
+				.getSystemService(FavouritesFragment.LAYOUT_INFLATER_SERVICE))
+				.inflate(R.layout.footer, null);
+
+		TextView txt_footer_text = (TextView) footer
+				.findViewById(R.id.txt_footer_text);
 		txt_footer_text.setTypeface(font);
 		progressbar_footer = (ProgressWheel) footer
 				.findViewById(R.id.progressbar_footer);
 		progressbar_footer.spin();
-		
+
 		listView_controller_favourite.addFooterView(footer);
-		adapter = new NearestSpaListviewAdapter(getActivity(), SpaDetails);
+		adapter = new NearestSpaListviewAdapter(this, SpaDetails);
 		listView_controller_favourite.setAdapter(adapter);
-		getFavouriteSpaTask=new GetFavouriteSpa();
+		getFavouriteSpaTask = new GetFavouriteSpa();
 		getFavouriteSpaTask.execute();
-		
-		
-		listView_controller_favourite.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
+		listView_controller_favourite
+				.setOnItemClickListener(new OnItemClickListener() {
 
-				@SuppressWarnings("unchecked")
-				HashMap<String, String> spaDetails = (HashMap<String, String>) view
-						.getTag();
-				Intent i = new Intent(getActivity(), SpaProfileActivity.class);
-				i.putExtra("SelectedSpDetails", spaDetails);
-				startActivity(i);
-			}
-		});
-		return rootView;
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						// TODO Auto-generated method stub
+
+						@SuppressWarnings("unchecked")
+						HashMap<String, String> spaDetails = (HashMap<String, String>) view
+								.getTag();
+						Intent i = new Intent(FavouritesFragment.this,
+								SpaProfileActivity.class);
+						i.putExtra("SelectedSpDetails", spaDetails);
+						startActivity(i);
+					}
+				});
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
 	}
-	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			// This ID represents the Home or Up button. In the case of this
+			// activity, the Up button is shown. Use NavUtils to allow users
+			// to navigate up one level in the application structure. For
+			// more details, see the Navigation pattern on Android Design:
+			//
+			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			//
+			// NavUtils.navigateUpFromSameTask(this);
 
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 	class GetFavouriteSpa extends AsyncTask<String, String, String> {
 
 		int success;
@@ -119,7 +142,8 @@ public class FavouritesFragment extends Fragment implements OnScrollListener{
 			// TODO Auto-generated method stub
 			super.onPreExecute();
 			// dialog.show();
-			dialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
+			dialog = new Dialog(FavouritesFragment.this,
+					R.style.ThemeWithCorners);
 			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			dialog.setContentView(R.layout.custom_progress_dialog);
 			dialog.setCancelable(false);
@@ -240,21 +264,20 @@ public class FavouritesFragment extends Fragment implements OnScrollListener{
 					progressbar_footer.stopSpinning();
 					isDataAvailable = false;
 				} else if (file_url.equalsIgnoreCase("timeout")) {
-					Toast.makeText(getActivity(), "Connection TimeOut..!!!",
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(FavouritesFragment.this,
+							"Connection TimeOut..!!!", Toast.LENGTH_LONG)
+							.show();
 				}
 			}
 		}
 
 	}
 
-
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
@@ -278,7 +301,8 @@ public class FavouritesFragment extends Fragment implements OnScrollListener{
 			// adapter.notifyDataSetChanged();
 
 		}
-		VisiblePosition = listView_controller_favourite.getFirstVisiblePosition();
+		VisiblePosition = listView_controller_favourite
+				.getFirstVisiblePosition();
 		View v = listView_controller_favourite.getChildAt(0);
 		distFromTop = (v == null) ? 0 : v.getTop();
 	}

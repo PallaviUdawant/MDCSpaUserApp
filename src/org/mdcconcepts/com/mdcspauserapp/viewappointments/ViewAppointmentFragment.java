@@ -97,67 +97,75 @@ public class ViewAppointmentFragment extends Fragment {
 						Context.MODE_PRIVATE);
 		editor = sharedPreferences.edit();
 		boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
-		loginDialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
-		loginDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		loginDialog.setContentView(R.layout.activity_login);
-		loginDialog.setCancelable(true);
+		font = Typeface.createFromAsset(rootView.getContext().getAssets(),
+				Util.fontPath);
 
-		TextView TextView_Controller_Login_Title = (TextView) loginDialog
-				.findViewById(R.id.textView_Controller_Login_Title);
-		TextView TextView_Controller_Create_account = (TextView) loginDialog
-				.findViewById(R.id.TextView_Controller_Create_account);
+		
 
-		EditText_Controller_Username_Login = (EditText) loginDialog
-				.findViewById(R.id.EditText_Controller_Username_Login);
-		EditText_Controller_Password_Login = (EditText) loginDialog
-				.findViewById(R.id.EditText_Controller_Password_Login);
-
-		textView_controller_incorrect_credentials = (TextView) loginDialog
-				.findViewById(R.id.textView_controller_incorrect_credentials);
-
-		Button Button_Controller_Login = (Button) loginDialog
-				.findViewById(R.id.Button_Controller_Login);
-
-		progressBar_Controller_Login = (ProgressWheel) loginDialog
-				.findViewById(R.id.progressBar_Controller_Login);
-
-		TextView_Controller_Login_Title.setTypeface(font);
-		TextView_Controller_Create_account.setTypeface(font);
-		textView_controller_incorrect_credentials.setTypeface(font);
-
-		EditText_Controller_Password_Login.setTypeface(font);
-		EditText_Controller_Username_Login.setTypeface(font);
-
-		Button_Controller_Login.setTypeface(font);
-
+	
 		if (!isLogin) {
+			loginDialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
+			loginDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			loginDialog.setContentView(R.layout.activity_login);
+			loginDialog.setCancelable(true);
+
+			TextView TextView_Controller_Login_Title = (TextView) loginDialog
+					.findViewById(R.id.textView_Controller_Login_Title);
+			TextView TextView_Controller_Create_account = (TextView) loginDialog
+					.findViewById(R.id.TextView_Controller_Create_account);
+
+			EditText_Controller_Username_Login = (EditText) loginDialog
+					.findViewById(R.id.EditText_Controller_Username_Login);
+			EditText_Controller_Password_Login = (EditText) loginDialog
+					.findViewById(R.id.EditText_Controller_Password_Login);
+
+			textView_controller_incorrect_credentials = (TextView) loginDialog
+					.findViewById(R.id.textView_controller_incorrect_credentials);
+
+			Button Button_Controller_Login = (Button) loginDialog
+					.findViewById(R.id.Button_Controller_Login);
+
+			progressBar_Controller_Login = (ProgressWheel) loginDialog
+					.findViewById(R.id.progressBar_Controller_Login);
+			
+			TextView_Controller_Login_Title.setTypeface(font);
+			TextView_Controller_Create_account.setTypeface(font);
+			Button_Controller_Login.setTypeface(font);
+
+			textView_controller_incorrect_credentials.setTypeface(font);
+			EditText_Controller_Password_Login.setTypeface(font);
+			EditText_Controller_Username_Login.setTypeface(font);
+			
 			loginDialog.show();
+			
+			
+			Button_Controller_Login.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if (EditText_Controller_Username_Login.getText().toString()
+							.trim().isEmpty()) {
+						EditText_Controller_Username_Login
+								.setError("Please Enter Username !");
+					} else if (EditText_Controller_Password_Login.getText()
+							.toString().trim().isEmpty()) {
+						EditText_Controller_Password_Login
+								.setError("Please Enter Password !");
+					} else {
+						new LoginUser().execute();
+					}
+
+				}
+
+			});
 
 		}
 		else
 		{
 			new GetAppointments().execute();
 		}
-		Button_Controller_Login.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (EditText_Controller_Username_Login.getText().toString()
-						.trim().isEmpty()) {
-					EditText_Controller_Username_Login
-							.setError("Please Enter Username !");
-				} else if (EditText_Controller_Password_Login.getText()
-						.toString().trim().isEmpty()) {
-					EditText_Controller_Password_Login
-							.setError("Please Enter Password !");
-				} else {
-					new LoginUser().execute();
-				}
-
-			}
-
-		});
+		
 		listViewController_Appointmentlist = (ListView) rootView
 				.findViewById(R.id.listViewController_Appointmentlist);
 
@@ -239,6 +247,12 @@ public class ViewAppointmentFragment extends Fragment {
 
 					if (success == 1) {
 						Util.Uid = json.getInt("Uid");
+						Util.User_Name = json.getString("Name");
+						Util.User_Contact_Number = json.getString("Mobile");
+						Util.User_EmailId = json.getString("Email");
+						Util.User_Address = json.getString("Address");
+						Util.User_DOB = json.getString("DOB");
+						Util.User_Anniversary = json.getString("Anniversary");
 						return json.getString(TAG_MESSAGE);
 					} else
 
@@ -472,6 +486,7 @@ public class ViewAppointmentFragment extends Fragment {
 										i.putExtra("AppointmentDetails",
 												MyAppointmentDetails);
 										startActivityForResult(i, 2);
+										getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
 									} else if (data.status.toString()
 											.equalsIgnoreCase("Attended"))

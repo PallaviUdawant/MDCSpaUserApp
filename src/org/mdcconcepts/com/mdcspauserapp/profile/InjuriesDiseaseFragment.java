@@ -12,6 +12,7 @@ import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -42,6 +43,8 @@ public class InjuriesDiseaseFragment extends FragmentActivity {
 	private String[] InjuriesArray;
 	private String[] DiseaseArray;
 
+	SharedPreferences pref;
+	
 	Typeface font;
 
 	@Override
@@ -62,6 +65,9 @@ public class InjuriesDiseaseFragment extends FragmentActivity {
 
 		font = Typeface.createFromAsset(getAssets(), Util.fontPath);
 
+		pref = getApplicationContext()
+				.getSharedPreferences(Util.APP_PREFERENCES, 0);
+		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		new GetPainingAreas().execute();
 
@@ -124,10 +130,9 @@ public class InjuriesDiseaseFragment extends FragmentActivity {
 
 				List<NameValuePair> params1 = new ArrayList<NameValuePair>();
 
-				params1.add(new BasicNameValuePair("uid", String
-						.valueOf(Util.Uid)));
+				params1.add(new BasicNameValuePair("uid", String.valueOf(Util.Uid)));
 
-				Log.d("request!", "starting");
+				Log.d("request Injuries fragment!", "starting" + String.valueOf(Util.Uid));
 
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(Util.getPainData,
@@ -241,10 +246,9 @@ public class InjuriesDiseaseFragment extends FragmentActivity {
 
 				List<NameValuePair> params1 = new ArrayList<NameValuePair>();
 
-				params1.add(new BasicNameValuePair("uid", String
-						.valueOf(Util.Uid)));
+				params1.add(new BasicNameValuePair("uid",  String.valueOf(Util.Uid)));
 
-				Log.d("request!", "starting");
+				Log.d("request disease!", "starting" +String.valueOf(Util.Uid));
 
 				if (!Util.getDiseaseData.isEmpty()) {// Posting user data to
 														// script

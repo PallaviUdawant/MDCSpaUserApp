@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,7 @@ public class WishListTherapyAdapter extends BaseAdapter {
 		// TODO Auto-generated constructor stub
 		this.activity = a;
 		this.data = data;
-		inflater = (LayoutInflater) activity
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	
 		notifyDataSetChanged();
 	}
 
@@ -59,7 +59,7 @@ public class WishListTherapyAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-//		LayoutInflater inflater = activity.getLayoutInflater();
+		 LayoutInflater inflater = activity.getLayoutInflater();
 		final View rootView = inflater.inflate(
 				R.layout.wishlist_therapy_list_item, null, true);
 
@@ -84,8 +84,8 @@ public class WishListTherapyAdapter extends BaseAdapter {
 						/**
 						 * Ask before leaving app
 						 */
-//						Typeface font = Typeface.createFromAsset(
-//								activity.getAssets(), "Raleway-Light.otf");
+						// Typeface font = Typeface.createFromAsset(
+						// activity.getAssets(), "Raleway-Light.otf");
 
 						final Dialog dialog = new Dialog(rootView.getContext(),
 								R.style.ThemeWithCorners);
@@ -125,11 +125,12 @@ public class WishListTherapyAdapter extends BaseAdapter {
 						});
 					}
 				});
-		new HashMap<String, String>();
-		data.get(position);
-
-		// Txt_Spa_Title.setText(therapyDetails.get(Select_Therapy_Activity.THERAPY));
-		// Txt_Spa_Descp.setText(therapyDetails.get(Select_Therapy_Activity.THERAPY_DETAILS));
+		// new HashMap<String, String>();
+		// data.get(position);
+		Log.d("In Wishlist Adapter", data.get(position).get("therapy_name"));
+		
+		Txt_THERAPY_Title.setText(data.get(position).get("therapy_name"));
+		Txt_THERAPY_Descp.setText(data.get(position).get("therapy_details"));
 		return rootView;
 	}
 

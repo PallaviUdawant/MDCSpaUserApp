@@ -8,8 +8,7 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:layout_marginTop="10sp">
+        android:layout_height="fill_parent" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,8 +19,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" 
-                >
+                android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/txt_username_create_acc"
@@ -43,16 +41,15 @@
                     android:fontFamily=" android:fontFamily=&quot;Raleway-Light.otf&quot;"
                     android:padding="10dp"
                     android:singleLine="true"
-                     android:textColor="#4e3315" >
-
+                    android:textColor="#4e3315" >
                 </EditText>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" 
-                android:paddingBottom="5sp">
+                android:orientation="horizontal"
+                android:paddingBottom="5sp" >
 
                 <TextView
                     android:id="@+id/txt_pass_create_acc"
@@ -68,15 +65,14 @@
                     android:id="@+id/Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:singleLine="true"
-                     android:layout_marginRight="5dp"
                     android:background="@drawable/edittext_background"
                     android:fontFamily=" android:fontFamily=&quot;Raleway-Light.otf&quot;"
-                    android:textColor="#4e3315"
                     android:padding="10dp"
-                    android:password="true" />
-
+                    android:password="true"
+                    android:singleLine="true"
+                    android:textColor="#4e3315" />
             </LinearLayout>
 
             <LinearLayout
@@ -104,15 +100,15 @@
                     android:imeOptions="actionNext"
                     android:padding="10dp"
                     android:password="true"
-                     android:textColor="#4e3315"
-                    android:singleLine="true" />
-
+                    android:singleLine="true"
+                    android:textColor="#4e3315" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" android:paddingBottom="5sp">
+                android:orientation="horizontal"
+                android:paddingBottom="5sp" >
 
                 <TextView
                     android:id="@+id/txt_full_name_create_acc"
@@ -128,14 +124,13 @@
                     android:id="@+id/Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                   android:layout_marginRight="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/edittext_background"
                     android:fontFamily=" android:fontFamily=&quot;Raleway-Light.otf&quot;"
                     android:imeOptions="actionNext"
                     android:padding="10dp"
-                     android:textColor="#4e3315"
-                    android:singleLine="true" >
-
+                    android:singleLine="true"
+                    android:textColor="#4e3315" >
                 </EditText>
             </LinearLayout>
 
@@ -143,7 +138,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:textColor="#4e3315" android:paddingBottom="5sp">
+                android:paddingBottom="5sp"
+                android:textColor="#4e3315" >
 
                 <TextView
                     android:id="@+id/txt_contact_num_create_acc"
@@ -159,7 +155,7 @@
                     android:id="@+id/Mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                     android:layout_marginRight="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/edittext_background"
                     android:fontFamily=" android:fontFamily=&quot;Raleway-Light.otf&quot;"
                     android:inputType="phone"
@@ -167,44 +163,45 @@
                     android:singleLine="true"
                     android:textColor="#4e3315"
                     android:textColorHint="#bbbbbb" >
-
                 </EditText>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"  android:paddingBottom="5sp">
+                android:orientation="horizontal"
+                android:paddingBottom="5sp" >
 
                 <TextView
                     android:id="@+id/txt_email_create_acc"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="Raleway-Light.otf"
                     android:layout_marginRight="5sp"
-                    android:text="Email" android:textSize="16sp"
-                    android:textColor="#4e3315" />
+                    android:fontFamily="Raleway-Light.otf"
+                    android:text="Email"
+                    android:textColor="#4e3315"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                     android:layout_marginRight="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/edittext_background"
                     android:fontFamily=" android:fontFamily=&quot;Raleway-Light.otf&quot;"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:padding="10dp"
-                     android:textColor="#4e3315"
-                    android:singleLine="true" >
-
+                    android:singleLine="true"
+                    android:textColor="#4e3315" >
                 </EditText>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" android:paddingBottom="5sp">
+                android:orientation="horizontal"
+                android:paddingBottom="5sp" >
 
                 <TextView
                     android:id="@+id/txt_addr__create_acc"
@@ -212,30 +209,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5sp"
                     android:fontFamily="Raleway-Light.otf"
-                    android:text="Address" 
-                    android:textSize="16sp"
-                    android:textColor="#4e3315" />
+                    android:text="Address"
+                    android:textColor="#4e3315"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/Address"
                     android:layout_width="match_parent"
                     android:layout_height="100sp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/edittext_background"
                     android:fontFamily=" android:fontFamily=&quot;Raleway-Light.otf&quot;"
+                    android:gravity="top"
                     android:imeOptions="actionNext"
                     android:inputType="textMultiLine"
-                     android:textColor="#4e3315"
-                    android:padding="5dp"  android:layout_marginRight="10dp"
+                    android:padding="5dp"
                     android:singleLine="true"
-                     >
-
+                    android:textColor="#4e3315" >
                 </EditText>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" android:paddingBottom="5sp">
+                android:orientation="horizontal"
+                android:paddingBottom="5sp" >
 
                 <TextView
                     android:id="@+id/txt_dob_create_acc"
@@ -251,15 +249,14 @@
                     android:id="@+id/DOB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                     android:layout_marginRight="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/edittext_background"
                     android:fontFamily=" android:fontFamily=&quot;Raleway-Light.otf&quot;"
                     android:imeOptions="actionNext"
-                    android:inputType="textMultiLine"
+                    android:inputType="date"
                     android:padding="10dp"
-                     android:textColor="#4e3315"
-                    android:singleLine="true" >
-
+                    android:singleLine="true"
+                    android:textColor="#4e3315" >
                 </EditText>
             </LinearLayout>
 
@@ -267,17 +264,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:textColor="#4e3315" 
-                android:paddingBottom="5sp">
+                android:paddingBottom="5sp"
+                android:textColor="#4e3315" >
 
                 <TextView
                     android:id="@+id/txt_anniversary_create_acc"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="Raleway-Light.otf" 
                     android:layout_marginRight="5sp"
-                    android:textSize="16sp"
-                    android:text="Anniversary" />
+                    android:fontFamily="Raleway-Light.otf"
+                    android:text="Anniversary"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/Anniversary"
@@ -286,47 +283,36 @@
                     android:layout_marginRight="5dp"
                     android:background="@drawable/edittext_background"
                     android:fontFamily="Raleway-Light.otf"
-                    android:imeOptions="actionNext"
-                     android:textColor="#4e3315"
-                      android:padding="10dp"
-                    android:inputType="textMultiLine"
-                    android:singleLine="true" >
-
+                    android:imeOptions="actionGo"
+                    android:inputType="date"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="#4e3315" >
                 </EditText>
             </LinearLayout>
+
             <Button
                 android:id="@+id/Sign_Up"
                 android:layout_width="100sp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_gravity="center|center_vertical"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/button_default_bg"
                 android:fontFamily="Raleway-Light.otf"
                 android:text="Sign Up"
                 android:textColor="#ffffff" />
 
-             <TextView
-        android:id="@+id/txt_alreadyHaveAccount"
-        android:layout_gravity="center|center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-         android:layout_margin="20dp"
-         android:fontFamily="Raleway-Light.otf"
-         
-        android:text="Already Have Account"  android:textColor="@drawable/textview_selector"/>
-            
-            <!--  <Button
-                android:id="@+id/AlreadyHaveAccount"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txt_alreadyHaveAccount"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_default_bg"
+                android:layout_gravity="center|center_vertical"
+                android:layout_margin="20dp"
+                android:fontFamily="Raleway-Light.otf"
                 android:text="Already Have Account"
-                android:textColor="#ffffff" />
-                -->
+                android:textColor="@drawable/textview_selector"
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 
-   
 </RelativeLayout>

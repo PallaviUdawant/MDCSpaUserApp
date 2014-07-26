@@ -7,7 +7,6 @@ import org.json.JSONArray;
 
 import android.support.v4.app.FragmentManager;
 
-
 public class Util {
 
 	/**
@@ -87,7 +86,7 @@ public class Util {
 	 * This is Get An Single Appointments User Webservice URL.
 	 */
 	public static final String GetTherapistSchedule = "http://mdcspa.mdcconcepts.com/GetTherapistSchedule.php";
-	
+
 	public static final String GetTherapistTimeline = "http://mdcspa.mdcconcepts.com/GetTherapistTimeline.php";
 
 	/**
@@ -103,24 +102,22 @@ public class Util {
 	/**
 	 * Get 10 spa's at a time
 	 */
-	public static final String get_ten_spa="http://mdcspa.mdcconcepts.com/get_ten_spa_webservice.php";
-	
+	public static final String get_ten_spa = "http://mdcspa.mdcconcepts.com/get_ten_spa_webservice.php";
+
 	/**
 	 * Get Nearest 10 spa's at a time
 	 */
-	public static final String get_nearest_ten_spa="http://mdcspa.mdcconcepts.com/get_ten_nearest_spa_webservice.php";
-	
+	public static final String get_nearest_ten_spa = "http://mdcspa.mdcconcepts.com/get_ten_nearest_spa_webservice.php";
+
 	/**
 	 * Get Nearest 10 spa's at a time
 	 */
-	public static final String get_ten_therapies="http://mdcspa.mdcconcepts.com/get_ten_therapies_webservice.php";
-	
-	
+	public static final String get_ten_therapies = "http://mdcspa.mdcconcepts.com/get_ten_therapies_webservice.php";
+
 	/**
 	 * This is Get An Single Appointments User Webservice URL.
 	 */
 	public static final String sendgift = "http://mdcspa.mdcconcepts.com/sendgift.php";
-	
 
 	/**
 	 * This is to submit paining area details
@@ -131,31 +128,30 @@ public class Util {
 	 * This is to get therapies pricing details
 	 */
 	public static final String GetTherapiesPricingDetails = "http://mdcspa.mdcconcepts.com//GetTimeForServiceWebservice.php";
-	
+
 	/**
 	 * This is to get paining area details
 	 */
 	public static final String getPainData = "http://mdcspa.mdcconcepts.com/Get_Paining_Areas_webservice.php";
-	
+
 	public static final String getDiseaseData = "http://mdcspa.mdcconcepts.com/GetDiseaseWebservice.php";
-	
+
 	public static final String getHighestRatedSpa = "http://mdcspa.mdcconcepts.com/GetHighestRatedSpa.php";
-	
+
 	/**
 	 * This is Get An Single Appointments User Webservice URL.
 	 */
 	public static final String UpdateUserDetails = "http://mdcspa.mdcconcepts.com/UpdateUserProfile_Webservice.php";
 
-	
 	public static HashMap<String, String> selectedSpaDetails = new HashMap<String, String>();
-	
-	public static final String APP_PREFERENCES="MDC_SPA"; 
-	
+
+	public static final String APP_PREFERENCES = "MDC_SPA";
+
 	public static int Uid;
 	public static int Appointment_Id;
 	public static String Appointment_Time;
 	public static String Spa_Name;
-	
+
 	public static String User_Name;
 	public static String User_Contact_Number;
 	public static String User_EmailId;
@@ -163,9 +159,9 @@ public class Util {
 	public static String User_DOB;
 	public static String User_Anniversary;
 
-	public static Boolean isHeader=false;
-	public static String fontPath="Raleway-Light.otf";
-	
+	public static Boolean isHeader = false;
+	public static String fontPath = "Raleway-Light.otf";
+
 	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Head = false;
 	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Neck = false;
 	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Shoulder = false;
@@ -175,30 +171,30 @@ public class Util {
 	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Thigh = false;
 	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Calf = false;
 	public static Boolean isSelected_ImageView_Controller_Activity_BodyPart_Sole = false;
-	
-	public static Boolean isChecked_Heart=false;
-	public static Boolean isChecked_Hepatitis=false;
-	public static Boolean isChecked_Diabeties=false;
-	public static Boolean isChecked_Lung=false;
-	public static Boolean isChecked_Hypotension=false;
-	public static Boolean isChecked_Skin=false;
-	public static Boolean isChecked_BP=false;
-	public static Boolean isChecked_Arthritis=false;
-	public static Boolean isChecked_Pregnant=false;
-	public static Boolean isChecked_Other=false;
-	
-	
-	public static JSONArray jsonPainArray= new JSONArray();
-	
-	public static JSONArray jsonDiseaseArray= new JSONArray();
-	
-	
+
+	public static Boolean isChecked_Heart = false;
+	public static Boolean isChecked_Hepatitis = false;
+	public static Boolean isChecked_Diabeties = false;
+	public static Boolean isChecked_Lung = false;
+	public static Boolean isChecked_Hypotension = false;
+	public static Boolean isChecked_Skin = false;
+	public static Boolean isChecked_BP = false;
+	public static Boolean isChecked_Arthritis = false;
+	public static Boolean isChecked_Pregnant = false;
+	public static Boolean isChecked_Other = false;
+
+	public static JSONArray jsonPainArray = new JSONArray();
+
+	public static JSONArray jsonDiseaseArray = new JSONArray();
+
 	public static ArrayList<String> PainAreas = new ArrayList<String>();
 	public static ArrayList<String> UserDisease = new ArrayList<String>();
- 	
+
 	public static FragmentManager fm;
-	 public static String DISTANCE="";
+	public static String DISTANCE = "";
 
-
-	public static boolean isUpcoming=false;
+	public static String WishList = "User_WishList";
+	public static String WishListDesc = "User_WishListDesc";
+	public static boolean isUpcoming = false;
+	public static boolean isUserDetailsFetched = false;
 }

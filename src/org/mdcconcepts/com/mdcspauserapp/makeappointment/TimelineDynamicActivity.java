@@ -15,11 +15,11 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TimelineDynamicActivity extends Activity {
 
@@ -32,21 +32,39 @@ public class TimelineDynamicActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
+		setContentView(R.layout.timeline_dynamic);
+		
+		LinearLayout dynamic_timeline_layout=(LinearLayout)findViewById(R.id.dynamic_timeline_layout);
+		
+		
+		TextView TextView_Controller_Therapist_Name_Timeline=(TextView)findViewById(R.id.TextView_Controller_Therapist_Name_Timeline);
+		TextView TextView_Controller_Spa_Name_Timeline=(TextView)findViewById(R.id.TextView_Controller_Spa_Name_Timeline);
+		
+		Typeface font=Typeface.createFromAsset(getAssets(), Util.fontPath);
+		TextView_Controller_Therapist_Name_Timeline.setTypeface(font,Typeface.BOLD);
+		TextView_Controller_Spa_Name_Timeline.setTypeface(font);
 		
 		 Intent i = getIntent();
 		 TherapyTimelineDetails=(ArrayList<HashMap<String, String>>)
 		 i.getSerializableExtra("TimelineData");
+		 
+		 TextView_Controller_Therapist_Name_Timeline.setText(i.getStringExtra("TherapistName"));
+		 TextView_Controller_Spa_Name_Timeline.setText(i.getStringExtra("SpaName"));
+		 
+		 Toast.makeText(this, i.getStringExtra("Profile_url"), Toast.LENGTH_LONG).show();
+		 
 		 getActionBar().setDisplayHomeAsUpEnabled(true);
 		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_LARGE) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
 			View v = Timeline_Large_Screen();
-			this.setContentView(v);
+			dynamic_timeline_layout.addView(v);
+//			this.setContentView(v);
 		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_NORMAL) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
 			View v = Timeline_Small_Screen();
-			this.setContentView(v);
+			dynamic_timeline_layout.addView(v);
+//			this.setContentView(v);
 		} else {
 			View v = Timeline_Large_Screen();
-			this.setContentView(v);
+//			this.setContentView(v);
 		}
 
 
@@ -362,16 +380,16 @@ public class TimelineDynamicActivity extends Activity {
 		mainLayout.setLayoutParams(layoutParams);
 		mainLayout.setGravity(Gravity.CENTER_VERTICAL);
 
-		LinearLayout headerLayout = new LinearLayout(this);
-		mainLayout.setOrientation(LinearLayout.HORIZONTAL);
-		layoutParams = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.MATCH_PARENT);
-		layoutParams.gravity = Gravity.CENTER_VERTICAL;
-		mainLayout.setLayoutParams(layoutParams);
-		mainLayout.setGravity(Gravity.CENTER_VERTICAL);
-		
-		ImageView profile_pic=new ImageView(this);
+//		LinearLayout headerLayout = new LinearLayout(this);
+//		mainLayout.setOrientation(LinearLayout.HORIZONTAL);
+//		layoutParams = new LinearLayout.LayoutParams(
+//				LinearLayout.LayoutParams.FILL_PARENT,
+//				LinearLayout.LayoutParams.MATCH_PARENT);
+//		layoutParams.gravity = Gravity.CENTER_VERTICAL;
+//		mainLayout.setLayoutParams(layoutParams);
+//		mainLayout.setGravity(Gravity.CENTER_VERTICAL);
+//		
+//		ImageView profile_pic=new ImageView(this);
 		
 		
 		/*** ScrollView ***/

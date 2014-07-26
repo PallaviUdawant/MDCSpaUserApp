@@ -1,12 +1,20 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme.Holo.Light">
-        <item name="android:actionBarStyle">@style/ActionBarTheme</item>
-        <item name="android:windowActionBarOverlay">true</item>
+        <!-- <item name="android:actionBarStyle">@style/ActionBarTheme</item>
+         <item name="android:windowActionBarOverlay">true</item>-->
         <item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="android:actionBarTabTextStyle">@style/MyActionbarTabTextStyle</item>
-         <item name="android:homeAsUpIndicator">@drawable/actionbar_home</item>
+        <item name="android:homeAsUpIndicator">@drawable/actionbar_home</item>
+      <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverFlow</item>
+    </style>
+<style name="OverFlow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+    <item name="android:src">@drawable/dots_icon_new</item>
+</style>
+    <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">#4e3115</item>
     </style>
 
     <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -22,15 +30,16 @@
     <style name="ActionBarTabStyle" parent="android:style/Widget.Holo.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_selector</item>
     </style>
+
     <style name="Theme.MyFancyTheme" parent="android:Theme.Holo">
-    <item name="android:homeAsUpIndicator">@drawable/back_button</item>
-</style>
-    
+        <item name="android:homeAsUpIndicator">@drawable/back_button</item>
+    </style>
+
     <!-- ActionBar Tab Text Properties -->
     <style name="MyActionbarTabTextStyle" parent="@android:Widget.Holo.Light.ActionBar.TabText">
         <item name="android:textColor">#4e3115</item>
         <item name="android:textAllCaps">false</item>
-         <item name="android:textSize">16sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="ProgressBar" parent="@style/android:Theme.Holo">

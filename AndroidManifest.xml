@@ -161,6 +161,17 @@
             android:screenOrientation="portrait" >
         </activity>
 
+         <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.profile.MyProfileFragment"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.setting.SettingActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
         <service
             android:name="org.mdcconcepts.com.mdcspauserapp.notification.MyAlarmService"
             android:enabled="true" />
@@ -182,6 +193,12 @@
             android:name="org.mdcconcepts.com.mdcspauserapp.SpaProfileActivity"
             android:label="@string/title_activity_spa_profile" >
         </activity>
+        
+        <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.favourites.FavouritesFragment"
+            android:label="@string/title_activity_spa_profile" >
+        </activity>
+        
     </application>
 
 </manifest>

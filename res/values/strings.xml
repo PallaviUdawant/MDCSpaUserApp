@@ -33,7 +33,7 @@
         <item>@drawable/ic_send_gift_card</item>
         <!-- <item>@drawable/ic_favourites</item> -->
         <item>@drawable/ic_offers</item>
-        <item>@drawable/ic_offers</item>
+        <item>@drawable/wishlist_icon</item>
         <!-- <item>@drawable/ic_settings</item> -->
         <!-- <item>@drawable/ic_logout</item> -->
     </array>

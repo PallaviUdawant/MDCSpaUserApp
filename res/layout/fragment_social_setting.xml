@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="0dp"
+   
     android:orientation="vertical" >
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="95dp"
         android:background="#efece9" >
 
         <LinearLayout
@@ -68,7 +67,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
+                            android:layout_marginRight="10dp" 
+                             android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track"/>
 
                         <TextView
                             android:id="@+id/TextView08"
@@ -109,7 +110,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
+                            android:layout_marginRight="10dp" 
+                             android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track"/>
 
                         <TextView
                             android:id="@+id/TextView04"
@@ -150,7 +153,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
+                            android:layout_marginRight="10dp"
+                             android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track" />
 
                         <TextView
                             android:id="@+id/TextView07"

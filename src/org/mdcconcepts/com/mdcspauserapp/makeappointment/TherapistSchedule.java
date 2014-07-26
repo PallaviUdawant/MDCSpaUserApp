@@ -39,7 +39,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -57,7 +56,7 @@ public class TherapistSchedule extends Fragment {
 
 	private String Therapist_Id;
 	private String Therapist_name;
-
+	public String TherapistProfileUrl="";
 	// ids
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MESSAGE = "message";
@@ -97,8 +96,8 @@ public class TherapistSchedule extends Fragment {
 	String feedback_message;
 	static final int TIME_DIALOG_ID = 999;
 	Typeface font;
-	ProgressBar progressBar_therapist;
-	ProgressBar progressBar_timeline;
+	ProgressWheel progressBar_therapist;
+	ProgressWheel progressBar_timeline;
 	ArrayList<HashMap<String, String>> TherapyTimelineDetails = new ArrayList<HashMap<String, String>>();
 
 	public TherapistSchedule() {
@@ -163,9 +162,9 @@ public class TherapistSchedule extends Fragment {
 		edt_date = (EditText) v.findViewById(R.id.edt_date);
 		edt_time = (EditText) v.findViewById(R.id.edt_time);
 
-		progressBar_therapist = (ProgressBar) v
+		progressBar_therapist = (ProgressWheel) v
 				.findViewById(R.id.progressBar_therapist);
-		progressBar_timeline = (ProgressBar) v
+		progressBar_timeline = (ProgressWheel) v
 				.findViewById(R.id.progressBar_timeline);
 		progressBar_therapist.setVisibility(View.GONE);
 		Button btn_show_timeline = (Button) v
@@ -333,6 +332,7 @@ public class TherapistSchedule extends Fragment {
 						edt_time.setError(null);
 						new IsTherapistAvailable().execute();
 						progressBar_therapist.setVisibility(View.VISIBLE);
+						progressBar_therapist.spin();
 
 					}
 				} else
@@ -356,6 +356,7 @@ public class TherapistSchedule extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				progressBar_timeline.setVisibility(View.VISIBLE);
+				progressBar_timeline.spin();
 				new GetTherapistTimeline().execute();
 				// timeline_dialog.show();
 			}
@@ -528,7 +529,7 @@ public class TherapistSchedule extends Fragment {
 
 						Profile_url = json.getString("Profile_Image_Url");
 						rating = Float.parseFloat(json.getString("Rate"));
-
+						TherapistProfileUrl=Profile_url;
 						Log.d("therapist details ", Profile_url);
 
 						return json.getString(TAG_MESSAGE);
@@ -660,10 +661,16 @@ public class TherapistSchedule extends Fragment {
 			if (result != null) {
 				if (success == 1) {
 					progressBar_timeline.setVisibility(View.INVISIBLE);
+					progressBar_timeline.stopSpinning();
 					Intent i = new Intent(getActivity(),
 							TimelineDynamicActivity.class);
 					i.putExtra("TimelineData", TherapyTimelineDetails);
+					i.putExtra("TherapistName", Therapist_name);
+					i.putExtra("SpaName", AllDetails.get("Spa_Name"));
+					i.putExtra("ProfileUrl", TherapistProfileUrl);
 					startActivity(i);
+					 getActivity().overridePendingTransition(R.anim.fade_in
+		        				, R.anim.fade_out);
 				}
 			}
 
@@ -734,6 +741,7 @@ public class TherapistSchedule extends Fragment {
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
 			progressBar_therapist.setVisibility(View.GONE);
+			progressBar_therapist.stopSpinning();
 			if (file_url != null) {
 				if (success == 1) {
 
@@ -756,8 +764,9 @@ public class TherapistSchedule extends Fragment {
 									.put("Selected_Therapist", Therapist_name);
 							AllDetails.put("Therapist_Id", Therapist_Id);
 							i.putExtra("AllDetails", AllDetails);
-
 							startActivity(i);
+							getActivity(). overridePendingTransition(R.anim.fade_in
+				        				, R.anim.fade_out);
 						}
 
 					} catch (Exception e) {

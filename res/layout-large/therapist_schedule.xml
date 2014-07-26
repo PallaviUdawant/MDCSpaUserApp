@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="20dp"
@@ -107,19 +108,29 @@
             android:text="Timeline"
             android:textColor="#ffffff"
             android:textSize="16sp" />
-     <ProgressBar
+
+        <com.todddavies.components.progressbar.ProgressWheel
             android:id="@+id/progressBar_timeline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="0dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            ProgressWheel:barColor="#4e3115"
+            ProgressWheel:barLength="30dp"
+            ProgressWheel:barWidth="4dp"
+            ProgressWheel:delayMillis="75"
+            ProgressWheel:rimColor="#4e3115"
+            ProgressWheel:rimWidth="1dp"
+            ProgressWheel:spinSpeed="10dp"
+            ProgressWheel:text=""
+            ProgressWheel:textColor="#222222"
+            ProgressWheel:textSize="14sp"
             android:visibility="invisible" />
-        
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:layout_weight="1" />
 
-   
         <Button
             android:id="@+id/btn_feedback"
             android:layout_width="100dp"
@@ -295,12 +306,23 @@
             android:textColor="#ffffff"
             android:textSize="16sp" />
 
-        <ProgressBar
+        <com.todddavies.components.progressbar.ProgressWheel
             android:id="@+id/progressBar_therapist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="10dp" />
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            ProgressWheel:barColor="#4e3115"
+            ProgressWheel:barLength="30dp"
+            ProgressWheel:barWidth="4dp"
+            ProgressWheel:delayMillis="75"
+            ProgressWheel:rimColor="#4e3115"
+            ProgressWheel:rimWidth="1dp"
+            ProgressWheel:spinSpeed="10dp"
+            ProgressWheel:text=""
+            ProgressWheel:textColor="#222222"
+            ProgressWheel:textSize="14sp"
+            android:visibility="invisible" />
     </LinearLayout>
 
 </LinearLayout>

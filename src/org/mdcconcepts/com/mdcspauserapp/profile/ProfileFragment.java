@@ -319,27 +319,6 @@ public class ProfileFragment extends FragmentActivity {
 					Log.d("Update Status", json.toString());
 					success = json.getInt(TAG_SUCCESS);
 					if (success == 1) {
-						Mobile.setText(Mobile1);
-						Address.setText(Address1);
-						DOB.setText(DOB1);
-						Anniversary.setText(Anniversary1);
-
-						Button_Save.setVisibility(View.GONE);
-
-						Edt_Mobile.setVisibility(View.GONE);
-						Edt_Addr.setVisibility(View.GONE);
-						Edt_DOB.setVisibility(View.GONE);
-						Edt_Anniversary.setVisibility(View.GONE);
-
-						Mobile.setVisibility(View.VISIBLE);
-						Address.setVisibility(View.VISIBLE);
-						DOB.setVisibility(View.VISIBLE);
-						Anniversary.setVisibility(View.VISIBLE);
-
-						ImageView_Edit_Number.setVisibility(View.VISIBLE);
-						ImageView_Edit_Addr.setVisibility(View.VISIBLE);
-						ImageView_Edit_DOB.setVisibility(View.VISIBLE);
-						ImageView_Edit_Anniversary.setVisibility(View.VISIBLE);
 
 						Util.User_Contact_Number = Mobile1;
 						Util.User_Address = Address1;
@@ -359,9 +338,33 @@ public class ProfileFragment extends FragmentActivity {
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			if (result != null) {
+			dialog.dismiss();
+			
+			Mobile.setText(Mobile1);
+			Address.setText(Address1);
+			DOB.setText(DOB1);
+			Anniversary.setText(Anniversary1);
 
+			Button_Save.setVisibility(View.GONE);
+
+			Edt_Mobile.setVisibility(View.GONE);
+			Edt_Addr.setVisibility(View.GONE);
+			Edt_DOB.setVisibility(View.GONE);
+			Edt_Anniversary.setVisibility(View.GONE);
+
+			Mobile.setVisibility(View.VISIBLE);
+			Address.setVisibility(View.VISIBLE);
+			DOB.setVisibility(View.VISIBLE);
+			Anniversary.setVisibility(View.VISIBLE);
+
+			ImageView_Edit_Number.setVisibility(View.VISIBLE);
+			ImageView_Edit_Addr.setVisibility(View.VISIBLE);
+			ImageView_Edit_DOB.setVisibility(View.VISIBLE);
+			ImageView_Edit_Anniversary.setVisibility(View.VISIBLE);
+
+			super.onPostExecute(result);
+			
+			if (result != null) {
 				if (result.equalsIgnoreCase("timeout")) {
 					Toast.makeText(
 							ProfileFragment.this,
@@ -369,7 +372,7 @@ public class ProfileFragment extends FragmentActivity {
 							Toast.LENGTH_LONG).show();
 				}
 
-				dialog.dismiss();
+				
 
 			}
 		}

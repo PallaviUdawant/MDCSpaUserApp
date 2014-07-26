@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="0dp"
+    android:layout_marginTop="10dp"
     android:orientation="vertical" >
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="95dp"
         android:background="#efece9" >
 
         <LinearLayout
@@ -41,7 +40,7 @@
                     android:layout_centerVertical="true" >
 
                     <TextView
-                        android:id="@+id/TextView05"
+                        android:id="@+id/TextView_Controller_PushNotification"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -80,10 +79,13 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
+                            android:layout_marginRight="10dp"
+                            android:checked="true"
+                            android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track" />
 
                         <TextView
-                            android:id="@+id/TextView08"
+                            android:id="@+id/TextView_Controller_Notification"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -121,10 +123,13 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
+                            android:layout_marginRight="10dp"
+                            android:checked="true"
+                            android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track" />
 
                         <TextView
-                            android:id="@+id/TextView04"
+                            android:id="@+id/TextView_Controller_vibrate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -162,10 +167,13 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
+                            android:layout_marginRight="10dp"
+                            android:checked="true"
+                            android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track" />
 
                         <TextView
-                            android:id="@+id/TextView07"
+                            android:id="@+id/TextView_Controller_Ringtone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -203,10 +211,13 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
+                            android:layout_marginRight="10dp"
+                            android:checked="true"
+                            android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track" />
 
                         <TextView
-                            android:id="@+id/TextView06"
+                            android:id="@+id/TextView_Controller_Light"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -281,10 +292,13 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp" />
+                            android:layout_marginRight="10dp"
+                            android:checked="true"
+                            android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track" />
 
                         <TextView
-                            android:id="@+id/TextView01"
+                            android:id="@+id/TextView_Con"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -327,7 +341,7 @@
                             android:textAppearance="?android:attr/textAppearanceLarge" />
 
                         <TextView
-                            android:id="@+id/TextView02"
+                            android:id="@+id/TextView_Controller_current_mail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"

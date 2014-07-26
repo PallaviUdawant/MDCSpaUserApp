@@ -215,6 +215,8 @@ import com.todddavies.components.progressbar.ProgressWheel;
 						SelectTherapistActivity.class);
 				i.putExtra("AllDetails", AllDetails);
 				startActivity(i);
+				 getActivity().overridePendingTransition(R.anim.fade_in
+	        				, R.anim.fade_out);
 				dialog.dismiss();
 			}
 		});

@@ -37,6 +37,7 @@ import android.os.SystemClock;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,16 +91,16 @@ public class FindSpaMapFragment extends Fragment implements
 
 	private FetchNearestSpa getTenNearestSpaTask;
 
-//	private FetchHighestRatedSpa getHighestRatedSpaTask;
+	// private FetchHighestRatedSpa getHighestRatedSpaTask;
 	double myCurrentLocationLat = 0.0;
 	double myCurrentLocationlong = 0.0;
 
 	private boolean isloadingNearestSpa = false;
-//	private boolean isloadingHighestRatedSpa = false;
+	// private boolean isloadingHighestRatedSpa = false;
 	Spinner filter;
 
 	private boolean isNearestDataAvailable = true;
-//	private boolean isHighestRatedDataAvailable = true;
+	// private boolean isHighestRatedDataAvailable = true;
 
 	ProgressWheel progressbar_footer;
 	ProgressWheel progressbar_header;
@@ -129,7 +130,8 @@ public class FindSpaMapFragment extends Fragment implements
 	static final String SPA_COVER_PHOTO = "spa_cover_photo";
 	private NearestSpaListviewAdapter adapter;
 	ImageLoader imgLoader;
-//	private ArrayList<String> ArrayList_Filter = new ArrayList<String>();
+
+	// private ArrayList<String> ArrayList_Filter = new ArrayList<String>();
 
 	public FindSpaMapFragment() {
 		// TODO Auto-generated constructor stub
@@ -193,71 +195,11 @@ public class FindSpaMapFragment extends Fragment implements
 
 		mDrawerList.addFooterView(footer);
 
-//		filter = (Spinner) header.findViewById(R.id.spinner_sort_by);
-
 		adapter = new NearestSpaListviewAdapter(getActivity(), SpaDetails);
 		mDrawerList.setAdapter(adapter);
 
-//		ArrayList_Filter.add("Nearest Spa's");
-//		// ArrayList_Filter.add("Highest Rated Spa's");
-//		// ArrayList_Filter.add("Newest Spa");
-//
-//		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
-//				getActivity(), R.layout.spinner_item, ArrayList_Filter);
-//		//
-//		dataAdapter
-//				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		//
-//		filter.setAdapter(dataAdapter);
-		// filter.setOnItemSelectedListener(new OnItemSelectedListener() {
-		//
-		// @Override
-		// public void onItemSelected(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// // TODO Auto-generated method stub
-		//
-		// switch (position) {
-		//
-		// case 0:
-		// hit_counter = 0;
-		// Selected_Filter = 0;
-		// mDrawerList.setAdapter(null);
-		// if (!SpaDetails.isEmpty())
-		// SpaDetails.clear();
-		// // dialog.show();
-		// getTenNearestSpaTask = new FetchNearestSpa();
-		// getTenNearestSpaTask.execute();
-		//
-		// break;
-		// case 1:
-		// Selected_Filter = 1;
-		// mDrawerList.setAdapter(null);
-		// if (!SpaDetails.isEmpty())
-		// SpaDetails.clear();
-		//
-		// hit_counter = 0;
-		// getHighestRatedSpaTask = new FetchHighestRatedSpa();
-		// getHighestRatedSpaTask.execute();
-		// break;
-		//
-		// default:
-		// break;
-		// }
-		// }
-		//
-		// @Override
-		// public void onNothingSelected(AdapterView<?> parent) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
-
-		// enabling action bar app icon and behaving it as toggle button
-		// getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-		// getActivity().getActionBar().setHomeButtonEnabled(true);
-
 		mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout,
-				R.drawable.drawer_icon, // nav menu toggle icon
+				R.drawable.ic_drawer_new, // nav menu toggle icon
 				R.string.app_name, // nav drawer open - description for
 									// accessibility
 				R.string.app_name // nav drawer close - description for
@@ -273,16 +215,14 @@ public class FindSpaMapFragment extends Fragment implements
 			public void onDrawerOpened(View drawerView) {
 				getActivity().getActionBar().setTitle(mDrawerTitle);
 				if (getActivity().getActionBar().isShowing())
-					getActivity().getActionBar().hide();
+//					getActivity().getActionBar().hide();
 				// calling onPrepareOptionsMenu() to hide action bar icons
 				getActivity().invalidateOptionsMenu();
 			}
 		};
 
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		// getActivity().getActionBar().hide();
-
+		mDrawerLayout.openDrawer(Gravity.RIGHT);
 		/**
 		 * Fetch 10 Nearest Spa's from server
 		 */
@@ -358,6 +298,16 @@ public class FindSpaMapFragment extends Fragment implements
 
 					mLastLatitude = gps.getLatitude();
 					mLastLongitude = gps.getLongitude();
+					do {
+						if (mLastLatitude == 0 && mLastLongitude == 0) {
+							mLastLatitude = gps.getLatitude();
+							mLastLongitude = gps.getLongitude();
+						}
+						else
+						{
+							break;
+						}
+					} while (true);
 
 				}
 				Log.d("Sending Lat", String.valueOf(mLastLatitude));
@@ -673,9 +623,9 @@ public class FindSpaMapFragment extends Fragment implements
 
 			// check if map is created successfully or not
 			if (google_map == null) {
-				Toast.makeText(this.getActivity(),
-						"Sorry! unable to create maps", Toast.LENGTH_SHORT)
-						.show();
+//				Toast.makeText(this.getActivity(),
+//						"Sorry! unable to create maps", Toast.LENGTH_SHORT)
+//						.show();
 			} else {
 
 				// check if GPS enabled
@@ -1092,9 +1042,9 @@ public class FindSpaMapFragment extends Fragment implements
 					+ "\nEstimated time taken to reach " + duration;
 			txt_distance_time.setText("Distance " + distance + " "
 					+ "Estimated time taken to reach" + duration);
-			Toast.makeText(getActivity(),
-					"Duration" + duration + " " + "Distance" + distance,
-					Toast.LENGTH_LONG).show();
+//			Toast.makeText(getActivity(),
+//					"Duration" + duration + " " + "Distance" + distance,
+//					Toast.LENGTH_LONG).show();
 			// google_map.clear();
 			// google_map
 			// .addMarker(new MarkerOptions().position(position).icon(
@@ -1116,13 +1066,16 @@ public class FindSpaMapFragment extends Fragment implements
 
 		Intent i = new Intent(getActivity(), SpaProfileActivity.class);
 
-		if (Util.selectedSpaDetails.get("Spa_Id") == spa_data.Spa_Id);
+		if (Util.selectedSpaDetails.get("Spa_Id") == spa_data.Spa_Id)
+			;
 		i.putExtra("SelectedSpDetails", Util.selectedSpaDetails);
 		// i.putExtra("Spa_Data", )
 		// i.putExtra("Spa_Name", spa_data.Spa_Name);
 		// i.putExtra("Spa_Id", spa_data.Spa_Id);
 		// i.putExtra("Spa_Addr", spa_data.Spa_Address);
 		startActivity(i);
+		getActivity(). overridePendingTransition(R.anim.fade_in
+				, R.anim.fade_out);
 
 	}
 

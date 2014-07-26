@@ -85,11 +85,11 @@
 
                 <Button
                     android:id="@+id/Button_Controller_Login"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="140dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:background="@drawable/button_default_bg"
-                    android:padding="20sp"
+                    android:padding="5dp"
                     android:text="Login"
                     android:textColor="#ffffff"
                     android:textSize="18sp" />
@@ -129,7 +129,7 @@
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.42"
                 android:gravity="center"
                 android:padding="5sp"

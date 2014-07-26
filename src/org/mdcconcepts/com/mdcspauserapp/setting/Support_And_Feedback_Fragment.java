@@ -2,6 +2,7 @@ package org.mdcconcepts.com.mdcspauserapp.setting;
 
 import org.mdcconcepts.com.mdcspauserapp.R;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -34,13 +36,23 @@ public class Support_And_Feedback_Fragment extends Fragment {
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(getActivity(),
-								Send_FeedBack.class);
-						// EditText editText = (EditText)
-						// findViewById(R.id.edit_message);
-						// String message = editText.getText().toString();
-						// intent.putExtra(EXTRA_MESSAGE, message);
-						startActivity(intent);
+						
+						Dialog feedbackDialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
+						feedbackDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+						feedbackDialog.setContentView(R.layout.activity_send__feed_back);
+						feedbackDialog.setCancelable(true);
+						
+						feedbackDialog.show();
+						
+						
+						
+//						Intent intent = new Intent(getActivity(),
+//								Send_FeedBack.class);
+//						// EditText editText = (EditText)
+//						// findViewById(R.id.edit_message);
+//						// String message = editText.getText().toString();
+//						// intent.putExtra(EXTRA_MESSAGE, message);
+//						startActivity(intent);
 					}
 				});
 		Image_Controller_Send_Feedback

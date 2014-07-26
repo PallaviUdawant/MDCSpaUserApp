@@ -5,21 +5,25 @@ import java.util.Locale;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
-import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.InflateException;
 import android.view.LayoutInflater;
+import android.view.LayoutInflater.Factory;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
@@ -29,7 +33,7 @@ import android.widget.TextView;
  * @author Codelord
  * 
  */
-public class SettingActivity extends Fragment implements ActionBar.TabListener {
+public class SettingActivity extends Activity implements ActionBar.TabListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -39,43 +43,35 @@ public class SettingActivity extends Fragment implements ActionBar.TabListener {
 	 * {@link android.support.v13.app.FragmentStatePagerAdapter}.
 	 */
 	public SectionsPagerAdapter1 mSectionsPagerAdapter;
-
+	Typeface font;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-	public View rootView;
+//	public View rootView;
 	ActionBar actionBar;
-
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	}
+		setContentView(R.layout.activity_setting);
 
-	@SuppressLint("NewApi")
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+//		rootView = inflater
+//				.inflate(R.layout.activity_setting, container, false);
 
-		rootView = inflater
-				.inflate(R.layout.activity_setting, container, false);
-
-		Typeface font = Typeface.createFromAsset(getActivity().getAssets(),
+		font = Typeface.createFromAsset(getAssets(),
 				Util.fontPath);
 
 		// Set up the action bar.
-		actionBar = (((Activity) rootView.getContext()).getActionBar());
+		actionBar =getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		// Create the adapter that will return a fragment for each of the
 		// three
 		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter1(
-				getChildFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter1(getFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
+		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
 		// When swiping between different sections, select the corresponding
@@ -89,7 +85,7 @@ public class SettingActivity extends Fragment implements ActionBar.TabListener {
 					}
 				});
 
-		TextView t1 = new TextView(getActivity());
+		TextView t1 = new TextView(this);
 		t1.setTypeface(font);
 		t1.setTextColor(Color.parseColor("#4e3115"));
 		t1.setText("General Setting");
@@ -99,7 +95,7 @@ public class SettingActivity extends Fragment implements ActionBar.TabListener {
 		actionBar.addTab(actionBar.newTab().setTabListener(this)
 				.setCustomView(t1));
 
-		TextView t2 = new TextView(getActivity());
+		TextView t2 = new TextView(this);
 		t2.setTypeface(font);
 		t2.setTextColor(Color.parseColor("#4e3115"));
 		t2.setTextSize(14);
@@ -109,18 +105,62 @@ public class SettingActivity extends Fragment implements ActionBar.TabListener {
 		actionBar.addTab(actionBar.newTab().setTabListener(this)
 				.setCustomView(t2));
 
-		TextView t3 = new TextView(getActivity());
+		TextView t3 = new TextView(this);
 		t3.setTypeface(font);
 		t3.setTextColor(Color.parseColor("#4e3115"));
 		t3.setTextSize(14);
-		t3.setText("Sopport And Feedback");
+		t3.setText("Support & Feedback");
 		t3.setGravity(Gravity.CENTER_HORIZONTAL);
 		t3.setPadding(0, 20, 0, 0);
 
 		actionBar.addTab(actionBar.newTab().setTabListener(this)
 				.setCustomView(t3));
+		if (getLayoutInflater().getFactory() == null)
+			setMenuBackground();
+		
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		return rootView;
+//		return rootView;
+	}
+	protected void setMenuBackground() {
+
+		// Log.d("in", "Enterting setMenuBackGround");
+
+		getLayoutInflater().setFactory(new Factory() {
+
+			@Override
+			public View onCreateView(String name, Context context,
+					AttributeSet attrs) {
+				// Log.d("Enterting onCreateView", name);
+				LayoutInflater f = getLayoutInflater();
+				if (name.equalsIgnoreCase("TextView")) {
+
+					try { // Ask our inflater to create the view
+
+						final View view = f.createView(name, null, attrs);
+						/*
+						 * The background gets refreshed each time a new item is
+						 * added the options menu. So each time Android applies
+						 * the default background we need to set our own
+						 * background. This is done using a thread giving the
+						 * background change as runnable object
+						 */
+						new Handler().post(new Runnable() {
+							public void run() {
+								 ((TextView)
+								 view).setTextColor(Color.parseColor("#4e3115"));
+								((TextView) view).setTypeface(font);
+							}
+						});
+						return view;
+					} catch (InflateException e) {
+					} catch (ClassNotFoundException e) {
+					}
+				}
+				return null;
+			}
+		});
 	}
 
 	// @Override
@@ -155,8 +195,8 @@ public class SettingActivity extends Fragment implements ActionBar.TabListener {
 
 	@Override
 	public void onDestroy() {
-		actionBar.removeAllTabs();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//		actionBar.removeAllTabs();
+//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		super.onDestroy();
 	}
 
@@ -214,5 +254,22 @@ public class SettingActivity extends Fragment implements ActionBar.TabListener {
 			return null;
 		}
 	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			// This ID represents the Home or Up button. In the case of this
+			// activity, the Up button is shown. Use NavUtils to allow users
+			// to navigate up one level in the application structure. For
+			// more details, see the Navigation pattern on Android Design:
+			//
+			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			//
+			// NavUtils.navigateUpFromSameTask(this);
 
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

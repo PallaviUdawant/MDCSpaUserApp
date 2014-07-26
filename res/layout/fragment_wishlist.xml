@@ -8,10 +8,11 @@
         android:id="@+id/listview_Controller_Wishlist"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="5dp"
         android:background="#50cccccc"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" >
+
     </ListView>
 
     <ImageView
@@ -20,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="-2dp"
         android:src="@drawable/shadow_under_header" />
 
 </FrameLayout>

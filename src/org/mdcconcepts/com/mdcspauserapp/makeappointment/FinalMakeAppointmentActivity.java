@@ -8,8 +8,10 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.MainActivity;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
+import org.mdcconcepts.com.mdcspauserapp.signup.SignUpActivity;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Activity;
@@ -145,6 +147,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 		Button Button_Controller_Login = (Button) loginDialog
 				.findViewById(R.id.Button_Controller_Login);
 
+		
 		progressBar_Controller_Login=(ProgressWheel)loginDialog.findViewById(R.id.progressBar_Controller_Login);
 		
 		TextView_Controller_Login_Title.setTypeface(font);
@@ -155,7 +158,18 @@ public class FinalMakeAppointmentActivity extends Activity {
 		EditText_Controller_Username_Login.setTypeface(font);
 
 		Button_Controller_Login.setTypeface(font);
-
+TextView_Controller_Create_account.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+			
+				Intent i=new Intent(FinalMakeAppointmentActivity.this,SignUpActivity.class);
+				startActivity(i);
+				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//				loginDialog.dismiss();
+			}
+		});
 		Button_Controller_make_an_appointment
 				.setOnClickListener(new View.OnClickListener() {
 
@@ -279,6 +293,12 @@ public class FinalMakeAppointmentActivity extends Activity {
 
 					if (success == 1) {
 						Util.Uid = json.getInt("Uid");
+						Util.User_Name = json.getString("Name");
+						Util.User_Contact_Number = json.getString("Mobile");
+						Util.User_EmailId = json.getString("Email");
+						Util.User_Address = json.getString("Address");
+						Util.User_DOB = json.getString("DOB");
+						Util.User_Anniversary = json.getString("Anniversary");
 						return json.getString(TAG_MESSAGE);
 					} else
 

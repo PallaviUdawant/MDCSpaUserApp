@@ -21,7 +21,7 @@
          android:layout_margin="5dp"
          android:layout_weight="0.00"
          android:contentDescription="@string/desc_list_item_icon"
-         android:src="@drawable/drawer_icon" />
+         android:src="@drawable/ic_drawer_new" />
 
     <TextView
         android:id="@+id/title"

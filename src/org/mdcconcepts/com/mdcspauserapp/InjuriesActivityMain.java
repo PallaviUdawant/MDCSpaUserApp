@@ -14,6 +14,7 @@ import org.mdcconcepts.com.mdcspauserapp.util.Util;
 import com.todddavies.components.progressbar.ProgressWheel;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class InjuriesActivityMain extends FragmentActivity {
 	public static ViewPager mViewPager;
 	JSONParser jsonParser = new JSONParser();
 	private Typeface font;
-
+	SharedPreferences pref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -45,7 +46,9 @@ public class InjuriesActivityMain extends FragmentActivity {
 		setContentView(R.layout.injuries_viewpager);
 
 		new GetPainingAreas().execute();
-
+		pref = getApplicationContext()
+				.getSharedPreferences(Util.APP_PREFERENCES, 0);
+		
 		font = Typeface.createFromAsset(getAssets(), Util.fontPath);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		ImageView view = (ImageView) findViewById(android.R.id.home);
@@ -184,10 +187,9 @@ public class InjuriesActivityMain extends FragmentActivity {
 
 				List<NameValuePair> params1 = new ArrayList<NameValuePair>();
 
-				params1.add(new BasicNameValuePair("uid", String
-						.valueOf(Util.Uid)));
+				params1.add(new BasicNameValuePair("uid", String.valueOf(Util.Uid)));
 
-				Log.d("request!", "starting");
+				Log.d("request Injuries Activity!", "starting"+ String.valueOf(Util.Uid));
 
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(Util.getPainData,
@@ -278,7 +280,12 @@ public class InjuriesActivityMain extends FragmentActivity {
 					}
 					return "true";
 
-				} else {
+				} 
+//				else if(success==-1)
+//				{
+//					return "No injuries data";
+//				}
+				else{
 					return "timeout";
 				}
 			} catch (Exception e) {
@@ -301,7 +308,13 @@ public class InjuriesActivityMain extends FragmentActivity {
 
 				else if (file_url.equalsIgnoreCase("true"))
 					new GetDisease().execute();
+//				else if (file_url.equalsIgnoreCase("No injuries data")) {
+//					Toast.makeText(InjuriesActivityMain.this,
+//							"Connection Timeout...!!!", Toast.LENGTH_LONG)
+//							.show();
+//				}
 			}
+			
 		}
 	}
 
@@ -343,10 +356,9 @@ public class InjuriesActivityMain extends FragmentActivity {
 
 				List<NameValuePair> params1 = new ArrayList<NameValuePair>();
 
-				params1.add(new BasicNameValuePair("uid", String
-						.valueOf(Util.Uid)));
+				params1.add(new BasicNameValuePair("uid", String.valueOf(Util.Uid)));
 
-				Log.d("request!", "starting");
+				Log.d("request Injuries Activity disease!", "starting"+ String.valueOf(Util.Uid));
 
 				if (!Util.getDiseaseData.isEmpty()) {// Posting user data to
 														// script
@@ -433,17 +445,18 @@ public class InjuriesActivityMain extends FragmentActivity {
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
 			pdialog.dismiss();
+			FragmentManager fm = getSupportFragmentManager();
+			mSectionsPagerAdapter = new SectionsPagerAdapter(fm);
+			// // Set up the ViewPager with the sections adapter.
+			mViewPager = (ViewPager) findViewById(R.id.injuries_pager);
+			mViewPager.setAdapter(mSectionsPagerAdapter);
 			if (file_url != null) {
 				if (file_url.equals("timeout"))
 					Toast.makeText(InjuriesActivityMain.this,
 							"Connection Timeout...!!!!", Toast.LENGTH_LONG)
 							.show();
 			}
-			FragmentManager fm = getSupportFragmentManager();
-			mSectionsPagerAdapter = new SectionsPagerAdapter(fm);
-			// // Set up the ViewPager with the sections adapter.
-			mViewPager = (ViewPager) findViewById(R.id.injuries_pager);
-			mViewPager.setAdapter(mSectionsPagerAdapter);
+			
 		}
 
 	}

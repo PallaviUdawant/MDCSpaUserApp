@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -80,7 +79,7 @@ public class SpaProfileActivity extends Activity implements
 					}
 				});
 
-//		SpannableString s = new SpannableString("Spa Profile");
+		// SpannableString s = new SpannableString("Spa Profile");
 		// s.setSpan(new TypefaceSpan(SpaProfileActivity.this, Util.fontPath),
 		// 0, s.length(),
 		// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -120,11 +119,10 @@ public class SpaProfileActivity extends Activity implements
 		actionBar.addTab(actionBar.newTab().setTabListener(this)
 				.setCustomView(t3));
 
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		ImageView view = (ImageView)findViewById(android.R.id.home);
+		ImageView view = (ImageView) findViewById(android.R.id.home);
 		view.setPadding(10, 10, 10, 10);
-//		final LayoutParams iconLp = (LayoutParams) view.getLayoutParams();
+		// final LayoutParams iconLp = (LayoutParams) view.getLayoutParams();
 	}
 
 	@Override
@@ -144,14 +142,6 @@ public class SpaProfileActivity extends Activity implements
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.spa_profile, menu);
-		return true;
 	}
 
 	@Override
@@ -196,7 +186,8 @@ public class SpaProfileActivity extends Activity implements
 				return fragment;
 			case 1:
 				fragment = new SpaTherapiesFragment(selectedSpaDetails);
-//				Toast.makeText(getApplicationContext(), selectedSpaDetails.get("spa_id"), Toast.LENGTH_LONG).show();
+				// Toast.makeText(getApplicationContext(),
+				// selectedSpaDetails.get("spa_id"), Toast.LENGTH_LONG).show();
 				return fragment;
 			case 2:
 				fragment = new SpaOffersFragment();
@@ -226,4 +217,4 @@ public class SpaProfileActivity extends Activity implements
 		}
 	}
 
-	}
+}
