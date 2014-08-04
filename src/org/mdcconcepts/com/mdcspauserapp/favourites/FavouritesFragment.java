@@ -8,6 +8,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.AppSharedPreferences;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.findspa.NearestSpaListviewAdapter;
 import org.mdcconcepts.com.mdcspauserapp.findspa.SpaProfileActivity;
@@ -167,12 +168,12 @@ public class FavouritesFragment extends Activity implements OnScrollListener {
 				// Building Parameters
 				List<NameValuePair> params1 = new ArrayList<NameValuePair>();
 
-				params1.add(new BasicNameValuePair("Uid", String
-						.valueOf(Util.Uid)));
+				params1.add(new BasicNameValuePair("Uid", AppSharedPreferences.getUID(getApplicationContext())));
 				params1.add(new BasicNameValuePair("hit_counter", String
 						.valueOf(hit_counter)));
 
-				Log.d("request!", "starting");
+				Log.d("request!", "starting"+String
+						.valueOf(AppSharedPreferences.getUID(getApplicationContext())));
 
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(
@@ -218,6 +219,7 @@ public class FavouritesFragment extends Activity implements OnScrollListener {
 							else
 								cover_url = cover_url.replace("\\", "");
 							spaDetails.put(SPA_COVER_PHOTO, cover_url);
+							spaDetails.put("IsFav", "1");
 							SpaDetails.add(spaDetails);
 							isDataAvailable = true;
 						}

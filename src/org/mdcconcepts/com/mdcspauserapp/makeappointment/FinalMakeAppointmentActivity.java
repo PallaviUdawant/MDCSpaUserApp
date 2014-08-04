@@ -8,7 +8,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.mdcconcepts.com.mdcspauserapp.MainActivity;
+import org.mdcconcepts.com.mdcspauserapp.AppSharedPreferences;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.signup.SignUpActivity;
@@ -16,10 +16,7 @@ import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +43,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 	HashMap<String, String> AllDetails = new HashMap<String, String>();
 	Typeface font;
 	Button Button_Controller_make_an_appointment;
-	SharedPreferences sharedPreferences;
+//	SharedPreferences sharedPreferences;
 
 	EditText EditText_Controller_Username_Login;
 	EditText EditText_Controller_Password_Login;
@@ -57,7 +54,7 @@ public class FinalMakeAppointmentActivity extends Activity {
 
 	Dialog loginDialog;
 	
-	Editor editor;
+//	Editor editor;
 
 	ProgressWheel progressBar_Controller_Login;
 	
@@ -122,9 +119,9 @@ public class FinalMakeAppointmentActivity extends Activity {
 		ImageView view = (ImageView) findViewById(android.R.id.home);
 		view.setPadding(10, 10, 10, 10);
 
-		sharedPreferences = getSharedPreferences(Util.APP_PREFERENCES,
-				Context.MODE_PRIVATE);
-		editor = sharedPreferences.edit();
+//		sharedPreferences = getSharedPreferences(Util.APP_PREFERENCES,
+//				Context.MODE_PRIVATE);
+//		editor = sharedPreferences.edit();
 
 		loginDialog = new Dialog(this, R.style.ThemeWithCorners);
 		loginDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -177,9 +174,9 @@ TextView_Controller_Create_account.setOnClickListener(new View.OnClickListener()
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 
-						boolean isLogin = sharedPreferences.getBoolean(
-								"IsLogin", false);
-						if (!isLogin)
+//						boolean isLogin = sharedPreferences.getBoolean(
+//								"IsLogin", false);
+						if (!AppSharedPreferences.getLoginStatus(FinalMakeAppointmentActivity.this))
 							loginDialog.show();
 						else {
 							//forward to payment gateway
@@ -293,6 +290,9 @@ TextView_Controller_Create_account.setOnClickListener(new View.OnClickListener()
 
 					if (success == 1) {
 						Util.Uid = json.getInt("Uid");
+						
+						AppSharedPreferences.setUID(getApplicationContext(), String.valueOf(json.getInt("Uid")));
+						
 						Util.User_Name = json.getString("Name");
 						Util.User_Contact_Number = json.getString("Mobile");
 						Util.User_EmailId = json.getString("Email");
@@ -336,14 +336,20 @@ TextView_Controller_Create_account.setOnClickListener(new View.OnClickListener()
 				// Toast.LENGTH_LONG)
 				// .show();
 				if (success == 1) {
-					editor.putBoolean("IsLogin", true);
-					editor.putString("UserName",
-							EditText_Controller_Username_Login.getText()
+					
+					AppSharedPreferences.setLoginStatus(getApplicationContext(), true);
+					AppSharedPreferences.setUserName(getApplicationContext(), EditText_Controller_Username_Login.getText()
 									.toString());
-					editor.putString("Password",
-							EditText_Controller_Password_Login.getText()
+					AppSharedPreferences.setPassword(getApplicationContext(), EditText_Controller_Password_Login.getText()
 									.toString());
-					editor.commit();
+//					editor.putBoolean("IsLogin", true);
+//					editor.putString("UserName",
+//							EditText_Controller_Username_Login.getText()
+//									.toString());
+//					editor.putString("Password",
+//							EditText_Controller_Password_Login.getText()
+//									.toString());
+//					editor.commit();
 					loginDialog.dismiss();
 					
 					//forward to payment gateway

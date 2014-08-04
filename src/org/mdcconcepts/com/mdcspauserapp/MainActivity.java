@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.contactSync.ContactSyncFragment;
 import org.mdcconcepts.com.mdcspauserapp.customitems.ConnectionDetector;
 import org.mdcconcepts.com.mdcspauserapp.customitems.GPSTracker;
 import org.mdcconcepts.com.mdcspauserapp.favourites.FavouritesFragment;
@@ -31,8 +32,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -83,13 +82,13 @@ public class MainActivity extends Activity {
 	private NavDrawerListAdapter adapter;
 	ConnectionDetector cd;
 	Boolean isInternetPresent = false;
-	SharedPreferences sharedPreferences;
+
 	Dialog loginDialog;
+
 	EditText EditText_Controller_Username_Login;
 	EditText EditText_Controller_Password_Login;
 	TextView textView_controller_incorrect_credentials;
 	ProgressWheel progressBar_Controller_Login;
-	Editor editor;
 	public Menu APP_MENU;
 
 	@Override
@@ -138,6 +137,8 @@ public class MainActivity extends Activity {
 				.getResourceId(5, -1)));
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons
 				.getResourceId(6, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons
+				.getResourceId(6, -1)));
 
 		navMenuIcons.recycle();
 
@@ -168,7 +169,6 @@ public class MainActivity extends Activity {
 
 			public void onDrawerOpened(View drawerView) {
 				getActionBar().setTitle(mDrawerTitle);
-//				getActionBar().hide();
 				// calling onPrepareOptionsMenu() to hide action bar icons
 				invalidateOptionsMenu();
 			}
@@ -182,32 +182,14 @@ public class MainActivity extends Activity {
 			displayView(0);
 		}
 
-		sharedPreferences = getSharedPreferences(Util.APP_PREFERENCES,
-				Context.MODE_PRIVATE);
-		// boolean isFirstRun = sharedPreferences.getBoolean("FIRSTRUN", true);
 		try {
-			Util.Uid = Integer.parseInt(sharedPreferences.getString("Uid", ""));
+			Util.Uid = Integer.parseInt(AppSharedPreferences.getUID(this));
 			Log.d("User Uid Value", "" + Util.Uid);
 		} catch (Exception e) {
 			// TODO: handle exception
 			Log.d("User Uid Value", "it is not set now");
 		}
 
-		// if (isFirstRun) {
-		// // Code to run once
-		// SharedPreferences.Editor editor = sharedPreferences.edit();
-		// editor.putBoolean("FIRSTRUN", false);
-		// editor.commit();
-		//
-		// Intent i = new Intent(MainActivity.this, InjuriesActivityMain.class);
-		// startActivity(i);
-		//
-		// }
-
-		// new GetUserData().execute();
-		
-		ImageView view1 = (ImageView) findViewById(android.R.id.home);
-		view1.setPadding(10, 10, 10, 10);
 	}
 
 	/**
@@ -228,13 +210,9 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		if (getLayoutInflater().getFactory() == null)
 			setMenuBackground();
-		SharedPreferences sharedPreferences = getSharedPreferences(
-				Util.APP_PREFERENCES, Context.MODE_PRIVATE);
-		editor = sharedPreferences.edit();
-		boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
 		APP_MENU = menu;
 
-		if (!isLogin) {
+		if (!AppSharedPreferences.getLoginStatus(MainActivity.this)) {
 			APP_MENU.findItem(R.id.action_profile).setVisible(false);
 			APP_MENU.findItem(R.id.action_logout).setVisible(false);
 			APP_MENU.findItem(R.id.action_Login).setVisible(true);
@@ -261,12 +239,8 @@ public class MainActivity extends Activity {
 		 * Condition For Login Menu Iteam Click
 		 */
 		if (item.getTitle().equals("Login")) {
-			SharedPreferences sharedPreferences = getSharedPreferences(
-					Util.APP_PREFERENCES, Context.MODE_PRIVATE);
-			editor = sharedPreferences.edit();
-			boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
 
-			if (!isLogin) {
+			if (!AppSharedPreferences.getLoginStatus(MainActivity.this)) {
 				open_LoginPopUp(1);
 			} else {
 				Intent intent = new Intent(this, FavouritesFragment.class);
@@ -278,12 +252,7 @@ public class MainActivity extends Activity {
 		 * Condition For Favorite SPA Menu Item Click
 		 */
 		if (item.getTitle().equals("Favourite SPA")) {
-			SharedPreferences sharedPreferences = getSharedPreferences(
-					Util.APP_PREFERENCES, Context.MODE_PRIVATE);
-			editor = sharedPreferences.edit();
-			boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
-
-			if (!isLogin) {
+			if (!AppSharedPreferences.getLoginStatus(MainActivity.this)) {
 				open_LoginPopUp(2);
 			} else {
 				Intent intent = new Intent(this, FavouritesFragment.class);
@@ -300,13 +269,9 @@ public class MainActivity extends Activity {
 		 * Condition For User Profile Menu Item Click
 		 */
 		if (item.getTitle().equals("Profile")) {
-			SharedPreferences sharedPreferences = getSharedPreferences(
-					Util.APP_PREFERENCES, Context.MODE_PRIVATE);
-			editor = sharedPreferences.edit();
-			boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
 
-			if (!isLogin) {
-				open_LoginPopUp(2);
+			if (!AppSharedPreferences.getLoginStatus(MainActivity.this)) {
+				open_LoginPopUp(3);
 			} else {
 				Intent intent = new Intent(this, MyProfileFragment.class);
 				startActivity(intent);
@@ -316,52 +281,20 @@ public class MainActivity extends Activity {
 		 * Condition For Settings Menu Item Click
 		 */
 		if (item.getTitle().equals("Settings")) {
-//			SharedPreferences sharedPreferences = getSharedPreferences(
-//					Util.APP_PREFERENCES, Context.MODE_PRIVATE);
-//			editor = sharedPreferences.edit();
-//			boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
-//
-//			if (!isLogin) {
-//				open_LoginPopUp(3);
-//			} else {
-				Intent intent = new Intent(this, SettingActivity.class);
-				startActivity(intent);
-//			}
+			Intent intent = new Intent(this, SettingActivity.class);
+			startActivity(intent);
 		}
 
 		/**
 		 * Condition For Logout Menu Item Click
 		 */
 		if (item.getTitle().equals("Logout")) {
-			editor.putBoolean("IsLogin", false);
-			editor.commit();
-
+			AppSharedPreferences.setLoginStatus(MainActivity.this, false);
 			APP_MENU.findItem(R.id.action_profile).setVisible(false);
 			APP_MENU.findItem(R.id.action_logout).setVisible(false);
 			APP_MENU.findItem(R.id.action_Login).setVisible(true);
 
 		}
-		// // Handle action bar actions click
-		// switch (item.getItemId()) {
-		// case R.id.action_settings:
-		// return true;
-		// case R.id.action_fav:
-		// SharedPreferences sharedPreferences = getSharedPreferences(
-		// Util.APP_PREFERENCES, Context.MODE_PRIVATE);
-		// editor = sharedPreferences.edit();
-		// boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
-		//
-		// if (!isLogin) {
-		// open_LoginPopUp(1);
-		// } else {
-		// Intent intent = new Intent(this, FavouritesFragment.class);
-		// startActivity(intent);
-		// }
-		//
-		// return true;
-		// default:
-		// return super.onOptionsItemSelected(item);
-		// }
 		return true;
 	}
 
@@ -428,12 +361,6 @@ public class MainActivity extends Activity {
 			// Home Fragment
 			fragment = new HomeFragment();
 			break;
-
-		// case 1:
-		// //Profile Fragment
-		// fragment = new MyProfileFragment();
-		// break;
-
 		case 1:
 
 			// Find Spa Fragment
@@ -477,26 +404,18 @@ public class MainActivity extends Activity {
 			// fragment = new WhatsHotFragment();
 			break;
 
-		// case 6:
-		// //Favourites
-		// fragment = new FavouritesFragment();
-		//
-		// break;
-
 		case 5:
 			// Offers
 			fragment = new HomeFragment();
 			break;
-		 case 6:
-		 //Settings
-		 fragment = new WishList_Fragment();
-		 break;
-		// case 9:
-		// //Logout
-		// Intent i = new Intent(MainActivity.this, LoginActivity.class);
-		// startActivity(i);
-		// finish();
-		// break;
+		case 6:
+			// Settings
+			fragment = new WishList_Fragment();
+			break;
+		case 7:
+			// Settings
+			fragment = new ContactSyncFragment();
+			break;
 
 		default:
 			break;
@@ -568,8 +487,6 @@ public class MainActivity extends Activity {
 		alertDialog.show();
 	}
 
-	
-
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
@@ -638,23 +555,6 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-
-			// dialog = new Dialog(FinalMakeAppointmentActivity.this,
-			// R.style.ThemeWithCorners);
-			// dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			// dialog.setContentView(R.layout.custom_progress_dialog);
-			// dialog.setCancelable(false);
-			// // dialog.show();
-			//
-			// TextView Txt_Title = (TextView) dialog
-			// .findViewById(R.id.txt_alert_text);
-			// Txt_Title.setTypeface(font);
-			// /**
-			// * custom circular progress bar
-			// */
-			// ProgressWheel pw_four = (ProgressWheel) dialog
-			// .findViewById(R.id.progressBarFour);
-			// pw_four.spin();
 			progressBar_Controller_Login.setVisibility(View.VISIBLE);
 			progressBar_Controller_Login.spin();
 		}
@@ -690,8 +590,9 @@ public class MainActivity extends Activity {
 					success = json.getInt(TAG_SUCCESS);
 
 					if (success == 1) {
-						
+
 						Util.Uid = json.getInt("Uid");
+						AppSharedPreferences.setUID(getApplicationContext(), String.valueOf(json.getInt("Uid")));
 						Util.User_Name = json.getString("Name");
 						Util.User_Contact_Number = json.getString("Mobile");
 						Util.User_EmailId = json.getString("Email");
@@ -727,7 +628,7 @@ public class MainActivity extends Activity {
 		 **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-			
+
 			progressBar_Controller_Login.setVisibility(View.GONE);
 			progressBar_Controller_Login.stopSpinning();
 			if (file_url != null) {
@@ -736,31 +637,29 @@ public class MainActivity extends Activity {
 				// .show();
 				if (success == 1) {
 					loginDialog.cancel();
-					editor.putBoolean("IsLogin", true);
-					editor.putString("UserName",
+					AppSharedPreferences.setLoginStatus(
+							getApplicationContext(), true);
+					AppSharedPreferences.setUserName(getApplicationContext(),
 							EditText_Controller_Username_Login.getText()
 									.toString());
-					editor.putString("Password",
+					AppSharedPreferences.setPassword(getApplicationContext(),
 							EditText_Controller_Password_Login.getText()
 									.toString());
-					editor.putString("Uid", "" + Util.Uid);
-					editor.commit();
-					
 
 					APP_MENU.findItem(R.id.action_profile).setVisible(true);
 					APP_MENU.findItem(R.id.action_logout).setVisible(true);
 					APP_MENU.findItem(R.id.action_Login).setVisible(false);
 					Intent intent;
 					switch (whichMenuIteam) {
-					
+
 					case 2:
-						 intent = new Intent(MainActivity.this,
+						intent = new Intent(MainActivity.this,
 								FavouritesFragment.class);
 						startActivity(intent);
 						break;
 					case 3:
-						 intent = new Intent(MainActivity.this,
-								SettingActivity.class);
+						intent = new Intent(MainActivity.this,
+								MyProfileFragment.class);
 						startActivity(intent);
 						break;
 					default:
@@ -785,7 +684,7 @@ public class MainActivity extends Activity {
 
 					textView_controller_incorrect_credentials
 							.setVisibility(View.VISIBLE);
-				
+
 					// textView_controller_incorrect_credentials.setTypeface(font);
 					// Toast.makeText(FinalMakeAppointmentActivity.this,
 					// "Wrong Username or Password.. Please try again..!!!",
@@ -808,7 +707,6 @@ public class MainActivity extends Activity {
 		TextView TextView_Controller_Create_account = (TextView) loginDialog
 				.findViewById(R.id.TextView_Controller_Create_account);
 
-		
 		EditText_Controller_Username_Login = (EditText) loginDialog
 				.findViewById(R.id.EditText_Controller_Username_Login);
 		EditText_Controller_Password_Login = (EditText) loginDialog
@@ -833,14 +731,15 @@ public class MainActivity extends Activity {
 		/**
 		 * Shared preferences to autofill username and password
 		 */
-		SharedPreferences pref = getApplicationContext().getSharedPreferences(
-				Util.APP_PREFERENCES, 0);
-		editor = pref.edit();
+		// SharedPreferences pref =
+		// getApplicationContext().getSharedPreferences(
+		// Util.APP_PREFERENCES, 0);
+		// editor = pref.edit();
 
-		EditText_Controller_Username_Login.setText(pref.getString("UserName",
-				""));
-		EditText_Controller_Password_Login.setText(pref.getString("Password",
-				""));
+		EditText_Controller_Username_Login.setText(AppSharedPreferences
+				.getUserName(MainActivity.this));
+		EditText_Controller_Password_Login.setText(AppSharedPreferences
+				.getPassword(MainActivity.this));
 
 		Button_Controller_Login.setTypeface(font);
 		Button_Controller_Login.setOnClickListener(new View.OnClickListener() {
@@ -863,19 +762,22 @@ public class MainActivity extends Activity {
 			}
 
 		});
-		
-		TextView_Controller_Create_account.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-			
-				Intent i=new Intent(MainActivity.this,SignUpActivity.class);
-				startActivity(i);
-				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-//				loginDialog.dismiss();
-			}
-		});
+
+		TextView_Controller_Create_account
+				.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+
+						Intent i = new Intent(MainActivity.this,
+								SignUpActivity.class);
+						startActivity(i);
+						overridePendingTransition(R.anim.fade_in,
+								R.anim.fade_out);
+						// loginDialog.dismiss();
+					}
+				});
 		loginDialog.show();
 	}
 

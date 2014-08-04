@@ -229,6 +229,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/LinearLayout_Email_Notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -266,9 +267,9 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/Text_Content"
                     android:orientation="vertical" >
 
                     <RelativeLayout
@@ -351,22 +352,35 @@
                             android:text="@string/Current_Email" />
 
                         <ImageView
-                            android:id="@+id/Switch_Controller_Email_Noti_Add_Another_Email"
+                            android:id="@+id/ImageView_Controller_Email_Noti_Add_Another_Email"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentTop="true"
                             android:layout_marginRight="19dp"
                             android:src="@drawable/add_new_email" />
-
                     </RelativeLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
+                        android:id="@+id/LinearLayout_AlternateEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
+                        android:orientation="vertical"
                         android:layout_marginTop="10dp" >
-                    </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/TextViewController_UserName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="46dp"
+                            android:padding="10dp"
+                            android:text="Alternate Email Id" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

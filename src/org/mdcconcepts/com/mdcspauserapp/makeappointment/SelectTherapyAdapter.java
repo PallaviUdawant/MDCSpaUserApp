@@ -7,15 +7,13 @@ import java.util.Map.Entry;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.AppSharedPreferences;
 import org.mdcconcepts.com.mdcspauserapp.R;
-import org.mdcconcepts.com.mdcspauserapp.util.Util;
 import org.mdcconcepts.com.mdcspauserapp.wishlist.WishList_Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -124,29 +122,11 @@ public class SelectTherapyAdapter extends BaseAdapter {
 
 							WishList_Fragment.WishList.remove(Integer
 									.parseInt(data.get(pos).get("therapy_id")));
-//							WishList_Fragment.WishListDesc.remove(Integer
-//									.parseInt(data.get(pos).get("therapy_id")));
 
 							JSONArray WishList_JsonArray = HashMapToJsonArray(
 									WishList_Fragment.WishList);
-//							JSONArray WishListDesc_JsonArray = HashMapToJsonArray(
-//									WishList_Fragment.WishList, "therapy_id",
-//									"therapy_desc");
-							/**
-							 * Shared preferences to Store Wishlist
-							 */
-							SharedPreferences pref = rootView.getContext()
-									.getSharedPreferences(Util.APP_PREFERENCES,
-											0);
 
-							Editor editor = pref.edit();
-
-							editor.putString(Util.WishList,
-									WishList_JsonArray.toString());
-//							editor.putString(Util.WishListDesc,
-//									WishListDesc_JsonArray.toString());
-
-							editor.commit();
+							AppSharedPreferences.setUserWishList(activity, WishList_JsonArray.toString());
 
 						} else {
 							imageView_controller_wishlist
@@ -170,30 +150,11 @@ public class SelectTherapyAdapter extends BaseAdapter {
 											"therapy_id")),
 											Therapy_Data.toString());
 							
-							// WishList_Fragment.WishListDesc.put(
-							// Integer.parseInt(data.get(pos).get(
-							// "therapy_id")),
-							// data.get(pos).get("therapy_desc"));
 
 							JSONArray WishList_JsonArray = HashMapToJsonArray(
 									WishList_Fragment.WishList);
-//							JSONArray WishListDesc_JsonArray = HashMapToJsonArray(
-//									WishList_Fragment.WishList, "therapy_id",
-//									"therapy_desc");
-							/**
-							 * Shared preferences to Store Wishlist
-							 */
-							SharedPreferences pref = rootView.getContext()
-									.getSharedPreferences(Util.APP_PREFERENCES,
-											0);
 
-							Editor editor = pref.edit();
-
-							editor.putString(Util.WishList,
-									WishList_JsonArray.toString());
-//							editor.putString(Util.WishListDesc,
-//									WishListDesc_JsonArray.toString());
-							editor.commit();
+							AppSharedPreferences.setUserWishList(activity, WishList_JsonArray.toString());
 
 						}
 					}

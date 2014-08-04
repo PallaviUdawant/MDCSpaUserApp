@@ -90,39 +90,43 @@ public class DiseaseFragment extends Fragment {
 		CheckBox_Pregnant.setTypeface(font);
 		CheckBox_Other.setTypeface(font);
 
+		//Heart Disease Checkbox
 		if (Util.isChecked_Heart)
 			CheckBox_Heart.setChecked(true);
 
+		//Hepatitis Checkbox
 		if (Util.isChecked_Hepatitis)
 			CheckBox_Hepatitis.setChecked(true);
 
+		//Diabeties Checkbox
 		if (Util.isChecked_Diabeties)
 			CheckBox_Diabeties.setChecked(true);
 
+		//Lung Disease Checkbox
 		if (Util.isChecked_Lung)
-			CheckBox_Hepatitis.setChecked(true);
+			CheckBox_Lung.setChecked(true);
 
-		if (Util.isChecked_Lung)
-			CheckBox_Hepatitis.setChecked(true);
-
+		//Hypotension Checkbox
 		if (Util.isChecked_Hypotension)
 			CheckBox_Hypotension.setChecked(true);
 
+		//Skin Disease Checkbox
 		if (Util.isChecked_Skin)
 			CheckBox_Skin.setChecked(true);
 
+		//BP Checkbox
 		if (Util.isChecked_BP)
 			CheckBox_BP.setChecked(true);
 
-		if (Util.isChecked_BP)
-			CheckBox_Arthritis.setChecked(true);
-
+		//Arthritis Checkbox
 		if (Util.isChecked_Arthritis)
 			CheckBox_Arthritis.setChecked(true);
 
+		//Pregnant Checkbox
 		if (Util.isChecked_Pregnant)
 			CheckBox_Pregnant.setChecked(true);
 
+		//Other Checkbox
 		if (Util.isChecked_Other)
 			CheckBox_Other.setChecked(true);
 

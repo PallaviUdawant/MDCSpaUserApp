@@ -1,7 +1,6 @@
 package org.mdcconcepts.com.mdcspauserapp;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -11,10 +10,7 @@ import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
-import com.todddavies.components.progressbar.ProgressWheel;
-
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,12 +29,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.todddavies.components.progressbar.ProgressWheel;
+
 public class InjuriesActivityMain extends FragmentActivity {
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	public static ViewPager mViewPager;
 	JSONParser jsonParser = new JSONParser();
 	private Typeface font;
-	SharedPreferences pref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -46,8 +43,6 @@ public class InjuriesActivityMain extends FragmentActivity {
 		setContentView(R.layout.injuries_viewpager);
 
 		new GetPainingAreas().execute();
-		pref = getApplicationContext()
-				.getSharedPreferences(Util.APP_PREFERENCES, 0);
 		
 		font = Typeface.createFromAsset(getAssets(), Util.fontPath);
 		getActionBar().setDisplayHomeAsUpEnabled(true);

@@ -33,40 +33,43 @@ public class TimelineDynamicActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.timeline_dynamic);
-		
-		LinearLayout dynamic_timeline_layout=(LinearLayout)findViewById(R.id.dynamic_timeline_layout);
-		
-		
-		TextView TextView_Controller_Therapist_Name_Timeline=(TextView)findViewById(R.id.TextView_Controller_Therapist_Name_Timeline);
-		TextView TextView_Controller_Spa_Name_Timeline=(TextView)findViewById(R.id.TextView_Controller_Spa_Name_Timeline);
-		
-		Typeface font=Typeface.createFromAsset(getAssets(), Util.fontPath);
-		TextView_Controller_Therapist_Name_Timeline.setTypeface(font,Typeface.BOLD);
+
+		LinearLayout dynamic_timeline_layout = (LinearLayout) findViewById(R.id.dynamic_timeline_layout);
+
+		TextView TextView_Controller_Therapist_Name_Timeline = (TextView) findViewById(R.id.TextView_Controller_Therapist_Name_Timeline);
+		TextView TextView_Controller_Spa_Name_Timeline = (TextView) findViewById(R.id.TextView_Controller_Spa_Name_Timeline);
+
+		Typeface font = Typeface.createFromAsset(getAssets(), Util.fontPath);
+		TextView_Controller_Therapist_Name_Timeline.setTypeface(font,
+				Typeface.BOLD);
 		TextView_Controller_Spa_Name_Timeline.setTypeface(font);
-		
-		 Intent i = getIntent();
-		 TherapyTimelineDetails=(ArrayList<HashMap<String, String>>)
-		 i.getSerializableExtra("TimelineData");
-		 
-		 TextView_Controller_Therapist_Name_Timeline.setText(i.getStringExtra("TherapistName"));
-		 TextView_Controller_Spa_Name_Timeline.setText(i.getStringExtra("SpaName"));
-		 
-		 Toast.makeText(this, i.getStringExtra("Profile_url"), Toast.LENGTH_LONG).show();
-		 
-		 getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		Intent i = getIntent();
+		TherapyTimelineDetails = (ArrayList<HashMap<String, String>>) i
+				.getSerializableExtra("TimelineData");
+
+		TextView_Controller_Therapist_Name_Timeline.setText(i
+				.getStringExtra("TherapistName"));
+		TextView_Controller_Spa_Name_Timeline.setText(i
+				.getStringExtra("SpaName"));
+
+		Toast.makeText(this, i.getStringExtra("Profile_url"), Toast.LENGTH_LONG)
+				.show();
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_LARGE) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
 			View v = Timeline_Large_Screen();
 			dynamic_timeline_layout.addView(v);
-//			this.setContentView(v);
+			// this.setContentView(v);
 		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_NORMAL) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
 			View v = Timeline_Small_Screen();
 			dynamic_timeline_layout.addView(v);
-//			this.setContentView(v);
+			// this.setContentView(v);
 		} else {
 			View v = Timeline_Large_Screen();
-//			this.setContentView(v);
+			dynamic_timeline_layout.addView(v);
+			// this.setContentView(v);
 		}
-
 
 	}
 
@@ -194,7 +197,8 @@ public class TimelineDynamicActivity extends Activity {
 			Linear_Child1_Child.setLayoutParams(layoutParams);
 
 			TextView tv = new TextView(this);
-			Typeface font=Typeface.createFromAsset(getAssets(), Util.fontPath);
+			Typeface font = Typeface
+					.createFromAsset(getAssets(), Util.fontPath);
 			tv.setTypeface(font);
 			String Appointment_Time = TherapyTimelineDetails.get(j).get(
 					TherapistSchedule.Appointment_Start_Time);
@@ -215,9 +219,9 @@ public class TimelineDynamicActivity extends Activity {
 			viewHorizontal.setLayoutParams(ViewHorizontalParam);
 			viewHorizontal.setBackgroundColor(0xff4e3115);
 
-			if (j % 2 == 0) {
+			if (j % 2 != 0) {
 				/** Even Child1 ***/
-				if (j == 0)
+				if (j == 1)
 					/** First Child **/
 					layoutParamsParent.topMargin = 225;
 				else
@@ -242,7 +246,7 @@ public class TimelineDynamicActivity extends Activity {
 				// viewHorizontal.setBackgroundColor(0xff4e3115);
 
 				/** Odd Child ***/
-				if (j == 1)
+				if (j == 0)
 					/** First Child **/
 					layoutParamsParent.topMargin = 7;
 				else
@@ -343,10 +347,10 @@ public class TimelineDynamicActivity extends Activity {
 		// Linear_Child2.addView(view1);
 		mainLayout.addView(sv);
 
-		
 		return mainLayout;
 
 	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -380,18 +384,17 @@ public class TimelineDynamicActivity extends Activity {
 		mainLayout.setLayoutParams(layoutParams);
 		mainLayout.setGravity(Gravity.CENTER_VERTICAL);
 
-//		LinearLayout headerLayout = new LinearLayout(this);
-//		mainLayout.setOrientation(LinearLayout.HORIZONTAL);
-//		layoutParams = new LinearLayout.LayoutParams(
-//				LinearLayout.LayoutParams.FILL_PARENT,
-//				LinearLayout.LayoutParams.MATCH_PARENT);
-//		layoutParams.gravity = Gravity.CENTER_VERTICAL;
-//		mainLayout.setLayoutParams(layoutParams);
-//		mainLayout.setGravity(Gravity.CENTER_VERTICAL);
-//		
-//		ImageView profile_pic=new ImageView(this);
-		
-		
+		// LinearLayout headerLayout = new LinearLayout(this);
+		// mainLayout.setOrientation(LinearLayout.HORIZONTAL);
+		// layoutParams = new LinearLayout.LayoutParams(
+		// LinearLayout.LayoutParams.FILL_PARENT,
+		// LinearLayout.LayoutParams.MATCH_PARENT);
+		// layoutParams.gravity = Gravity.CENTER_VERTICAL;
+		// mainLayout.setLayoutParams(layoutParams);
+		// mainLayout.setGravity(Gravity.CENTER_VERTICAL);
+		//
+		// ImageView profile_pic=new ImageView(this);
+
 		/*** ScrollView ***/
 		ScrollView sv = new ScrollView(this);
 		layoutParams = new LinearLayout.LayoutParams(
@@ -484,7 +487,7 @@ public class TimelineDynamicActivity extends Activity {
 
 		int k = 0;
 		for (int j = 0; j < TherapyTimelineDetails.size(); j++) {
-//		for (int j = 0; j <4; j++) {
+			// for (int j = 0; j <4; j++) {
 			if (k == 6)
 				k = 1;
 
@@ -511,7 +514,7 @@ public class TimelineDynamicActivity extends Activity {
 			LinearLayout.LayoutParams layoutParamsParent = new LinearLayout.LayoutParams(
 					250, LayoutParams.WRAP_CONTENT);
 			layoutParamsParent.gravity = Gravity.CENTER;
-//			Linear_Child1_Parent.setBackgroundColor(Color.LTGRAY);
+			// Linear_Child1_Parent.setBackgroundColor(Color.LTGRAY);
 
 			LinearLayout Linear_Child1_Child = new LinearLayout(this);
 			Linear_Child1_Child.setOrientation(LinearLayout.HORIZONTAL);
@@ -528,12 +531,14 @@ public class TimelineDynamicActivity extends Activity {
 					TherapistSchedule.Appointment_End_Time);
 			String Timeline_Data = "Therapist Busy \n From " + Appointment_Time
 					+ " to " + Appointment_End_Time;
-//			String Timeline_Data = "Therapist Busy \n From 22-06-2014 to 22-06-2014";
+			// String Timeline_Data =
+			// "Therapist Busy \n From 22-06-2014 to 22-06-2014";
 			tv.setText(Timeline_Data);
-			Typeface font=Typeface.createFromAsset(getAssets(), Util.fontPath);
+			Typeface font = Typeface
+					.createFromAsset(getAssets(), Util.fontPath);
 			tv.setTypeface(font);
-//			tv.setText("Therapist Busy \n From 12/12/2013 12:00 to 12/12/2013 1:00");
-			
+			// tv.setText("Therapist Busy \n From 12/12/2013 12:00 to 12/12/2013 1:00");
+
 			tv.setPadding(10, 10, 10, 10);
 			tv.setTextColor(0xff4e3115);
 

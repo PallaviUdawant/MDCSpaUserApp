@@ -78,7 +78,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 				.getSerializableExtra("AllDetails");
 		Therapies_Id = AllDetails.get("Therapy_Id");
 
-		new GetTherapies().execute();
+		new GetTherapist().execute();
 
 	}
 
@@ -161,7 +161,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 		// super.onBackPressed();
 	}
 
-	class GetTherapies extends AsyncTask<String, String, String> {
+	class GetTherapist extends AsyncTask<String, String, String> {
 
 		// Progress Dialog
 		Dialog dialog;
@@ -232,7 +232,7 @@ public class SelectTherapistActivity extends FragmentActivity {
 						return json.getString(TAG_MESSAGE)
 								+ " , Please Login !";
 					} else {
-						Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+						Log.d("SelectTherapistActivity", json.getString(TAG_MESSAGE));
 						return json.getString(TAG_MESSAGE);
 
 					}

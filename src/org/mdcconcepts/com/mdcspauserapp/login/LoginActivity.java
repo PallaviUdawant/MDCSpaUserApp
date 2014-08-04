@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.AppSharedPreferences;
 import org.mdcconcepts.com.mdcspauserapp.MainActivity;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.ConnectionDetector;
@@ -20,7 +21,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -62,7 +62,7 @@ public class LoginActivity extends Activity {
 
 	// flag for Internet connection status
 	Boolean isInternetPresent = false;
-	SharedPreferences pref;
+//	SharedPreferences pref;
 
 	// Connection detector class
 	ConnectionDetector cd;
@@ -113,42 +113,6 @@ public class LoginActivity extends Activity {
 
 		txt_Create_account = (TextView) findViewById(R.id.txt_Create_account);
 
-//		if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_LARGE) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-//			Toast.makeText(getApplicationContext(), "High", Toast.LENGTH_LONG)
-//					.show();
-//		} else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_NORMAL) == Configuration.SCREENLAYOUT_SIZE_NORMAL) { // do
-//																																						// something
-//			Toast.makeText(getApplicationContext(), "Normal", Toast.LENGTH_LONG)
-//					.show();
-//		} else {
-//			Toast.makeText(getApplicationContext(),
-//					"Medium " + getResources().getConfiguration().screenLayout,
-//					Toast.LENGTH_LONG).show();
-//		}
-
-		// final float LOW_LEVEL = 0.75f;
-		// final float MEDIUM_LEVEL = 1.0f;
-		// final float HIGH_LEVEL = 1.5f;
-		//
-		// float level = getApplicationContext().getResources()
-		// .getDisplayMetrics().density;
-		//
-		// if (level == LOW_LEVEL) {
-		//
-		// // do something here
-		// Toast.makeText(getApplicationContext(), "Low", Toast.LENGTH_LONG)
-		// .show();
-		//
-		// } else if (level == MEDIUM_LEVEL) {
-		// Toast.makeText(getApplicationContext(), "Medium ",
-		// Toast.LENGTH_LONG).show();
-		// // do smoothing here
-		//
-		// } else if (level == HIGH_LEVEL) {
-		// // do something here
-		// Toast.makeText(getApplicationContext(), "High", Toast.LENGTH_LONG)
-		// .show();
-		// }
 		/**
 		 * Set Font
 		 */
@@ -158,18 +122,12 @@ public class LoginActivity extends Activity {
 		Login_ButtonController.setTypeface(font);
 		txt_Create_account.setTypeface(font);
 
-		/**
-		 * Shared preferences to autofill username and password
-		 */
-		pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 -
-																			// for
-																			// private
-																			// mode
-		editor = pref.edit();
-		if (pref.getBoolean("Login_Status", false)) {
+	
+		
+		if (AppSharedPreferences.getLoginStatus(LoginActivity.this)) {
 
-			Username.setText(pref.getString("UserName", ""));
-			Password.setText(pref.getString("Password", ""));
+			Username.setText(AppSharedPreferences.getUserName(LoginActivity.this));
+			Password.setText(AppSharedPreferences.getPassword(LoginActivity.this));
 
 		}
 
@@ -191,10 +149,6 @@ public class LoginActivity extends Activity {
 						// make HTTP requests
 
 						new LoginUser().execute();
-						// showAlertDialog(
-						// AndroidDetectInternetConnectionActivity.this,
-						// "Internet Connection",
-						// "You have internet connection", true);
 					} else {
 						// Internet connection is not present
 						// Ask user to connect to Internet
@@ -285,10 +239,6 @@ public class LoginActivity extends Activity {
 					} else
 
 					{
-						// Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-						// Toast.makeText(LoginActivity.this,
-						// "Wrong Username or Password", Toast.LENGTH_LONG)
-						// .show();
 						return json.getString(TAG_MESSAGE);
 
 					}
@@ -312,9 +262,6 @@ public class LoginActivity extends Activity {
 			// dismiss the dialog once product deleted
 			dialog.cancel();
 			if (file_url != null) {
-				// Toast.makeText(LoginActivity.this, file_url,
-				// Toast.LENGTH_LONG)
-				// .show();
 				if (success == 1) {
 					editor.putBoolean("Login_Status", true);
 					editor.putString("UserName", Username.getText().toString());

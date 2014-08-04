@@ -16,11 +16,14 @@ import org.mdcconcepts.com.mdcspauserapp.wishlist.WishList_Fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class SplashScreenActivity extends Activity {
@@ -28,7 +31,7 @@ public class SplashScreenActivity extends Activity {
 	private final int SPLASH_TIME_OUT = 3000;
 	ConnectionDetector cd;
 	JSONParser jsonParser = new JSONParser();
-	SharedPreferences pref;
+//	SharedPreferences pref;
 	// ids
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MESSAGE = "message";
@@ -37,7 +40,31 @@ public class SplashScreenActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash_screen);
+		final ImageView imageView_Logo=(ImageView)findViewById(R.id.imageView_Logo);
+		
 		cd = new ConnectionDetector(getApplicationContext());
+		
+//		final Animation animFade = AnimationUtils.loadAnimation(
+//				SplashScreenActivity.this, R.drawable.fade);
+
+		Animation animation = AnimationUtils.loadAnimation(this,
+				R.drawable.translate);
+		imageView_Logo.startAnimation(animation);
+		animation.setAnimationListener(new AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				imageView_Logo.clearAnimation();
+
+			}
+		});
 		new Handler().postDelayed(new Runnable() {
 
 			/*
@@ -53,9 +80,10 @@ public class SplashScreenActivity extends Activity {
 				/**
 				 * Shared preferences to Store Wishlist
 				 */
-				pref = getApplicationContext()
-						.getSharedPreferences(Util.APP_PREFERENCES, 0);
-				String value = pref.getString(Util.WishList, null);
+//				pref = getApplicationContext()
+//						.getSharedPreferences(Util.APP_PREFERENCES, 0);
+//				String value = pref.getString(Util.WishList, null);
+				String value = AppSharedPreferences.getUserWishList(SplashScreenActivity.this);
 				// Log.d("Wish List Json ", value);
 				if (value != null) {
 
@@ -73,13 +101,16 @@ public class SplashScreenActivity extends Activity {
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+//						e.printStackTrace();
 					}
 
 				}
 				boolean isInternetPresent = cd.isConnectingToInternet();
-				boolean isLogin = pref.getBoolean("IsLogin", false);
+				
+				boolean isLogin =AppSharedPreferences.getLoginStatus(SplashScreenActivity.this);
+				
 				Log.d("IsLogin", String.valueOf(isLogin));
+				
 				Log.d("isInternetPresent", String.valueOf(isInternetPresent));
 				
 			
@@ -148,9 +179,9 @@ public class SplashScreenActivity extends Activity {
 			try {
 				// Building Parameters
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
-				params.add(new BasicNameValuePair("Uid", "" + pref.getString("Uid", "0")));
+				params.add(new BasicNameValuePair("Uid", "" + AppSharedPreferences.getUID(getApplicationContext())));
 //				Log.d("Uid", "" + Util.Uid);
-				Log.d("request!", "starting");
+				Log.d("requesting from Splash screen GetUserData task!", "starting");
 
 				// Posting user data to script
 				JSONObject json = jsonParser.makeHttpRequest(

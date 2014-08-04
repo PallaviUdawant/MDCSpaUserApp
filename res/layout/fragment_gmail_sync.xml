@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+ <TableRow
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content" >
+
+	    <Button android:id="@+id/button_start_oauth"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Do OAuth"/>
+	            
+	    <Button android:id="@+id/button_get_contacts"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Get Contacts"/>
+
+	    <Button android:id="@+id/button_delete_tokens"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Delete Tokens"/>	
+	 </TableRow> 
+
+	   <TextView
+	       android:id="@+id/text_console"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:text=""
+	       android:textColor="#000000"
+	       android:typeface="normal" />
+
+    <ListView
+        android:id="@+id/ListViewController_Gmail_Sync"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</LinearLayout>

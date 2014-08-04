@@ -2,12 +2,16 @@ package org.mdcconcepts.com.mdcspauserapp.wishlist;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.AppSharedPreferences;
 import org.mdcconcepts.com.mdcspauserapp.R;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +24,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class WishListTherapyAdapter extends BaseAdapter {
-	private LayoutInflater inflater = null;
+//	private LayoutInflater inflater = null;
 	Activity activity;
 	ArrayList<HashMap<String, String>> data;
 	TextView Txt_THERAPY_Title;
@@ -42,7 +46,7 @@ public class WishListTherapyAdapter extends BaseAdapter {
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return data.size();
-	}
+	} 
 
 	@Override
 	public Object getItem(int position) {
@@ -77,21 +81,21 @@ public class WishListTherapyAdapter extends BaseAdapter {
 		Txt_THERAPY_Descp.setTypeface(font);
 
 		Txt_THERAPY_Title.setTypeface(font);
-
+		
+		Imageview_Controller_Delete_Wishlist.setTag(position);
+		
 		Imageview_Controller_Delete_Wishlist
 				.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						/**
 						 * Ask before leaving app
 						 */
-						// Typeface font = Typeface.createFromAsset(
-						// activity.getAssets(), "Raleway-Light.otf");
 
 						final Dialog dialog = new Dialog(rootView.getContext(),
 								R.style.ThemeWithCorners);
 						dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 						dialog.setContentView(R.layout.custom_alert_box);
-						dialog.setCancelable(false);
+						dialog.setCancelable(true);
 						dialog.show();
 
 						TextView title;
@@ -105,13 +109,25 @@ public class WishListTherapyAdapter extends BaseAdapter {
 						title.setTypeface(font);
 						btn_yes.setTypeface(font);
 						btn_no.setTypeface(font);
-
+						final int pos = (Integer) v.getTag();
+						title.setText("Are you sure you want to remove it from wishlist?");
+						
 						btn_yes.setOnClickListener(new View.OnClickListener() {
 
 							@Override
 							public void onClick(View v) {
 								// TODO Auto-generated method stub
+								
+								WishList_Fragment.WishList.remove(Integer
+										.parseInt(data.get(pos).get("therapy_id")));
+								
+								JSONArray WishList_JsonArray = HashMapToJsonArray(
+										WishList_Fragment.WishList);
 
+								AppSharedPreferences.setUserWishList(activity, WishList_JsonArray.toString());
+								data.remove(pos);
+								notifyDataSetChanged();
+								dialog.cancel();
 							}
 						});
 						btn_no.setOnClickListener(new View.OnClickListener() {
@@ -125,8 +141,6 @@ public class WishListTherapyAdapter extends BaseAdapter {
 						});
 					}
 				});
-		// new HashMap<String, String>();
-		// data.get(position);
 		Log.d("In Wishlist Adapter", data.get(position).get("therapy_name"));
 		
 		Txt_THERAPY_Title.setText(data.get(position).get("therapy_name"));
@@ -134,4 +148,25 @@ public class WishListTherapyAdapter extends BaseAdapter {
 		return rootView;
 	}
 
+	public JSONArray HashMapToJsonArray(HashMap<Integer, String> WishList
+			) {
+			JSONArray Wishlist_JsonArray = new JSONArray();
+
+			for (Entry<Integer, String> entry : WishList.entrySet()) {
+				System.out.println(entry.getKey() + " : " + entry.getValue());
+				JSONObject Theropy = new JSONObject();
+				try {
+					Theropy.put("therpay_id", "" + entry.getKey());
+					Theropy.put("therapy_name", entry.getValue());
+					Wishlist_JsonArray.put(Theropy);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+			return Wishlist_JsonArray;
+
+		}
 }

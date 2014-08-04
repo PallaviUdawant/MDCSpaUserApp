@@ -30,7 +30,7 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/edittext_background"
                 android:padding="2dp"
-                android:src="@drawable/spa_logo" />
+               />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -66,7 +66,7 @@
                     android:orientation="horizontal"
                     android:weightSum="2" >
 
-                    <RatingBar
+                    <!--  <RatingBar
                         android:id="@+id/ratingBarController_Therapist"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                         android:text="(19 Ratings)"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#4e3115"
-                        android:textSize="16sp" />
+                        android:textSize="16sp" />-->
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -162,7 +162,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -176,7 +175,7 @@
 
             <EditText
                 android:id="@+id/edt_service"
-                android:layout_width="fill_parent"
+                android:layout_width="380dp"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_background"
                 android:editable="false"
@@ -192,7 +191,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -206,7 +204,7 @@
 
             <EditText
                 android:id="@+id/edt_service_time"
-                android:layout_width="fill_parent"
+                android:layout_width="380dp"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_background"
                 android:editable="false"
@@ -222,7 +220,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -236,10 +233,9 @@
 
             <EditText
                 android:id="@+id/edt_date"
-                android:layout_width="fill_parent"
+                android:layout_width="380dp"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_background"
-                android:drawableRight="@drawable/calender_icon"
                 android:ems="10"
                 android:imeOptions="actionNext"
                 android:paddingBottom="10dp"
@@ -250,12 +246,18 @@
                 android:textColor="#4e3115"
                 android:textSize="18sp" >
             </EditText>
+
+            <ImageButton
+                android:id="@+id/imageButton_Controller_Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calender_icon" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp" >
 
@@ -269,10 +271,9 @@
 
             <EditText
                 android:id="@+id/edt_time"
-                android:layout_width="fill_parent"
+                android:layout_width="380dp"
                 android:layout_height="45dp"
                 android:background="@drawable/edittext_background"
-                android:drawableRight="@drawable/clock_icon"
                 android:ems="10"
                 android:imeOptions="actionGo"
                 android:paddingBottom="10dp"
@@ -283,6 +284,13 @@
                 android:textColor="#4e3115"
                 android:textSize="18sp" >
             </EditText>
+
+            <ImageButton
+                android:id="@+id/imageButton_Controller_Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/clock_icon" />
+
         </LinearLayout>
     </LinearLayout>
 

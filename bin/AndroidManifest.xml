@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="18" />
-
+    
     <permission
         android:name="com.example.test.googlemapsv2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -26,6 +26,8 @@
     <!-- Required to show current location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" >
+    </uses-permission>
 
     <!-- Required OpenGL ES 2.0. for Maps V2 -->
     <uses-feature
@@ -43,7 +45,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
             android:windowSoftInputMode="stateHidden" >
-            <intent-filter>
+      <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -160,17 +162,74 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-
-         <activity
+        <activity
             android:name="org.mdcconcepts.com.mdcspauserapp.profile.MyProfileFragment"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-        
-         <activity
+        <activity
             android:name="org.mdcconcepts.com.mdcspauserapp.setting.SettingActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.contactSync.PhoneContactSyncActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.GmailSync.GmailContactSyncFragment"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+         <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.GmailSync.GmailContactListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="org.mdcconcepts.com.mdcspauserapp.GmailSync.RequestTokenActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="callback"
+                    android:scheme="oauth-example" />
+            </intent-filter>
+        </activity>
+<activity android:name="org.mdcconcepts.com.mdcspauserapp.socialauth.CustomUI"
+           		  android:configChanges="keyboardHidden|orientation"
+                  android:label="@string/app_name">
+          <!--    <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+    	<activity android:name="org.mdcconcepts.com.mdcspauserapp.socialauth.ProfileActivity"
+           		  android:configChanges="keyboardHidden|orientation"
+                  >
+        </activity>
+        <activity android:name="org.mdcconcepts.com.mdcspauserapp.socialauth.ContactActivity"
+           		  android:configChanges="keyboardHidden|orientation"
+                  >
+        </activity>
+        <activity android:name="org.mdcconcepts.com.mdcspauserapp.socialauth.FeedActivity"
+           		  android:configChanges="keyboardHidden|orientation"
+                  >
+        </activity>
+        <activity android:name="org.mdcconcepts.com.mdcspauserapp.socialauth.AlbumActivity"
+           		  android:configChanges="keyboardHidden|orientation"
+                  >
+        </activity>
+        <activity android:name="org.mdcconcepts.com.mdcspauserapp.socialauth.CareerActivity"
+           		  android:configChanges="keyboardHidden|orientation"
+                  >
         </activity>
         <service
             android:name="org.mdcconcepts.com.mdcspauserapp.notification.MyAlarmService"
@@ -193,12 +252,10 @@
             android:name="org.mdcconcepts.com.mdcspauserapp.SpaProfileActivity"
             android:label="@string/title_activity_spa_profile" >
         </activity>
-        
         <activity
             android:name="org.mdcconcepts.com.mdcspauserapp.favourites.FavouritesFragment"
             android:label="@string/title_activity_spa_profile" >
         </activity>
-        
     </application>
 
 </manifest>

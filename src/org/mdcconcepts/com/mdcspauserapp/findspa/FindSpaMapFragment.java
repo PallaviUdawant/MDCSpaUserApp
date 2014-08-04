@@ -319,6 +319,8 @@ public class FindSpaMapFragment extends Fragment implements
 						.valueOf(mLastLongitude)));
 				params1.add(new BasicNameValuePair("hit_counter", String
 						.valueOf(hit_counter)));
+				params1.add(new BasicNameValuePair("Uid", String
+						.valueOf(Util.Uid)));
 
 				Log.d("request!", "starting");
 
@@ -376,8 +378,11 @@ public class FindSpaMapFragment extends Fragment implements
 											.getString("Addresss"), logo_url,
 											cover_url));
 
-							Log.v("NearestLocations",
-									NearestLocations.toString());
+//							Log.v("NearestLocations",
+//									NearestLocations.toString());
+							spaDetails.put("IsFav",  Temp
+									.getString("is_Fav"));
+							
 							SpaDetails.add(spaDetails);
 
 							isNearestDataAvailable = true;
@@ -765,8 +770,8 @@ public class FindSpaMapFragment extends Fragment implements
 			google_map.addMarker(
 					new MarkerOptions().position(newLatLong).icon(
 							BitmapDescriptorFactory
-									.fromResource(R.drawable.ic_marker)))
-					.showInfoWindow();
+									.fromResource(R.drawable.ic_marker)));
+					
 			CameraPosition cameraPosition = new CameraPosition.Builder()
 					.target(newLatLong).zoom(17) // Sets the zoom
 					.bearing(0) // Sets the orientation of the camera to east
@@ -1036,12 +1041,12 @@ public class FindSpaMapFragment extends Fragment implements
 
 			}
 			google_map.addPolyline(polyLineOptions);
-			txt_addr = (TextView) infoWindowView.findViewById(R.id.txt_address);
+//			txt_addr = (TextView) infoWindowView.findViewById(R.id.txt_address);
 
 			Util.DISTANCE = "Distance " + distance + " "
 					+ "\nEstimated time taken to reach " + duration;
-			txt_distance_time.setText("Distance " + distance + " "
-					+ "Estimated time taken to reach" + duration);
+//			txt_distance_time.setText("Distance " + distance + " "
+//					+ "Estimated time taken to reach" + duration);
 //			Toast.makeText(getActivity(),
 //					"Duration" + duration + " " + "Distance" + distance,
 //					Toast.LENGTH_LONG).show();

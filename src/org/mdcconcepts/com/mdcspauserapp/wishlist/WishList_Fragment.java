@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mdcconcepts.com.mdcspauserapp.R;
-import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +19,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
-public class WishList_Fragment extends Fragment implements OnScrollListener {
+@SuppressLint("UseSparseArrays") public class WishList_Fragment extends Fragment implements OnScrollListener {
 	ListView Wishlist_Therapy_List;
 	WishListTherapyAdapter adapter;
 	ArrayList<HashMap<String, String>> TherapyDetails = new ArrayList<HashMap<String, String>>();
@@ -44,21 +43,23 @@ public class WishList_Fragment extends Fragment implements OnScrollListener {
 				.findViewById(R.id.listview_Controller_Wishlist);
 		Wishlist_Therapy_List.setOnScrollListener(this);
 
-	
 		for (Entry<Integer, String> entry : WishList.entrySet()) {
-			
+
 			HashMap<String, String> spaDetails = new HashMap<String, String>();
-			
+
 			System.out.println(entry.getKey() + " : " + entry.getValue());
 			spaDetails.put(THERAPY_ID, "" + entry.getKey());
 			try {
-				spaDetails.put(THERAPY,new JSONObject(entry.getValue()).getString("therapy_name") );
-				spaDetails.put(THERAPY_DETAILS, new JSONObject(entry.getValue()).getString("therapy_desc") );
+				spaDetails.put(THERAPY, new JSONObject(entry.getValue())
+						.getString("therapy_name"));
+				spaDetails.put(THERAPY_DETAILS,
+						new JSONObject(entry.getValue())
+								.getString("therapy_desc"));
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			TherapyDetails.add(spaDetails);
 
 		}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/TextViewController_UserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INVITE FRIENDS" 
+       
+        android:textSize="15sp"
+        android:layout_margin="10sp" />
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    <EditText
+        android:id="@+id/edt_search_from_contactlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Type contact name..."
+        android:layout_marginLeft="20sp"
+         android:textSize="15sp"
+        android:layout_marginRight="20sp"
+       
+        android:inputType="textPersonName" >  </EditText>
+        
+  <!--  <AutoCompleteTextView
+                    android:id="@+id/auto_invite_friends"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                     android:layout_marginLeft="20sp"
+        			android:layout_marginRight="20sp"
+                    android:ems="10"
+                    android:textSize="15sp"
+                    android:drawableRight="@drawable/ic_action_new"
+                    android:hint="Type contact name..." />-->
+
+    <Button
+        android:id="@+id/btn_next_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:text="Next" android:layout_gravity="right" android:layout_margin="10sp" />
+    </LinearLayout>
+
+  <ListView
+      android:id="@+id/contact_list"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" >
+  </ListView>
+
+    <!--  <Button
+        android:id="@+id/btn_next_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next" android:layout_gravity="right" android:layout_margin="10sp"/>-->
+
+</LinearLayout>

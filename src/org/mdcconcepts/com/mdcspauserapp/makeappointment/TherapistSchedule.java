@@ -37,9 +37,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -56,7 +56,7 @@ public class TherapistSchedule extends Fragment {
 
 	private String Therapist_Id;
 	private String Therapist_name;
-	public String TherapistProfileUrl="";
+	public String TherapistProfileUrl = "";
 	// ids
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_MESSAGE = "message";
@@ -66,9 +66,9 @@ public class TherapistSchedule extends Fragment {
 	Button Btn_Select_Therapist;
 	TextView textViewController_SpaName;
 	TextView textViewController_TherapistName;
-	ImageView ImageviewController_ProfileImage;
-	RatingBar ratingBarController_Therapist;
-	TextView textViewController_No_Of_Rating;
+	static ImageView ImageviewController_ProfileImage;
+	// RatingBar ratingBarController_Therapist;
+	// TextView textViewController_No_Of_Rating;
 	TextView txt_service, txt_service_time, txt_date, txt_time;
 	TextView txt_feedback_therapist, txt_feedback_therapist_name,
 			txt_feedback_message, txt_feedkback_title;
@@ -79,15 +79,18 @@ public class TherapistSchedule extends Fragment {
 	EditText edt_date;
 	EditText edt_time;
 
-	private Calendar cal;
-	private int day;
-	private int month;
-	private int year;
+	// private Calendar cal;
+	// private int day;
+	// private int month;
+	// private int year;
 
 	static String Schedule_Id = "Schedule_Id";
 	static String Timeline_Therapist_Id = "Therapist_Id";
 	static String Appointment_Start_Time = "Start_Time";
 	static String Appointment_End_Time = "End_time";
+
+	ImageButton imageButton_Controller_Date;
+	ImageButton imageButton_Controller_Time;
 
 	Button btn_show_timeline, btn_feedback, btn_send_feedback;
 	Spinner Date_Spinner;
@@ -144,12 +147,17 @@ public class TherapistSchedule extends Fragment {
 		ImageviewController_ProfileImage = (ImageView) v
 				.findViewById(R.id.Imageview_ProfileImage);
 
-		ratingBarController_Therapist = (RatingBar) v
-				.findViewById(R.id.ratingBarController_Therapist);
-		ratingBarController_Therapist.setEnabled(false);
-
-		textViewController_No_Of_Rating = (TextView) v
-				.findViewById(R.id.textViewController_No_Of_Rating);
+		// ratingBarController_Therapist = (RatingBar) v
+		// .findViewById(R.id.ratingBarController_Therapist);
+		// ratingBarController_Therapist.setEnabled(false);
+		//
+		// textViewController_No_Of_Rating = (TextView) v
+		// .findViewById(R.id.textViewController_No_Of_Rating);
+		//
+		imageButton_Controller_Date = (ImageButton) v
+				.findViewById(R.id.imageButton_Controller_Date);
+		imageButton_Controller_Time = (ImageButton) v
+				.findViewById(R.id.imageButton_Controller_Time);
 
 		txt_service = (TextView) v.findViewById(R.id.txt_service);
 
@@ -203,7 +211,7 @@ public class TherapistSchedule extends Fragment {
 		 */
 		textViewController_SpaName.setTypeface(font);
 		textViewController_TherapistName.setTypeface(font);
-		textViewController_No_Of_Rating.setTypeface(font);
+		// textViewController_No_Of_Rating.setTypeface(font);
 		txt_service.setTypeface(font);
 		txt_service_time.setTypeface(font);
 		txt_date.setTypeface(font);
@@ -232,24 +240,92 @@ public class TherapistSchedule extends Fragment {
 		textViewController_TherapistName.setText(Therapist_name);
 		textViewController_SpaName.setText(AllDetails.get("Spa_Name"));
 
-		cal = Calendar.getInstance();
-		day = cal.get(Calendar.DAY_OF_MONTH);
-		month = cal.get(Calendar.MONTH);
-		year = cal.get(Calendar.YEAR);
+		// cal = Calendar.getInstance();
+		// day = cal.get(Calendar.DAY_OF_MONTH);
+		// month = cal.get(Calendar.MONTH);
+		// year = cal.get(Calendar.YEAR);
 		edt_date.setInputType(InputType.TYPE_NULL);
 
+		imageButton_Controller_Time
+				.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						final Calendar c = Calendar.getInstance();
+						final int mHour = c.get(Calendar.HOUR_OF_DAY);
+						final int mMinute = c.get(Calendar.MINUTE);
+
+						// c.set(Calendar.AM_PM, AM_PM);
+						// Launch Time Picker Dialog
+						TimePickerDialog tpd = new TimePickerDialog(
+								getActivity(),
+								new TimePickerDialog.OnTimeSetListener() {
+
+									@Override
+									public void onTimeSet(TimePicker view,
+											int hourOfDay, int minute) {
+										// Display Selected time in textbox
+										// edt_time.setText(hourOfDay + ":" +
+										// minute);
+										edt_time.setError(null);
+										if (hourOfDay >= c.get(Calendar.HOUR_OF_DAY)
+												&& minute >= c.get(Calendar.MINUTE)) {
+											Util.Appointment_Time = hourOfDay + ":"
+													+ minute;
+											String am_pm = null;
+											Calendar datetime = Calendar.getInstance();
+											datetime.set(Calendar.HOUR_OF_DAY,
+													hourOfDay);
+											datetime.set(Calendar.MINUTE, minute);
+
+											if (datetime.get(Calendar.AM_PM) == Calendar.AM)
+												am_pm = "AM";
+											else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
+												am_pm = "PM";
+
+											String strHrsToShow = (datetime
+													.get(Calendar.HOUR) == 0) ? "12"
+													: datetime.get(Calendar.HOUR) + "";
+											edt_time.setText(strHrsToShow + ":"
+													+ datetime.get(Calendar.MINUTE)
+													+ " " + am_pm);
+
+										}
+										else
+										{
+											edt_time.setError("Please select the appropritate time");
+										}
+
+									}
+
+								}, mHour, mMinute, false);
+
+						tpd.show();
+
+					}
+				});
+		imageButton_Controller_Date
+				.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						showDatepickerDialog();
+					}
+				});
 		edt_date.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showDatepickerDialog();
+				// showDatepickerDialog();
 			}
 		});
 
 		edt_time.setInputType(InputType.TYPE_NULL);
 
-		edt_time.setOnClickListener(new View.OnClickListener() {
+		/*edt_time.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -268,33 +344,42 @@ public class TherapistSchedule extends Fragment {
 									int hourOfDay, int minute) {
 								// Display Selected time in textbox
 								// edt_time.setText(hourOfDay + ":" + minute);
-								Util.Appointment_Time = hourOfDay + ":"
-										+ minute;
-								String am_pm = null;
-								Calendar datetime = Calendar.getInstance();
-								datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-								datetime.set(Calendar.MINUTE, minute);
+								edt_time.setError(null);
+								if (hourOfDay >= c.get(Calendar.HOUR_OF_DAY)
+										&& minute >= c.get(Calendar.MINUTE)) {
+									Util.Appointment_Time = hourOfDay + ":"
+											+ minute;
+									String am_pm = null;
+									Calendar datetime = Calendar.getInstance();
+									datetime.set(Calendar.HOUR_OF_DAY,
+											hourOfDay);
+									datetime.set(Calendar.MINUTE, minute);
 
-								if (datetime.get(Calendar.AM_PM) == Calendar.AM)
-									am_pm = "AM";
-								else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
-									am_pm = "PM";
+									if (datetime.get(Calendar.AM_PM) == Calendar.AM)
+										am_pm = "AM";
+									else if (datetime.get(Calendar.AM_PM) == Calendar.PM)
+										am_pm = "PM";
 
-								String strHrsToShow = (datetime
-										.get(Calendar.HOUR) == 0) ? "12"
-										: datetime.get(Calendar.HOUR) + "";
-								edt_time.setText(strHrsToShow + ":"
-										+ datetime.get(Calendar.MINUTE) + " "
-										+ am_pm);
+									String strHrsToShow = (datetime
+											.get(Calendar.HOUR) == 0) ? "12"
+											: datetime.get(Calendar.HOUR) + "";
+									edt_time.setText(strHrsToShow + ":"
+											+ datetime.get(Calendar.MINUTE)
+											+ " " + am_pm);
 
+								}
+								else
+								{
+									edt_time.setError("Please select the appropritate time");
+								}
 							}
-
+						
 						}, mHour, mMinute, false);
 
 				tpd.show();
 			}
 
-		});
+		});*/
 		edt_date.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -386,6 +471,11 @@ public class TherapistSchedule extends Fragment {
 	 * Date Picker
 	 */
 	public void showDatepickerDialog() {
+		Calendar c = Calendar.getInstance();
+		int cyear = c.get(Calendar.YEAR);
+		int cmonth = c.get(Calendar.MONTH);
+		int cday = c.get(Calendar.DAY_OF_MONTH);
+
 		DatePickerDialog mDatePicker = new DatePickerDialog(getActivity(),
 				new OnDateSetListener() {
 					public void onDateSet(DatePicker datepicker,
@@ -395,8 +485,9 @@ public class TherapistSchedule extends Fragment {
 								+ (selectedmonth + 1) + "-" + selectedday);
 
 					}
-				}, year, month, day);
+				}, cyear, cmonth, cday);
 		mDatePicker.setTitle("Select date");
+		mDatePicker.getDatePicker().setMinDate(c.getTimeInMillis());
 		mDatePicker.show();
 	}
 
@@ -529,7 +620,7 @@ public class TherapistSchedule extends Fragment {
 
 						Profile_url = json.getString("Profile_Image_Url");
 						rating = Float.parseFloat(json.getString("Rate"));
-						TherapistProfileUrl=Profile_url;
+						TherapistProfileUrl = Profile_url;
 						Log.d("therapist details ", Profile_url);
 
 						return json.getString(TAG_MESSAGE);
@@ -555,7 +646,7 @@ public class TherapistSchedule extends Fragment {
 		protected void onPostExecute(String file_url) {
 			if (file_url != null) {
 
-				ratingBarController_Therapist.setRating(rating);
+				// ratingBarController_Therapist.setRating(rating);
 
 				if (!Profile_url.equalsIgnoreCase("null")) {
 
@@ -568,9 +659,11 @@ public class TherapistSchedule extends Fragment {
 					// getting
 					// image
 					// image - ImageView
+
 					imgLoader.DisplayImage(Profile_url.replace("\\", ""),
 							R.id.Imageview_ProfileImage,
 							ImageviewController_ProfileImage);
+
 				}
 
 			}
@@ -611,7 +704,7 @@ public class TherapistSchedule extends Fragment {
 
 				if (json != null) {
 					// full json response
-					Log.d("Login attempt", json.toString());
+					Log.d("GetTherapistTimeline", json.toString());
 
 					// json success element
 					success = json.getInt(TAG_SUCCESS);
@@ -623,10 +716,10 @@ public class TherapistSchedule extends Fragment {
 							JSONObject Temp = PostJson.getJSONObject(i);
 							HashMap<String, String> TherapistScheduleDetails = new HashMap<String, String>();
 
-							TherapistScheduleDetails.put(Schedule_Id,
-									Temp.getString("Schedule_Id"));
-							TherapistScheduleDetails.put(Timeline_Therapist_Id,
-									Temp.getString("Therapist_Id"));
+							// TherapistScheduleDetails.put(Schedule_Id,
+							// Temp.getString("Schedule_Id"));
+							// TherapistScheduleDetails.put(Timeline_Therapist_Id,
+							// Temp.getString("Therapist_Id"));
 							TherapistScheduleDetails.put("Start_Time",
 									Temp.getString(Appointment_Start_Time));
 							TherapistScheduleDetails.put(Appointment_End_Time,
@@ -640,7 +733,8 @@ public class TherapistSchedule extends Fragment {
 						return json.getString(TAG_MESSAGE);
 
 					} else {
-						Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+						Log.d("GetTherapistTimeline!",
+								json.getString(TAG_MESSAGE));
 						return json.getString(TAG_MESSAGE);
 
 					}
@@ -669,8 +763,8 @@ public class TherapistSchedule extends Fragment {
 					i.putExtra("SpaName", AllDetails.get("Spa_Name"));
 					i.putExtra("ProfileUrl", TherapistProfileUrl);
 					startActivity(i);
-					 getActivity().overridePendingTransition(R.anim.fade_in
-		        				, R.anim.fade_out);
+					getActivity().overridePendingTransition(R.anim.fade_in,
+							R.anim.fade_out);
 				}
 			}
 
@@ -721,9 +815,9 @@ public class TherapistSchedule extends Fragment {
 				success = json.getInt(TAG_SUCCESS);
 				if (success == 1) {
 
-					return json.getString(TAG_MESSAGE) + " , Please Login !";
+					return json.getString(TAG_MESSAGE) + " ";
 				} else {
-					Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+					Log.d("Therapist Schedule!", json.getString(TAG_MESSAGE));
 					return json.getString(TAG_MESSAGE);
 
 				}
@@ -765,8 +859,8 @@ public class TherapistSchedule extends Fragment {
 							AllDetails.put("Therapist_Id", Therapist_Id);
 							i.putExtra("AllDetails", AllDetails);
 							startActivity(i);
-							getActivity(). overridePendingTransition(R.anim.fade_in
-				        				, R.anim.fade_out);
+							getActivity().overridePendingTransition(
+									R.anim.fade_in, R.anim.fade_out);
 						}
 
 					} catch (Exception e) {

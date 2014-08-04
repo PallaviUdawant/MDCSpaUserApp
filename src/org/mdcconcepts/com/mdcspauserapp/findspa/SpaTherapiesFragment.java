@@ -40,7 +40,8 @@ import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
-@SuppressLint("ValidFragment") public class SpaTherapiesFragment extends Fragment implements OnScrollListener {
+@SuppressLint("ValidFragment")
+public class SpaTherapiesFragment extends Fragment implements OnScrollListener {
 
 	ListView Therapy_List;
 	SelectTherapyAdapter adapter;
@@ -84,14 +85,12 @@ import com.todddavies.components.progressbar.ProgressWheel;
 	int stepSize = 2;
 	ListView listView_TFS;
 
-	
-	
 	ArrayList<HashMap<String, String>> PricingDetails = new ArrayList<HashMap<String, String>>();
 
 	public SpaTherapiesFragment(HashMap<String, String> spaDetails) {
 		// TODO Auto-generated constructor stub
 		this.Spa_Id = spaDetails.get("spa_id");
-		this.Spa_Name=spaDetails.get("spa_name");
+		this.Spa_Name = spaDetails.get("spa_name");
 	}
 
 	@Override
@@ -102,17 +101,17 @@ import com.todddavies.components.progressbar.ProgressWheel;
 
 		AllDetails.put("Spa_Id", Spa_Id);
 		AllDetails.put("Spa_Name", Spa_Name);
-//		Toast.makeText(getActivity(), "Therapies fragment"+ Spa_Id, Toast.LENGTH_SHORT).show();
-		
+		// Toast.makeText(getActivity(), "Therapies fragment"+ Spa_Id,
+		// Toast.LENGTH_SHORT).show();
+
 		Therapy_List = (ListView) rootView
 				.findViewById(R.id.listview_therapies);
 		Therapy_List.setOnScrollListener(this);
-//		adapter = new SelectTherapyAdapter(getActivity(), TherapyDetails);
-//		
-//		Therapy_List.setAdapter(adapter);
-//		adapter.notifyDataSetChanged();
+		// adapter = new SelectTherapyAdapter(getActivity(), TherapyDetails);
+		//
+		// Therapy_List.setAdapter(adapter);
+		// adapter.notifyDataSetChanged();
 
-		
 		font = Typeface.createFromAsset(getActivity().getAssets(),
 				"Raleway-Light.otf");
 
@@ -123,8 +122,6 @@ import com.todddavies.components.progressbar.ProgressWheel;
 				.findViewById(R.id.progressbar_footer);
 		progressbar_footer.spin();
 
-		
-		
 		getTenTherapies = new GetTenTherapies();
 		getTenTherapies.execute();
 
@@ -185,10 +182,12 @@ import com.todddavies.components.progressbar.ProgressWheel;
 				@SuppressWarnings("unchecked")
 				HashMap<String, String> therapyDetails = (HashMap<String, String>) view
 						.getTag();
-//				Toast.makeText(getActivity(), therapyDetails.get("therapy_id"),
-//						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(getActivity(),
+				// therapyDetails.get("therapy_id"),
+				// Toast.LENGTH_SHORT).show();
 				AllDetails.put("Therapy_Id", therapyDetails.get("therapy_id"));
-				AllDetails.put("Therapy_Name", therapyDetails.get("therapy_name"));
+				AllDetails.put("Therapy_Name",
+						therapyDetails.get("therapy_name"));
 
 				if (!PricingDetails.isEmpty()) {
 					PricingDetails.clear();
@@ -215,8 +214,8 @@ import com.todddavies.components.progressbar.ProgressWheel;
 						SelectTherapistActivity.class);
 				i.putExtra("AllDetails", AllDetails);
 				startActivity(i);
-				 getActivity().overridePendingTransition(R.anim.fade_in
-	        				, R.anim.fade_out);
+				getActivity().overridePendingTransition(R.anim.fade_in,
+						R.anim.fade_out);
 				dialog.dismiss();
 			}
 		});
@@ -267,11 +266,24 @@ import com.todddavies.components.progressbar.ProgressWheel;
 
 		int success;
 
+		Dialog LoadingDataDialog;
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-
+			LoadingDataDialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
+			LoadingDataDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			LoadingDataDialog.setContentView(R.layout.custom_progress_dialog);
+//			dialog.setTitle("Select Time for service");
+			// dialog.setCancelable(false);
+			TextView txt_alert_text = (TextView) LoadingDataDialog
+					.findViewById(R.id.txt_alert_text);
+			txt_alert_text.setTypeface(font);
+			txt_alert_text.setText("Loading Data");
+			ProgressWheel pw_four = (ProgressWheel) LoadingDataDialog
+					.findViewById(R.id.progressBarFour);
+			pw_four.spin();
+			LoadingDataDialog.show();
 		}
 
 		@Override
@@ -327,7 +339,7 @@ import com.todddavies.components.progressbar.ProgressWheel;
 			TFSListviewAdapter adapter = new TFSListviewAdapter(getActivity(),
 					PricingDetails);
 			listView_TFS.setAdapter(adapter);
-
+			LoadingDataDialog.dismiss();
 			dialog.show();
 		}
 	}
@@ -422,7 +434,8 @@ import com.todddavies.components.progressbar.ProgressWheel;
 			if (file_url != null) {
 				if (file_url.contains("Spa Found !")) {
 					Log.v("onPostLog If", file_url);
-					adapter = new SelectTherapyAdapter(getActivity(), TherapyDetails);
+					adapter = new SelectTherapyAdapter(getActivity(),
+							TherapyDetails);
 					Therapy_List.setAdapter(adapter);
 					Therapy_List.setSelectionFromTop(VisiblePosition,
 							distFromTop);

@@ -1,6 +1,9 @@
 package org.mdcconcepts.com.mdcspauserapp.viewappointments;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,17 +12,16 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mdcconcepts.com.mdcspauserapp.AppSharedPreferences;
 import org.mdcconcepts.com.mdcspauserapp.R;
 import org.mdcconcepts.com.mdcspauserapp.customitems.ConnectionDetector;
 import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
+@SuppressLint("SimpleDateFormat")
 public class ViewAppointmentFragment extends Fragment {
 
 	public static final String TherapyName = "TherapyName";
@@ -55,10 +58,11 @@ public class ViewAppointmentFragment extends Fragment {
 	EditText EditText_Controller_Username_Login;
 	EditText EditText_Controller_Password_Login;
 	Dialog loginDialog;
-	Editor editor;
+	// Editor editor;
 	ConnectionDetector cd;
 	Boolean isInternetPresent = false;
 	TextView textView_controller_incorrect_credentials;
+
 	public ViewAppointmentFragment() {
 	}
 
@@ -85,25 +89,22 @@ public class ViewAppointmentFragment extends Fragment {
 		cd = new ConnectionDetector(getActivity());
 		isInternetPresent = cd.isConnectingToInternet();
 		if (!isInternetPresent) {
-			View rootView = inflater.inflate(R.layout.fragment_no_internet_connection,
-					container, false);
+			View rootView = inflater.inflate(
+					R.layout.fragment_no_internet_connection, container, false);
 			return rootView;
 		}
-		
+
 		View rootView = inflater.inflate(R.layout.fragment_viewappointment,
 				container, false);
-		SharedPreferences sharedPreferences = getActivity()
-				.getSharedPreferences(Util.APP_PREFERENCES,
-						Context.MODE_PRIVATE);
-		editor = sharedPreferences.edit();
-		boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
+		// SharedPreferences sharedPreferences = getActivity()
+		// .getSharedPreferences(Util.APP_PREFERENCES,
+		// Context.MODE_PRIVATE);
+		// editor = sharedPreferences.edit();
+		// boolean isLogin = sharedPreferences.getBoolean("IsLogin", false);
 		font = Typeface.createFromAsset(rootView.getContext().getAssets(),
 				Util.fontPath);
 
-		
-
-	
-		if (!isLogin) {
+		if (!AppSharedPreferences.getLoginStatus(getActivity())) {
 			loginDialog = new Dialog(getActivity(), R.style.ThemeWithCorners);
 			loginDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			loginDialog.setContentView(R.layout.activity_login);
@@ -127,7 +128,7 @@ public class ViewAppointmentFragment extends Fragment {
 
 			progressBar_Controller_Login = (ProgressWheel) loginDialog
 					.findViewById(R.id.progressBar_Controller_Login);
-			
+
 			TextView_Controller_Login_Title.setTypeface(font);
 			TextView_Controller_Create_account.setTypeface(font);
 			Button_Controller_Login.setTypeface(font);
@@ -135,37 +136,35 @@ public class ViewAppointmentFragment extends Fragment {
 			textView_controller_incorrect_credentials.setTypeface(font);
 			EditText_Controller_Password_Login.setTypeface(font);
 			EditText_Controller_Username_Login.setTypeface(font);
-			
+
 			loginDialog.show();
-			
-			
-			Button_Controller_Login.setOnClickListener(new View.OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					if (EditText_Controller_Username_Login.getText().toString()
-							.trim().isEmpty()) {
-						EditText_Controller_Username_Login
-								.setError("Please Enter Username !");
-					} else if (EditText_Controller_Password_Login.getText()
-							.toString().trim().isEmpty()) {
-						EditText_Controller_Password_Login
-								.setError("Please Enter Password !");
-					} else {
-						new LoginUser().execute();
-					}
+			Button_Controller_Login
+					.setOnClickListener(new View.OnClickListener() {
 
-				}
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							if (EditText_Controller_Username_Login.getText()
+									.toString().trim().isEmpty()) {
+								EditText_Controller_Username_Login
+										.setError("Please Enter Username !");
+							} else if (EditText_Controller_Password_Login
+									.getText().toString().trim().isEmpty()) {
+								EditText_Controller_Password_Login
+										.setError("Please Enter Password !");
+							} else {
+								new LoginUser().execute();
+							}
 
-			});
+						}
 
-		}
-		else
-		{
+					});
+
+		} else {
 			new GetAppointments().execute();
 		}
-		
+
 		listViewController_Appointmentlist = (ListView) rootView
 				.findViewById(R.id.listViewController_Appointmentlist);
 
@@ -177,14 +176,14 @@ public class ViewAppointmentFragment extends Fragment {
 
 		Util.isHeader = false;
 		Util.isUpcoming = false;
-		
-	
+
 		return rootView;
 
 	}
+
 	class LoginUser extends AsyncTask<String, String, String> {
 
-//		private Dialog dialog;
+		// private Dialog dialog;
 		int success;
 		/**
 		 * Before starting background thread Show Progress Dialog
@@ -195,22 +194,6 @@ public class ViewAppointmentFragment extends Fragment {
 		protected void onPreExecute() {
 			super.onPreExecute();
 
-//			dialog = new Dialog(FinalMakeAppointmentActivity.this,
-//					R.style.ThemeWithCorners);
-//			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//			dialog.setContentView(R.layout.custom_progress_dialog);
-//			dialog.setCancelable(false);
-////			dialog.show();
-//
-//			TextView Txt_Title = (TextView) dialog
-//					.findViewById(R.id.txt_alert_text);
-//			Txt_Title.setTypeface(font);
-//			/**
-//			 * custom circular progress bar
-//			 */
-//			ProgressWheel pw_four = (ProgressWheel) dialog
-//					.findViewById(R.id.progressBarFour);
-//			pw_four.spin();
 			progressBar_Controller_Login.setVisibility(View.VISIBLE);
 			progressBar_Controller_Login.spin();
 		}
@@ -247,6 +230,8 @@ public class ViewAppointmentFragment extends Fragment {
 
 					if (success == 1) {
 						Util.Uid = json.getInt("Uid");
+						AppSharedPreferences.setUID(getActivity(),
+								String.valueOf(json.getInt("Uid")));
 						Util.User_Name = json.getString("Name");
 						Util.User_Contact_Number = json.getString("Mobile");
 						Util.User_EmailId = json.getString("Email");
@@ -282,7 +267,7 @@ public class ViewAppointmentFragment extends Fragment {
 		 **/
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once product deleted
-//			dialog.cancel();
+			// dialog.cancel();
 			progressBar_Controller_Login.setVisibility(View.GONE);
 			progressBar_Controller_Login.stopSpinning();
 			if (file_url != null) {
@@ -290,41 +275,33 @@ public class ViewAppointmentFragment extends Fragment {
 				// Toast.LENGTH_LONG)
 				// .show();
 				if (success == 1) {
-					editor.putBoolean("IsLogin", true);
-					editor.putString("UserName",
+
+					AppSharedPreferences.setLoginStatus(getActivity(), true);
+					AppSharedPreferences.setUserName(getActivity(),
 							EditText_Controller_Username_Login.getText()
 									.toString());
-					editor.putString("Password",
+					AppSharedPreferences.setPassword(getActivity(),
 							EditText_Controller_Password_Login.getText()
 									.toString());
-					editor.commit();
 					loginDialog.dismiss();
-					
+
 					new GetAppointments().execute();
-//					Intent myIntent = new Intent(
-//							FinalMakeAppointmentActivity.this,
-//							MainActivity.class);
-//					finish();
-//					startActivity(myIntent);
 				} else if (file_url.equalsIgnoreCase("timeout")) {
 					Toast.makeText(
 							getActivity(),
 							"Connection TimeOut..!!! Please try again later..!!!",
 							Toast.LENGTH_LONG).show();
 				} else {
-					
+
 					textView_controller_incorrect_credentials
 							.setVisibility(View.VISIBLE);
-//					textView_controller_incorrect_credentials.setTypeface(font);
-//					Toast.makeText(FinalMakeAppointmentActivity.this,
-//							"Wrong Username or Password.. Please try again..!!!",
-//							Toast.LENGTH_LONG).show();
 				}
 			}
 
 		}
 
 	}
+
 	class GetAppointments extends AsyncTask<String, String, String> {
 
 		// Progress Dialog
@@ -385,17 +362,35 @@ public class ViewAppointmentFragment extends Fragment {
 					Log.d("Post Date ", PostJson.toString());
 					for (int i = 0; i < PostJson.length(); i++) {
 
-						// HashMap<String, String> Appointment_Details = new
-						// HashMap<String, String>();
 						JSONObject Temp = PostJson.getJSONObject(i);
-						if (Temp.getString("Appointment_Status")
-								.equalsIgnoreCase("Attended")
+						String CurrentDate = new SimpleDateFormat("yyyy-MM-dd")
+								.format(new Date());
+						Log.d("CurrentDate", CurrentDate);
+						String dateTime[] = Temp.getString(
+								"Appointment_DateTime").split(" ");
+
+						Log.d("Appointment_DateTime", dateTime[0]);
+						SimpleDateFormat dateFormat = new SimpleDateFormat(
+								"yyyy-MM-dd");
+//						Date Current_Date = null;
+						Date AppDate = null;
+						try {
+							// Current_Date = dateFormat.parse(CurrentDate);
+							AppDate = dateFormat.parse(dateTime[0]);
+
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+						Log.d("Appointment_DateTime", dateTime[0]);
+
+						if (AppDate.before(new Date())
 								&& Util.isHeader == false) {
+
 							items.add(new SectionItem("History"));
 							Util.isHeader = true;
+
 						}
-						if (Temp.getString("Appointment_Status")
-								.equalsIgnoreCase("Upcoming")
+						if (AppDate.after(new Date())
 								&& Util.isUpcoming == false) {
 							items.add(new SectionItem("Upcoming Appointments"));
 							Util.isUpcoming = true;
@@ -486,7 +481,10 @@ public class ViewAppointmentFragment extends Fragment {
 										i.putExtra("AppointmentDetails",
 												MyAppointmentDetails);
 										startActivityForResult(i, 2);
-										getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+										getActivity()
+												.overridePendingTransition(
+														R.anim.fade_in,
+														R.anim.fade_out);
 
 									} else if (data.status.toString()
 											.equalsIgnoreCase("Attended"))

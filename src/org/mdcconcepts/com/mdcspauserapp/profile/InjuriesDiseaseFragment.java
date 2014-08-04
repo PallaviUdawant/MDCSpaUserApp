@@ -12,7 +12,6 @@ import org.mdcconcepts.com.mdcspauserapp.serverhandler.JSONParser;
 import org.mdcconcepts.com.mdcspauserapp.util.Util;
 
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -43,7 +42,7 @@ public class InjuriesDiseaseFragment extends FragmentActivity {
 	private String[] InjuriesArray;
 	private String[] DiseaseArray;
 
-	SharedPreferences pref;
+//	SharedPreferences pref;
 	
 	Typeface font;
 
@@ -65,8 +64,8 @@ public class InjuriesDiseaseFragment extends FragmentActivity {
 
 		font = Typeface.createFromAsset(getAssets(), Util.fontPath);
 
-		pref = getApplicationContext()
-				.getSharedPreferences(Util.APP_PREFERENCES, 0);
+//		pref = getApplicationContext()
+//				.getSharedPreferences(Util.APP_PREFERENCES, 0);
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		new GetPainingAreas().execute();
